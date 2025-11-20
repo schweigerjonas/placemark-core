@@ -1,6 +1,9 @@
 # TypeScript build output
 dist/
 
+# Local json db
+src/models/json/db.json
+
 # IDE
 .idea
 .vscode
