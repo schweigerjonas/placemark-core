@@ -1,4 +1,5 @@
 import { accountController } from "./controllers/account-controller";
+import { dashboardController } from "./controllers/dashboard-controller";
 
 export const routes = [
   {
@@ -30,5 +31,11 @@ export const routes = [
     method: "POST" as const,
     path: "/authenticate",
     config: accountController.login,
+  },
+
+  {
+    method: "GET" as const,
+    path: "/dashboard",
+    config: dashboardController.index,
   },
 ];
