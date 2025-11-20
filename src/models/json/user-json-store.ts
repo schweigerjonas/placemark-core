@@ -6,6 +6,7 @@ export const userJsonStore = {
   async addUser(user: User): Promise<User | null> {
     await db.read();
     user._id = uuidv4();
+    user.role = "user";
     db.data.users.push(user);
     await db.write();
     return user;
