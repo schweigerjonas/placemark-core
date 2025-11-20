@@ -3,6 +3,8 @@ export type User = {
   lastName: string;
   email: string;
   password: string;
-  role: string;
+  role: "user" | "admin";
   _id: string;
 };
+
+export type UserDetails = Omit<User, "_id">;

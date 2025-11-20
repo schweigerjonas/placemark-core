@@ -22,6 +22,7 @@
     "lint": "./node_modules/.bin/eslint . --ext .ts"
   },
   "devDependencies": {
+    "@types/chai": "^5.2.3",
     "@types/mocha": "^10.0.10",
     "@types/node": "^24.10.1",
     "@typescript-eslint/eslint-plugin": "^8.47.0",

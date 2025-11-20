@@ -1,7 +1,7 @@
-import { User } from "./user-types";
+import { User, UserDetails } from "./user-types";
 
 export interface UserStore {
-  addUser(user: User): Promise<User>;
+  addUser(user: UserDetails): Promise<User>;
   getAllUsers(): Promise<User[]>;
   getUserById(id: string): Promise<User | null>;
   getUserByEmail(email: string): Promise<User | null>;

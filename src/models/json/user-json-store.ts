@@ -1,15 +1,20 @@
 import { v4 as uuidv4 } from "uuid";
 import { db } from "./store-utils";
-import { User } from "../../types/user-types";
+import { User, UserDetails } from "../../types/user-types";
 
 export const userJsonStore = {
-  async addUser(user: User): Promise<User | null> {
+  async addUser(user: UserDetails): Promise<User | null> {
     await db.read();
-    user._id = uuidv4();
-    user.role = "user";
-    db.data.users.push(user);
+
+    const newUser: User = {
+      ...user,
+      role: "user",
+      _id: uuidv4(),
+    };
+
+    db.data.users.push(newUser);
     await db.write();
-    return user;
+    return newUser;
   },
 
   async getAllUsers(): Promise<User[]> {

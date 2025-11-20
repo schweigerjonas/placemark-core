@@ -1,5 +1,5 @@
 import { Request, ResponseToolkit } from "@hapi/hapi";
-import { User } from "../types/user-types";
+import { User, UserDetails } from "../types/user-types";
 import { db } from "../models/db";
 import { UserCredentialsSpec, UserSpec } from "../models/joi-schemas";
 
@@ -23,7 +23,7 @@ export const accountController = {
       },
     },
     handler: async function (request: Request, h: ResponseToolkit) {
-      const user = request.payload as User;
+      const user = request.payload as UserDetails;
       await db.userStore?.addUser(user);
       return h.redirect("/");
     },

@@ -14,7 +14,7 @@
     "moduleResolution": "node",
     "outDir": "./dist",
 
-    "types": ["mocha", "node"]
+    "types": ["mocha", "chai", "node"]
   },
   "include": ["src/**/*.ts", "test/**/*.ts"]
 }

@@ -1,15 +1,16 @@
-import assert from "assert";
-import { db } from "../src/models/db";
-import { User } from "../src/types/user-types";
+import { assert } from "chai";
+import { db } from "../../src/models/db";
+import { UserDetails } from "../../src/types/user-types";
+import { assertSubset } from "../test-utils";
 
 suite("User model tests", () => {
-  const maggie = {
+  const maggie: UserDetails = {
     firstName: "Maggie",
     lastName: "Simpson",
     email: "maggie@simpson.com",
     password: "secret",
     role: "user",
-  } as User;
+  };
 
   setup(async () => {
     db.init("json");
@@ -17,6 +18,7 @@ suite("User model tests", () => {
 
   test("create user", async () => {
     const user = await db.userStore?.addUser(maggie);
-    assert.deepEqual(maggie, user);
+    assert.exists(user);
+    assertSubset(maggie, user);
   });
 });
