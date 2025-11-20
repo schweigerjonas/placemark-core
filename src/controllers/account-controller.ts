@@ -1,6 +1,7 @@
 import { Request, ResponseToolkit } from "@hapi/hapi";
 import { User } from "../types/user-types";
 import { db } from "../models/db";
+import { UserCredentialsSpec, UserSpec } from "../models/joi-schemas";
 
 export const accountController = {
   index: {
@@ -14,6 +15,13 @@ export const accountController = {
     },
   },
   signup: {
+    validate: {
+      payload: UserSpec,
+      options: { abortEarly: false },
+      failAction: function (request: Request, h: ResponseToolkit, error: any) {
+        return h.view("signup", { title: "Sign up error", errors: error.details }).takeover().code(400);
+      },
+    },
     handler: async function (request: Request, h: ResponseToolkit) {
       const user = request.payload as User;
       await db.userStore?.addUser(user);
@@ -26,6 +34,13 @@ export const accountController = {
     },
   },
   login: {
+    validate: {
+      payload: UserCredentialsSpec,
+      options: { abortEarly: false },
+      failAction: function (request: Request, h: ResponseToolkit, error: any) {
+        return h.view("login", { title: "Login error", errors: error.details }).takeover().code(400);
+      },
+    },
     handler: async function (request: Request, h: ResponseToolkit) {
       const { email, password } = request.payload as any;
       const user = await db.userStore?.getUserByEmail(email);
