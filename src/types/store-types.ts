@@ -5,6 +5,8 @@ export interface UserStore {
   getAllUsers(): Promise<User[]>;
   getUserById(id: string): Promise<User | null>;
   getUserByEmail(email: string): Promise<User | null>;
+  deleteAllUsers(): Promise<void>;
+  deleteUserById(id: string): Promise<void>;
 }
 
 export interface jsonDb {

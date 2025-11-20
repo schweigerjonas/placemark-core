@@ -36,12 +36,12 @@ export const userJsonStore = {
     return u;
   },
 
-  async deleteAllUsers() {
+  async deleteAllUsers(): Promise<void> {
     db.data.users = [];
     await db.write();
   },
 
-  async deleteUserById(id: string) {
+  async deleteUserById(id: string): Promise<void> {
     await db.read();
     const index = db.data.users.findIndex((user) => user._id === id);
     if (index !== -1) db.data.users.splice(index, 1);

@@ -8,7 +8,7 @@ export const maggie: UserDetails = {
   role: "user",
 };
 
-export const testUsers = [
+export const testUsers: UserDetails[] = [
   {
     firstName: "Homer",
     lastName: "Simpson",
