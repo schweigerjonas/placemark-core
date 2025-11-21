@@ -1,5 +1,6 @@
 import Hapi from "@hapi/hapi";
 import Vision from "@hapi/vision";
+import Cookie from "@hapi/cookie";
 import Handlebars from "handlebars";
 import Joi from "joi";
 import path from "path";
@@ -7,6 +8,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { routes } from "./routes";
 import { db } from "./models/db";
+import { accountController } from "./controllers/account-controller";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -16,7 +18,18 @@ async function init() {
     port: process.env.PORT || 3000,
   });
 
+  await server.register(Cookie);
   await server.register(Vision);
+  server.auth.strategy("session", "cookie", {
+    cookie: {
+      name: "playtime",
+      password: "secretpasswordnotrevealedtoanyone",
+      isSecure: false,
+    },
+    redirectTo: "/",
+    validate: accountController.validate,
+  });
+  server.auth.default("session");
   server.views({
     engines: {
       hbs: Handlebars,

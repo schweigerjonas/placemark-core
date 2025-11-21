@@ -55,4 +55,12 @@ export const accountController = {
       return h.redirect("/");
     },
   },
+
+  async validate(request: Request, session: any) {
+    const user = await db.userStore?.getUserById(session.id);
+    if (!user) {
+      return { isValid: false };
+    }
+    return { isValid: true, credentials: user };
+  },
 };
