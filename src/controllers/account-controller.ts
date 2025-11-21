@@ -1,5 +1,5 @@
 import { Request, ResponseToolkit } from "@hapi/hapi";
-import { User, UserDetails } from "../types/user-types";
+import { UserDetails } from "../types/user-types";
 import { db } from "../models/db";
 import { UserCredentialsSpec, UserSpec } from "../models/joi-schemas";
 
