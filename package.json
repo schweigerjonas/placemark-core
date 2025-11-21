@@ -18,23 +18,32 @@
     "build": "tsc -p tsconfig.json && mkdir -p dist/views dist/public && cp -R src/views/* dist/views/ && cp -R public/* dist/public/",
     "start": "npm run build && node dist/server.js",
     "dev": "tsx watch src/server.ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "./node_modules/.bin/eslint . --ext .js"
+    "test": "./node_modules/mocha/bin/_mocha --inline-diffs --ui tdd ./test/**/*.ts",
+    "lint": "./node_modules/.bin/eslint . --ext .ts"
   },
   "devDependencies": {
+    "@types/chai": "^5.2.3",
+    "@types/mocha": "^10.0.10",
     "@types/node": "^24.10.1",
     "@typescript-eslint/eslint-plugin": "^8.47.0",
     "@typescript-eslint/parser": "^8.47.0",
+    "chai": "^6.2.1",
     "eslint": "^8.57.1",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.32.0",
+    "mocha": "^11.7.5",
     "prettier": "^3.6.2",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@hapi/hapi": "^21.4.4"
+    "@hapi/hapi": "^21.4.4",
+    "@hapi/vision": "^7.0.3",
+    "handlebars": "^4.7.8",
+    "joi": "^18.0.2",
+    "lowdb": "^7.0.1",
+    "uuid": "^13.0.0"
   }
 }
