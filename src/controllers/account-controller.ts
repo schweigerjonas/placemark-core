@@ -5,16 +5,19 @@ import { UserCredentialsSpec, UserSpec } from "../models/joi-schemas";
 
 export const accountController = {
   index: {
+    auth: false,
     handler: function (request: Request, h: ResponseToolkit) {
       return h.view("main", { title: "Placemark" });
     },
   },
   showSignup: {
+    auth: false,
     handler: function (request: Request, h: ResponseToolkit) {
       return h.view("signup", { title: "Sign Up to Placemark" });
     },
   },
   signup: {
+    auth: false,
     validate: {
       payload: UserSpec,
       options: { abortEarly: false },
@@ -29,11 +32,13 @@ export const accountController = {
     },
   },
   showLogin: {
+    auth: false,
     handler: function (request: Request, h: ResponseToolkit) {
       return h.view("login", { title: "Login to Placemark" });
     },
   },
   login: {
+    auth: false,
     validate: {
       payload: UserCredentialsSpec,
       options: { abortEarly: false },
@@ -47,10 +52,12 @@ export const accountController = {
       if (!user || user.password !== password) {
         return h.redirect("/");
       }
+      request.cookieAuth.set({ id: user._id });
       return h.redirect("/dashboard");
     },
   },
   logout: {
+    auth: false,
     handler: function (request: Request, h: ResponseToolkit) {
       return h.redirect("/");
     },
