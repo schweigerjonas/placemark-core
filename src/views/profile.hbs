@@ -1,13 +1,38 @@
 {{> menu active="profile"}}
 
 <section class="section">
-  <div class="card p-3">
+  <div class="card p-5">
     <h1 class="title">Update your profile</h1>
     <form action="/update" method="POST">
       {{> user-details}}
       <div class="field is-grouped">
-        <button class="button is-link">Submit Changes</button>
+        <button type="submit" class="button is-link">
+          <span class="icon is-small">
+            <i class="far fa-edit"></i>
+          </span>
+          <span>Submit Changes</span>
+        </button>
       </div>
     </form>
+    <hr class="mt-6 mb-6">
+    <h2 class="subtitle is-5 has-text-grey">Account Management</h2>
+    <div class="is-flex is-justify-content-space-between is-align-items-center">
+      <div>
+        <a href="/delete/{{id}}" class="button is-danger">
+          <span class="icon">
+            <i class="fas fa-trash"></i>
+          </span>
+          <span>Delete Account</span>
+        </a>
+      </div>
+      <div>
+        <a href="/logout" class="button is-link is-light">
+          <span class="icon">
+            <i class="fas fa-sign-out-alt"></i>
+          </span>
+          <span>Logout</span>
+        </a>
+      </div>
+    </div>
   </div>
 </section>
