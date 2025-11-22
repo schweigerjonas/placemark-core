@@ -45,4 +45,9 @@ export const routes = [
     path: "/profile",
     config: profileController.index,
   },
+  {
+    method: "POST" as const,
+    path: "/profile/update/{id}",
+    config: profileController.update,
+  },
 ];

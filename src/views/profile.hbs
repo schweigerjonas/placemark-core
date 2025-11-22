@@ -3,7 +3,7 @@
 <section class="section">
   <div class="card p-5">
     <h1 class="title">Update your profile</h1>
-    <form action="/update/{{user._id}}" method="POST">
+    <form action="/profile/update/{{user._id}}" method="POST">
       {{> user-details userDetails=user.userDetails}}
       <div class="field is-grouped">
         <button type="submit" class="button is-link">
