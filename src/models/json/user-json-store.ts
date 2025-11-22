@@ -1,9 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
 import { db } from "./store-utils";
 import { User, UserDetails } from "../../types/user-types";
+import { UserStore } from "../../types/store-types";
 
-export const userJsonStore = {
-  async addUser(user: UserDetails): Promise<User | null> {
+export const userJsonStore: UserStore = {
+  async addUser(user: UserDetails): Promise<User> {
     await db.read();
 
     const newUser: User = {
@@ -34,6 +35,15 @@ export const userJsonStore = {
     const u = db.data.users.find((user) => user.email === email);
     if (u === undefined) return null;
     return u;
+  },
+
+  async updateUser(user: User, updatedUser: UserDetails): Promise<void> {
+    user.firstName = updatedUser.firstName || user.firstName;
+    user.lastName = updatedUser.lastName || user.lastName;
+    user.email = updatedUser.email || user.email;
+    user.password = updatedUser.password || user.password;
+    user.role = updatedUser.role || user.role;
+    await db.write();
   },
 
   async deleteAllUsers(): Promise<void> {

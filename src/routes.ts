@@ -1,5 +1,6 @@
 import { accountController } from "./controllers/account-controller";
 import { dashboardController } from "./controllers/dashboard-controller";
+import { profileController } from "./controllers/profile-controller";
 
 export const routes = [
   {
@@ -37,5 +38,21 @@ export const routes = [
     method: "GET" as const,
     path: "/dashboard",
     config: dashboardController.index,
+  },
+
+  {
+    method: "GET" as const,
+    path: "/profile",
+    config: profileController.index,
+  },
+  {
+    method: "POST" as const,
+    path: "/profile/update/{id}",
+    config: profileController.update,
+  },
+  {
+    method: "GET" as const,
+    path: "/profile/delete/{id}",
+    config: profileController.delete,
   },
 ];
