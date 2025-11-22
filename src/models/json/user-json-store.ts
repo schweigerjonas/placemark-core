@@ -42,6 +42,7 @@ export const userJsonStore: UserStore = {
     user.lastName = updatedUser.lastName;
     user.email = updatedUser.email;
     user.password = updatedUser.password;
+    user.role = updatedUser.role;
     await db.write();
   },
 

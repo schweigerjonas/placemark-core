@@ -2,7 +2,7 @@ import { assert } from "chai";
 import { db } from "../../src/models/db";
 import { assertSubset } from "../test-utils";
 import { maggie, testUsers } from "../fixtures";
-import { User } from "../../src/types/user-types";
+import { User, UserDetails } from "../../src/types/user-types";
 
 suite("User model tests", () => {
   const users: User[] = [];
@@ -57,10 +57,30 @@ suite("User model tests", () => {
     assert.isNull(nullUser);
   });
 
+  test("update user", async () => {
+    const updatedDetails: UserDetails = {
+      firstName: "MaggieUpdated",
+      lastName: "SimpsonUpdated",
+      email: "maggie@simpsonupdated.com",
+      password: "secretupdated",
+      role: "admin",
+    };
+    const user = await db.userStore!.addUser(maggie);
+    await db.userStore!.updateUser(user, updatedDetails);
+    const updatedUser = await db.userStore!.getUserById(user._id);
+
+    assert.exists(updatedUser);
+    assert.equal(updatedUser.firstName, updatedDetails.firstName);
+    assert.equal(updatedUser.lastName, updatedDetails.lastName);
+    assert.equal(updatedUser.email, updatedDetails.email);
+    assert.equal(updatedUser.password, updatedDetails.password);
+    assert.equal(updatedUser.role, updatedDetails.role);
+  });
+
   test("delete all users", async () => {
     let returnedUsers = await db.userStore!.getAllUsers();
     assert.equal(returnedUsers.length, 3);
-    await db.userStore?.deleteAllUsers();
+    await db.userStore!.deleteAllUsers();
     returnedUsers = await db.userStore!.getAllUsers();
     assert.equal(returnedUsers.length, 0);
   });
