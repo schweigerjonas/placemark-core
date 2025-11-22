@@ -14,13 +14,13 @@ import { accountController } from "./controllers/account-controller";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const result = dotenv.config();
-if (result.error) {
-  console.log(result.error.message);
-  process.exit(1);
-}
-
 async function init() {
+  const result = dotenv.config({ quiet: true });
+  if (result.error) {
+    console.log(result.error.message);
+    process.exit(1);
+  }
+
   const server = Hapi.server({
     port: process.env.PORT || 3000,
   });
