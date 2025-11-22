@@ -50,4 +50,9 @@ export const routes = [
     path: "/profile/update/{id}",
     config: profileController.update,
   },
+  {
+    method: "GET" as const,
+    path: "/profile/delete/{id}",
+    config: profileController.delete,
+  },
 ];

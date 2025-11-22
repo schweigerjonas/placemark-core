@@ -35,4 +35,12 @@ export const profileController = {
       return h.redirect("/profile");
     },
   },
+  delete: {
+    handler: async function (request: Request, h: ResponseToolkit) {
+      const { id } = request.params;
+      await db.userStore?.deleteUserById(id);
+
+      return h.redirect("/logout");
+    },
+  },
 };
