@@ -38,11 +38,11 @@ export const userJsonStore: UserStore = {
   },
 
   async updateUser(user: User, updatedUser: UserDetails): Promise<void> {
-    user.firstName = updatedUser.firstName;
-    user.lastName = updatedUser.lastName;
-    user.email = updatedUser.email;
-    user.password = updatedUser.password;
-    user.role = updatedUser.role;
+    user.firstName = updatedUser.firstName || user.firstName;
+    user.lastName = updatedUser.lastName || user.lastName;
+    user.email = updatedUser.email || user.email;
+    user.password = updatedUser.password || user.password;
+    user.role = updatedUser.role || user.role;
     await db.write();
   },
 
