@@ -2,19 +2,43 @@
 <div class="field is-horizontal">
   <div class="field-body">
     <div class="field">
-      <!-- expression for value="..." used to have empty string as default value -->
-      <input class="input" type="text" placeholder="Enter first name" name="firstName" value="{{#if firstName}}{{firstName}}{{else}}{{/if}}" />
+      <!-- expression for value="..." is used to have empty string as default value -->
+      <input
+        class="input"
+        type="text"
+        placeholder="Enter first name"
+        name="firstName"
+        value="{{#if userDetails.firstName}}{{userDetails.firstName}}{{else}}{{/if}}"
+      />
     </div>
     <div class="field">
-      <input class="input" type="text" placeholder="Enter last name" name="lastName" value="{{#if lastName}}{{lastName}}{{else}}{{/if}}" />
+      <input
+        class="input"
+        type="text"
+        placeholder="Enter last name"
+        name="lastName"
+        value="{{#if userDetails.lastName}}{{userDetails.lastName}}{{else}}{{/if}}"
+      />
     </div>
   </div>
 </div>
 <div class="field">
   <label class="label">Email</label>
-  <input class="input" type="text" placeholder="Enter email" name="email" value="{{#if email}}{{email}}{{else}}{{/if}}" />
+  <input
+    class="input"
+    type="text"
+    placeholder="Enter email"
+    name="email"
+    value="{{#if userDetails.email}}{{userDetails.email}}{{else}}{{/if}}"
+  />
 </div>
 <div class="field">
   <label class="label">Password</label>
-  <input class="input" type="password" placeholder="Enter Password" name="password" value="{{#if password}}{{password}}{{else}}{{/if}}"  />
+  <input
+    class="input"
+    type="password"
+    placeholder="Enter Password"
+    name="password"
+    value="{{#if userDetails.password}}{{userDetails.password}}{{else}}{{/if}}"
+  />
 </div>
