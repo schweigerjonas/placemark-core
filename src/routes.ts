@@ -44,7 +44,12 @@ export const routes = [
   {
     method: "POST" as const,
     path: "/category/poi",
-    config: categoryController.update,
+    config: categoryController.updatePOI,
+  },
+  {
+    method: "GET" as const,
+    path: "/category/poi/{id}",
+    config: categoryController.deletePOI,
   },
 
   {

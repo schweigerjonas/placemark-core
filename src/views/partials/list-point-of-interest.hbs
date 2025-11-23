@@ -4,6 +4,7 @@
       <th>Name</th>
       <th>Description</th>
       <th>Location</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -16,7 +17,7 @@
           {{description}}
         </td>
         <td class="has-text-centered">
-          <div class="tags has-addons is-justify-content-start">
+          <div class="tags has-addons is-justify-content-start mb-1">
             <span class="tag is-info is-light">Lat</span>
             <span class="tag is-info">{{location.lat}}</span>
           </div>
@@ -24,6 +25,13 @@
             <span class="tag is-success is-light">Lng</span>
             <span class="tag is-success">{{location.lng}}</span>
           </div>
+        </td>
+        <td>
+          <a href="/category/poi/{{_id}}" class="button">
+            <span class="icon is-small">
+              <i class="fas fa-trash"></i>
+            </span>
+          </a>
         </td>
       </tr>
     {{/each}}
