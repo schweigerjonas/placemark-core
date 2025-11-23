@@ -1,16 +1,16 @@
 import Joi, { CustomHelpers } from "joi";
 
-export const UserSpec = {
+export const UserSpec = Joi.object({
   firstName: Joi.string().required(),
   lastName: Joi.string().required(),
   email: Joi.string().email().required(),
   password: Joi.string().required(),
-};
+});
 
-export const UserCredentialsSpec = {
+export const UserCredentialsSpec = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().required(),
-};
+});
 
 const LocationSpec = Joi.object({
   lat: Joi.number().min(-90).max(90).required(),
