@@ -1,0 +1,15 @@
+{{> menu}}
+
+<section class="section columns is-vcentered">
+  <div class="column has-text-centered">
+    <div class="title">
+      {{poi.name}}
+    </div>
+    <div class="box">
+      <p class="title is-4">Update POI</p>
+      <form action="/poi/{{poi._id}}" method="POST">
+        {{> point-of-interest-details}}
+      </form>
+    </div>
+  </div>
+</section>
