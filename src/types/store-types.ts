@@ -22,9 +22,11 @@ export interface PointOfInterestStore {
 
 export interface jsonDb {
   users: User[];
+  pois: PointOfInterest[];
 }
 
 export type Db = {
   userStore: UserStore | null;
+  poiStore: PointOfInterestStore | null;
   init(dbType: string): void;
 };
