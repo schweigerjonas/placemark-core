@@ -25,7 +25,7 @@ Clone the repository:
 
 ```bash
 git clone git@github.com:schweigerjonas/placemark-core.git
-cd playtime
+cd placemark-core
 ```
 
 Install dependencies:
@@ -44,7 +44,7 @@ COOKIE_NAME=placemark-core
 COOKIE_PASSWORD=YOUR_PERSONAL_PASSWORD_HERE
 
 # MongoDB connection string
-DB=mongodb://localhost/playtime
+DB=mongodb://localhost/placemark-core
 
 # Cloudinary credentials
 CLOUDINARY_NAME=YOUR_CLOUDINARY_NAME
@@ -99,4 +99,3 @@ The application is deployed and live at:
 > </>
 
 _Note: It may take 1-2 minutes until the instance is spun up upon first visiting the website._
-
