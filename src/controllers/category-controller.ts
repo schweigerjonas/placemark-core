@@ -4,7 +4,7 @@ import { db } from "../models/db";
 import { PointOfInterestValidator } from "../models/joi-schemas";
 
 export const categoryController = {
-  updatePOI: {
+  addPOI: {
     validate: {
       payload: PointOfInterestValidator,
       options: {
