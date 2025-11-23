@@ -1,19 +1,22 @@
 import { Request, ResponseToolkit } from "@hapi/hapi";
 import { PointOfInterestDetails } from "../types/poi-types";
 import { db } from "../models/db";
+import { PointOfInterestValidator } from "../models/joi-schemas";
 
 export const categoryController = {
   update: {
+    validate: {
+      payload: PointOfInterestValidator,
+      options: {
+        abortEarly: false,
+        convert: true,
+      },
+      failAction: function (request: Request, h: ResponseToolkit, error: any) {
+        return h.view("dashboard", { title: "Sign up error", errors: error.details }).takeover().code(400);
+      },
+    },
     handler: async function (request: Request, h: ResponseToolkit) {
-      const poiDetails = request.payload as any;
-      const poi: PointOfInterestDetails = {
-        name: poiDetails.name,
-        description: poiDetails.description,
-        location: {
-          lat: poiDetails.lat,
-          lng: poiDetails.lng,
-        },
-      };
+      const poi = request.payload as PointOfInterestDetails;
       await db.poiStore?.addPOI(poi);
       return h.redirect("/dashboard");
     },
