@@ -74,4 +74,9 @@ export const routes = [
     path: "/poi/{id}",
     config: poiController.index,
   },
+  {
+    method: "POST" as const,
+    path: "/poi/{id}",
+    config: poiController.updatePOI,
+  },
 ];
