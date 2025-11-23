@@ -37,6 +37,22 @@ export const routes = [
 
   {
     method: "GET" as const,
+    path: "/profile",
+    config: profileController.index,
+  },
+  {
+    method: "POST" as const,
+    path: "/profile/update/{id}",
+    config: profileController.update,
+  },
+  {
+    method: "GET" as const,
+    path: "/profile/delete/{id}",
+    config: profileController.delete,
+  },
+
+  {
+    method: "GET" as const,
     path: "/dashboard",
     config: dashboardController.index,
   },
@@ -50,21 +66,5 @@ export const routes = [
     method: "GET" as const,
     path: "/category/poi/{id}",
     config: categoryController.deletePOI,
-  },
-
-  {
-    method: "GET" as const,
-    path: "/profile",
-    config: profileController.index,
-  },
-  {
-    method: "POST" as const,
-    path: "/profile/update/{id}",
-    config: profileController.update,
-  },
-  {
-    method: "GET" as const,
-    path: "/profile/delete/{id}",
-    config: profileController.delete,
   },
 ];
