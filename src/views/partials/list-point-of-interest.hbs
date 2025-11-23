@@ -15,10 +15,15 @@
         <td>
           {{description}}
         </td>
-        <td>
-          Latitude:
-          {{location.lat}}, Longitude:
-          {{location.lng}}
+        <td class="has-text-centered">
+          <div class="tags has-addons is-justify-content-start">
+            <span class="tag is-info is-light">Lat</span>
+            <span class="tag is-info">{{location.lat}}</span>
+          </div>
+          <div class="tags has-addons is-justify-content-start">
+            <span class="tag is-success is-light">Lng</span>
+            <span class="tag is-success">{{location.lng}}</span>
+          </div>
         </td>
       </tr>
     {{/each}}
