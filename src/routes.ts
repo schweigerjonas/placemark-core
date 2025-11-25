@@ -1,3 +1,4 @@
+import { userApi } from "./api/user-api";
 import { accountController } from "./controllers/account-controller";
 import { categoryController } from "./controllers/category-controller";
 import { dashboardController } from "./controllers/dashboard-controller";
@@ -79,4 +80,9 @@ export const routes = [
     path: "/poi/{id}",
     config: poiController.updatePOI,
   },
+];
+
+export const apiRoutes = [
+  { method: "POST", path: "/api/user", config: userApi.create },
+  { method: "GET", path: "/api/user", config: userApi.find },
 ];

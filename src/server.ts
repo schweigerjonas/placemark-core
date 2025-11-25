@@ -7,7 +7,7 @@ import path from "path";
 import dotenv from "dotenv";
 
 import { fileURLToPath } from "url";
-import { routes } from "./routes";
+import { apiRoutes, routes } from "./routes";
 import { db } from "./models/db";
 import { accountController } from "./controllers/account-controller";
 
@@ -51,6 +51,7 @@ async function init() {
   server.validator(Joi);
   db.init("json");
   server.route(routes);
+  server.route(apiRoutes);
 
   await server.start();
   console.log("Server running on %s", server.info.uri);
