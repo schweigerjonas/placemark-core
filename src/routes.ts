@@ -83,6 +83,6 @@ export const routes = [
 ];
 
 export const apiRoutes = [
-  { method: "POST", path: "/api/user", config: userApi.create },
-  { method: "GET", path: "/api/user", config: userApi.find },
+  { method: "GET" as const, path: "/api/user", config: userApi.find },
+  { method: "POST" as const, path: "/api/user", config: userApi.create },
 ];

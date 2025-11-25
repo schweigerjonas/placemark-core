@@ -24,6 +24,7 @@ export const userApi = {
   // },
   //
   create: {
+    auth: false,
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const payload = request.payload as UserDetails;
@@ -39,6 +40,7 @@ export const userApi = {
   },
 
   find: {
+    auth: false,
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const users = await db.userStore?.getAllUsers();
