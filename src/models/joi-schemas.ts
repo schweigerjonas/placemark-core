@@ -12,6 +12,7 @@ export const UserCredentialsSpec = Joi.object({
   password: Joi.string().required(),
 });
 
+// UpdateSpecs are for validation of updates where empty fields are allowed
 export const UserUpdateSpec = Joi.object({
   firstName: Joi.string().allow("").optional(),
   lastName: Joi.string().allow("").optional(),
@@ -31,6 +32,13 @@ const FlatPointOfInterestSpec = Joi.object({
   lng: LocationSpec.extract("lng").required(),
 });
 
+const FlatPointOfInterestUpdateSpec = Joi.object({
+  name: Joi.string().allow("").optional(),
+  description: Joi.string().optional(),
+  lat: LocationSpec.extract("lat").allow("").empty("").optional(),
+  lng: LocationSpec.extract("lng").allow("").empty("").optional(),
+});
+
 const transformPointOfInterest = (value: any, helpers: CustomHelpers) => {
   const { name, description, lat, lng } = value;
 
@@ -45,3 +53,4 @@ const transformPointOfInterest = (value: any, helpers: CustomHelpers) => {
 };
 
 export const PointOfInterestValidator = FlatPointOfInterestSpec.custom(transformPointOfInterest);
+export const PointOfInterestUpdateValidator = FlatPointOfInterestUpdateSpec.custom(transformPointOfInterest);

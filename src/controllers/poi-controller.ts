@@ -1,6 +1,7 @@
 import { Request, ResponseToolkit } from "@hapi/hapi";
 import { db } from "../models/db";
 import { PointOfInterestDetails } from "../types/poi-types";
+import { PointOfInterestUpdateValidator } from "../models/joi-schemas";
 
 export const poiController = {
   index: {
@@ -20,6 +21,16 @@ export const poiController = {
     },
   },
   updatePOI: {
+    validate: {
+      payload: PointOfInterestUpdateValidator,
+      options: {
+        abortEarly: false,
+        convert: true,
+      },
+      failAction: function (request: Request, h: ResponseToolkit, error: any) {
+        return h.view("point-of-interest", { title: "Update POI error", errors: error.details }).takeover().code(400);
+      },
+    },
     handler: async function (request: Request, h: ResponseToolkit) {
       const { id } = request.params;
       const updatedPOIDetails = request.payload as PointOfInterestDetails;

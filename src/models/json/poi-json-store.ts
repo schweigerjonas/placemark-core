@@ -32,7 +32,8 @@ export const poiJsonStore: PointOfInterestStore = {
   async updatePOI(poi: PointOfInterest, updatedPOI: PointOfInterestDetails): Promise<void> {
     poi.name = updatedPOI.name || poi.name;
     poi.description = updatedPOI.description || poi.description;
-    poi.location = updatedPOI.location || poi.location;
+    poi.location.lat = updatedPOI.location.lat || poi.location.lat;
+    poi.location.lng = updatedPOI.location.lng || poi.location.lng;
     await db.write();
   },
 
