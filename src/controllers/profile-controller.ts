@@ -1,6 +1,7 @@
 import { Request, ResponseToolkit } from "@hapi/hapi";
 import { db } from "../models/db";
 import { User, UserDetails } from "../types/user-types";
+import { UserUpdateSpec } from "../models/joi-schemas";
 
 export const profileController = {
   index: {
@@ -23,6 +24,13 @@ export const profileController = {
     },
   },
   update: {
+    validate: {
+      payload: UserUpdateSpec,
+      options: { abortEarly: false },
+      failAction: function (request: Request, h: ResponseToolkit, error: any) {
+        return h.view("profile", { title: "Update profile error", errors: error.details }).takeover().code(400);
+      },
+    },
     handler: async function (request: Request, h: ResponseToolkit) {
       const { id } = request.params;
       const updatedUserDetails = request.payload as UserDetails;

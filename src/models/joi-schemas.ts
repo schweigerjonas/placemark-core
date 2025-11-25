@@ -12,6 +12,13 @@ export const UserCredentialsSpec = Joi.object({
   password: Joi.string().required(),
 });
 
+export const UserUpdateSpec = Joi.object({
+  firstName: Joi.string().allow("").optional(),
+  lastName: Joi.string().allow("").optional(),
+  email: Joi.string().email().allow("").optional(),
+  password: Joi.string().allow("").optional(),
+});
+
 const LocationSpec = Joi.object({
   lat: Joi.number().min(-90).max(90).required(),
   lng: Joi.number().min(-180).max(180).required(),
