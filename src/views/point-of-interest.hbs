@@ -1,10 +1,12 @@
-{{> menu active="dashboard"}}
+{{> menu}}
 
 <section class="section">
-  {{> list-point-of-interest}}
+  <div class="title">
+    {{poi.name}}
+  </div>
   <div class="box">
-    <p class="title is-4">Enter POI Details</p>
-    <form action="/category/poi" method="POST">
+    <p class="title is-4">Update POI</p>
+    <form action="/poi/{{poi._id}}" method="POST">
       {{> point-of-interest-details}}
       <div class="field is-horizontal">
         <div class="field-label is-normal"></div>
@@ -12,7 +14,7 @@
           <div class="field">
             <div class="control">
               <button class="button is-primary">
-                <span>Add POI</span>
+                <span>Submit Changes</span>
               </button>
             </div>
           </div>

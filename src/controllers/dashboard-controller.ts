@@ -1,9 +1,17 @@
 import { Request, ResponseToolkit } from "@hapi/hapi";
+import { db } from "../models/db";
 
 export const dashboardController = {
   index: {
-    handler: function (request: Request, h: ResponseToolkit) {
-      return h.view("dashboard", { title: "Placemark Dashboard" });
+    handler: async function (request: Request, h: ResponseToolkit) {
+      const loggedInUser = request.auth.credentials;
+      const pois = await db.poiStore?.getAllPOIs();
+      const viewData = {
+        title: "Placemark Dashboard",
+        user: loggedInUser,
+        pois: pois,
+      };
+      return h.view("dashboard", viewData);
     },
   },
 };

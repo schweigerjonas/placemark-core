@@ -1,3 +1,4 @@
+import { PointOfInterest, PointOfInterestDetails } from "./poi-types";
 import { User, UserDetails } from "./user-types";
 
 export interface UserStore {
@@ -10,11 +11,22 @@ export interface UserStore {
   deleteUserById(id: string): Promise<void>;
 }
 
+export interface PointOfInterestStore {
+  addPOI(poi: PointOfInterestDetails): Promise<PointOfInterest>;
+  getAllPOIs(): Promise<PointOfInterest[]>;
+  getPOIById(id: string): Promise<PointOfInterest | null>;
+  updatePOI(poi: PointOfInterest, updatedPOI: PointOfInterestDetails): Promise<void>;
+  deleteAllPOIs(): Promise<void>;
+  deletePOIById(id: string): Promise<void>;
+}
+
 export interface jsonDb {
   users: User[];
+  pois: PointOfInterest[];
 }
 
 export type Db = {
   userStore: UserStore | null;
+  poiStore: PointOfInterestStore | null;
   init(dbType: string): void;
 };

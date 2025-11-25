@@ -1,5 +1,7 @@
 import { accountController } from "./controllers/account-controller";
+import { categoryController } from "./controllers/category-controller";
 import { dashboardController } from "./controllers/dashboard-controller";
+import { poiController } from "./controllers/poi-controller";
 import { profileController } from "./controllers/profile-controller";
 
 export const routes = [
@@ -36,12 +38,6 @@ export const routes = [
 
   {
     method: "GET" as const,
-    path: "/dashboard",
-    config: dashboardController.index,
-  },
-
-  {
-    method: "GET" as const,
     path: "/profile",
     config: profileController.index,
   },
@@ -54,5 +50,33 @@ export const routes = [
     method: "GET" as const,
     path: "/profile/delete/{id}",
     config: profileController.delete,
+  },
+
+  {
+    method: "GET" as const,
+    path: "/dashboard",
+    config: dashboardController.index,
+  },
+
+  {
+    method: "POST" as const,
+    path: "/category/poi",
+    config: categoryController.addPOI,
+  },
+  {
+    method: "GET" as const,
+    path: "/category/poi/{id}",
+    config: categoryController.deletePOI,
+  },
+
+  {
+    method: "GET" as const,
+    path: "/poi/{id}",
+    config: poiController.index,
+  },
+  {
+    method: "POST" as const,
+    path: "/poi/{id}",
+    config: poiController.updatePOI,
   },
 ];
