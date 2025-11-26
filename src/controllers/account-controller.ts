@@ -1,7 +1,7 @@
 import { Request, ResponseToolkit } from "@hapi/hapi";
-import { UserDetails } from "../types/user-types";
-import { db } from "../models/db";
-import { UserCredentialsSpec, UserSpec } from "../models/joi-schemas";
+import { UserDetails } from "../types/user-types.js";
+import { db } from "../models/db.js";
+import { UserCredentialsSpec, UserSpec } from "../models/joi-schemas.js";
 
 export const accountController = {
   index: {

@@ -1,7 +1,7 @@
 import { Request, ResponseToolkit } from "@hapi/hapi";
-import { PointOfInterestDetails } from "../types/poi-types";
-import { db } from "../models/db";
-import { PointOfInterestValidator } from "../models/joi-schemas";
+import { PointOfInterestDetails } from "../types/poi-types.js";
+import { db } from "../models/db.js";
+import { PointOfInterestValidator } from "../models/joi-schemas.js";
 
 export const categoryController = {
   addPOI: {

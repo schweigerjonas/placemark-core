@@ -1,8 +1,8 @@
 import { assert } from "chai";
-import { db } from "../../src/models/db";
-import { assertSubset } from "../test-utils";
-import { maggie, testUsers } from "../fixtures";
-import { User, UserDetails } from "../../src/types/user-types";
+import { db } from "../../src/models/db.js";
+import { assertSubset } from "../test-utils.js";
+import { maggie, testUsers } from "../fixtures.js";
+import { User, UserDetails } from "../../src/types/user-types.js";
 
 suite("User model tests", () => {
   const users: User[] = [];

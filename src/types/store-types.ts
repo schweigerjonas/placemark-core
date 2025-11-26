@@ -1,5 +1,5 @@
-import { PointOfInterest, PointOfInterestDetails } from "./poi-types";
-import { User, UserDetails } from "./user-types";
+import { PointOfInterest, PointOfInterestDetails } from "./poi-types.js";
+import { User, UserDetails } from "./user-types.js";
 
 export interface UserStore {
   addUser(user: UserDetails): Promise<User>;

@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
-import { PointOfInterest, PointOfInterestDetails } from "../../types/poi-types";
-import { PointOfInterestStore } from "../../types/store-types";
-import { db } from "./store-utils";
+import { PointOfInterest, PointOfInterestDetails } from "../../types/poi-types.js";
+import { PointOfInterestStore } from "../../types/store-types.js";
+import { db } from "./store-utils.js";
 
 export const poiJsonStore: PointOfInterestStore = {
   async addPOI(poi: PointOfInterestDetails): Promise<PointOfInterest> {

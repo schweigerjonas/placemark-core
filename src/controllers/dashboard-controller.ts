@@ -1,5 +1,5 @@
 import { Request, ResponseToolkit } from "@hapi/hapi";
-import { db } from "../models/db";
+import { db } from "../models/db.js";
 
 export const dashboardController = {
   index: {

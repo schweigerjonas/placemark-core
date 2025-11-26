@@ -15,8 +15,8 @@
   "type": "module",
   "main": "dist/server.js",
   "scripts": {
-    "build": "tsc -p tsconfig.json && mkdir -p dist/views dist/public && cp -R src/views/* dist/views/ && cp -R public/* dist/public/",
-    "start": "npm run build && node dist/server.js",
+    "build": "tsc -p tsconfig.json && mkdir -p dist/src/views dist/public && cp -R src/views/* dist/src/views/ && cp -R public/* dist/public/",
+    "start": "npm run build && node dist/src/server.js",
     "dev": "tsx watch src/server.ts",
     "test": "./node_modules/mocha/bin/_mocha --inline-diffs --ui tdd ./test/**/*.ts",
     "lint": "./node_modules/.bin/eslint . --ext .ts"
@@ -28,6 +28,7 @@
     "@types/node": "^24.10.1",
     "@typescript-eslint/eslint-plugin": "^8.47.0",
     "@typescript-eslint/parser": "^8.47.0",
+    "axios": "^1.13.2",
     "chai": "^6.2.1",
     "eslint": "^8.57.1",
     "eslint-config-airbnb-base": "^15.0.0",
@@ -40,6 +41,7 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "@hapi/boom": "^10.0.1",
     "@hapi/cookie": "^12.0.1",
     "@hapi/hapi": "^21.4.4",
     "@hapi/vision": "^7.0.3",
