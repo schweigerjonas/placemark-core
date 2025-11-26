@@ -83,9 +83,10 @@ export const routes = [
 ];
 
 export const apiRoutes = [
-  { method: "POST", path: "/api/user", config: userApi.create },
-  { method: "GET", path: "/api/user", config: userApi.findAll },
-  { method: "GET", path: "/api/user/{id}", config: userApi.find },
-  { method: "DELETE", path: "/api/user", config: userApi.deleteAll },
-  { method: "DELETE", path: "/api/user/{id}", config: userApi.delete },
+  { method: "POST" as const, path: "/api/user", config: userApi.create },
+  { method: "GET" as const, path: "/api/user", config: userApi.findAll },
+  { method: "GET" as const, path: "/api/user/{id}", config: userApi.find },
+  { method: "PUT" as const, path: "/api/user/{id}", config: userApi.update },
+  { method: "DELETE" as const, path: "/api/user", config: userApi.deleteAll },
+  { method: "DELETE" as const, path: "/api/user/{id}", config: userApi.delete },
 ];

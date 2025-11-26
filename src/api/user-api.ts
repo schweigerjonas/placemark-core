@@ -33,6 +33,7 @@ export const userApi = {
   },
 
   find: {
+    auth: false,
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const user = await db.userStore?.getUserById(request.params.id);
@@ -46,7 +47,24 @@ export const userApi = {
     },
   },
 
+  update: {
+    auth: false,
+    handler: async function (request: Request, h: ResponseToolkit) {
+      try {
+        const user = await db.userStore?.getUserById(request.params.id);
+        if (!user) {
+          return Boom.notFound("No user with this id");
+        }
+        await db.userStore?.updateUser(user, request.payload as UserDetails);
+        return h.response().code(201);
+      } catch (err) {
+        return Boom.serverUnavailable("Database error");
+      }
+    },
+  },
+
   deleteAll: {
+    auth: false,
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         await db.userStore?.deleteAllUsers();
@@ -58,6 +76,7 @@ export const userApi = {
   },
 
   delete: {
+    auth: false,
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const user = await db.userStore?.getUserById(request.params.id);
