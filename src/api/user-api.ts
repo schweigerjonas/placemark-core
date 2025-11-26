@@ -1,8 +1,7 @@
 import Boom from "@hapi/boom";
 import { Request, ResponseToolkit } from "@hapi/hapi";
-import { db } from "../models/db";
-import { UserCredentialsSpec, UserSpec } from "../models/joi-schemas";
-import { UserDetails } from "../types/user-types";
+import { db } from "../models/db.js";
+import { UserDetails } from "../types/user-types.js";
 
 export const userApi = {
   // authenticate: {

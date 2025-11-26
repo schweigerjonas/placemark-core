@@ -7,9 +7,9 @@ import path from "path";
 import dotenv from "dotenv";
 
 import { fileURLToPath } from "url";
-import { apiRoutes, routes } from "./routes";
-import { db } from "./models/db";
-import { accountController } from "./controllers/account-controller";
+import { apiRoutes, routes } from "./routes.js";
+import { db } from "./models/db.js";
+import { accountController } from "./controllers/account-controller.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

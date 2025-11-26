@@ -15,8 +15,8 @@
   "type": "module",
   "main": "dist/server.js",
   "scripts": {
-    "build": "tsc -p tsconfig.json && mkdir -p dist/views dist/public && cp -R src/views/* dist/views/ && cp -R public/* dist/public/",
-    "start": "npm run build && node dist/server.js",
+    "build": "tsc -p tsconfig.json && mkdir -p dist/src/views dist/public && cp -R src/views/* dist/src/views/ && cp -R public/* dist/public/",
+    "start": "npm run build && node dist/src/server.js",
     "dev": "tsx watch src/server.ts",
     "test": "./node_modules/mocha/bin/_mocha --inline-diffs --ui tdd ./test/**/*.ts",
     "lint": "./node_modules/.bin/eslint . --ext .ts"

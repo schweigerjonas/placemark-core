@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
-import { db } from "./store-utils";
-import { User, UserDetails } from "../../types/user-types";
-import { UserStore } from "../../types/store-types";
+import { db } from "./store-utils.js";
+import { User, UserDetails } from "../../types/user-types.js";
+import { UserStore } from "../../types/store-types.js";
 
 export const userJsonStore: UserStore = {
   async addUser(user: UserDetails): Promise<User> {

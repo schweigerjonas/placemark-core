@@ -1,7 +1,7 @@
 import { Request, ResponseToolkit } from "@hapi/hapi";
-import { db } from "../models/db";
-import { User, UserDetails } from "../types/user-types";
-import { UserUpdateSpec } from "../models/joi-schemas";
+import { db } from "../models/db.js";
+import { User, UserDetails } from "../types/user-types.js";
+import { UserUpdateSpec } from "../models/joi-schemas.js";
 
 export const profileController = {
   index: {

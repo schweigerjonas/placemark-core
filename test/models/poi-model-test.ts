@@ -1,8 +1,8 @@
 import { assert } from "chai";
-import { db } from "../../src/models/db";
-import { assertSubset } from "../test-utils";
-import { neuschwansteinCastle, testPOIs } from "../fixtures";
-import { PointOfInterest, PointOfInterestDetails } from "../../src/types/poi-types";
+import { db } from "../../src/models/db.js";
+import { assertSubset } from "../test-utils.js";
+import { neuschwansteinCastle, testPOIs } from "../fixtures.js";
+import { PointOfInterest, PointOfInterestDetails } from "../../src/types/poi-types.js";
 
 suite("POI model tests", () => {
   const pois: PointOfInterest[] = [];
