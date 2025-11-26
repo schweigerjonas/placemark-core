@@ -4,24 +4,6 @@ import { db } from "../models/db.js";
 import { UserDetails } from "../types/user-types.js";
 
 export const userApi = {
-  // authenticate: {
-  //   handler: async function (request: Request, h: ResponseToolkit) {
-  //     try {
-  //       const user = await db.userStore?.getUserByEmail(request.payload.email);
-  //       if (!user) {
-  //         return Boom.unauthorized("User not found");
-  //       }
-  //       if (user.password !== request.payload.password) {
-  //         return Boom.unauthorized("Invalid password");
-  //       }
-  //       const token = createToken(user);
-  //       return h.response({ success: true, token: token }).code(201);
-  //     } catch (err) {
-  //       return Boom.serverUnavailable("Database error");
-  //     }
-  //   },
-  // },
-  //
   create: {
     auth: false,
     handler: async function (request: Request, h: ResponseToolkit) {
@@ -38,7 +20,7 @@ export const userApi = {
     },
   },
 
-  find: {
+  findAll: {
     auth: false,
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
@@ -50,28 +32,43 @@ export const userApi = {
     },
   },
 
-  // findOne: {
-  //   handler: async function (request, h) {
-  //     try {
-  //       const user = await db.userStore.getUserById(request.params.id);
-  //       if (!user) {
-  //         return Boom.notFound("No user with this id");
-  //       }
-  //       return user;
-  //     } catch (err) {
-  //       return Boom.serverUnavailable("No user with this id");
-  //     }
-  //   },
-  // },
+  find: {
+    handler: async function (request: Request, h: ResponseToolkit) {
+      try {
+        const user = await db.userStore?.getUserById(request.params.id);
+        if (!user) {
+          return Boom.notFound("No user with this id");
+        }
+        return user;
+      } catch (err) {
+        return Boom.serverUnavailable("No user with this id");
+      }
+    },
+  },
 
-  // deleteAll: {
-  //   handler: async function (request, h) {
-  //     try {
-  //       await db.userStore.deleteAll();
-  //       return h.response().code(204);
-  //     } catch (err) {
-  //       return Boom.serverUnavailable("Database Error");
-  //     }
-  //   },
-  // },
+  deleteAll: {
+    handler: async function (request: Request, h: ResponseToolkit) {
+      try {
+        await db.userStore?.deleteAllUsers();
+        return h.response().code(204);
+      } catch (err) {
+        return Boom.serverUnavailable("Database Error");
+      }
+    },
+  },
+
+  delete: {
+    handler: async function (request: Request, h: ResponseToolkit) {
+      try {
+        const user = await db.userStore?.getUserById(request.params.id);
+        if (!user) {
+          return Boom.notFound("No user with this id");
+        }
+        await db.userStore?.deleteUserById(user._id);
+        return h.response().code(204);
+      } catch (err) {
+        return Boom.serverUnavailable("No user with this id");
+      }
+    },
+  },
 };
