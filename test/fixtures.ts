@@ -1,5 +1,7 @@
-import { PointOfInterestDetails } from "../src/types/poi-types";
-import { UserDetails } from "../src/types/user-types";
+import { PointOfInterestDetails } from "../src/types/poi-types.js";
+import { UserDetails } from "../src/types/user-types.js";
+
+export const url = "http://localhost:3000";
 
 export const maggie: UserDetails = {
   firstName: "Maggie",
