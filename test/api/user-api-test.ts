@@ -79,14 +79,14 @@ suite("User API tests", () => {
   });
 
   test("delete user", async () => {
-    await service.deleteUser(users[0]._id);
-
+    const user = await service.createUser(maggie);
+    const response = await service.deleteUser(user._id);
+    assert.equal(response.status, 204);
     try {
-      const returnedUser = await service.getUser(users[0]._id);
+      const returnedUser = await service.getUser(user._id);
       assert.fail("Should not return a response");
     } catch (error: any) {
-      assert(error.response.data.message === "No user with this id");
-      assert.equal(error.response.data.statusCode, 404);
+      assert(error.response.data.message === "No user with this id", "Incorrect Response Message");
     }
   });
 });

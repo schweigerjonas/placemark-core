@@ -2,6 +2,7 @@ import axios from "axios";
 
 import { url } from "../fixtures.js";
 import { UserDetails } from "../../src/types/user-types.js";
+import { PointOfInterestDetails } from "../../src/types/poi-types.js";
 
 export const service = {
   url: url,
@@ -34,6 +35,37 @@ export const service = {
 
   async deleteUser(id: string) {
     const res = await axios.delete(`${this.url}/api/user/${id}`);
+    return res;
+  },
+
+  // POI API methods
+  async createPOI(poi: PointOfInterestDetails) {
+    const res = await axios.post(`${this.url}/api/poi`, poi);
     return res.data;
+  },
+
+  async getAllPOIs() {
+    const res = await axios.get(`${this.url}/api/poi`);
+    return res.data;
+  },
+
+  async getPOI(id: string) {
+    const res = await axios.get(`${this.url}/api/poi/${id}`);
+    return res.data;
+  },
+
+  async updatePOI(id: string, poiDetails: PointOfInterestDetails) {
+    const res = await axios.put(`${this.url}/api/poi/${id}`, poiDetails);
+    return res.data;
+  },
+
+  async deleteAllPOIs() {
+    const res = await axios.delete(`${this.url}/api/poi`);
+    return res.data;
+  },
+
+  async deletePOI(id: string) {
+    const res = await axios.delete(`${this.url}/api/poi/${id}`);
+    return res;
   },
 };
