@@ -1,6 +1,6 @@
 ## placemark-core
 
-**placemark-core** is a web application built with the [Hapi](https://hapi.dev/) framework that allows users to register, log in, and manage points of interest. This core of the application is focused on the backend of the application. The associated [Svelte](https://svelte.dev/) frontend can be found [here]().
+**placemark-core** is a web application built with the [Hapi](https://hapi.dev/) framework that allows users to register, log in, and manage points of interest. This application-core is focused on the backend of the project.
 
 - [Features](#features)
 - [Getting Started](#getting-started)
@@ -8,16 +8,21 @@
   - [Installation](#installation)
   - [Running the Application](#running-the-application)
 - [Testing](#testing)
-- [API Documentation](#api-documentation)
-- [Deployment](#deployment)
 
 ## Features
+
+- **User Management**: Register a new account, log in, update your profile or delete your account
+- **POI Management**: Users can create and update points of interest
+- **API Service**: A REST API for all CRUD operations on users and POIs
+- **Testing**: Full test suite to ensure application reliability.
 
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
+
+- [NodeJS](https://nodejs.org/en) (LTS Version recommended)
 
 ### Installation
 
@@ -36,20 +41,12 @@ npm install
 
 Configure Environment Variables:
 
-Create a file named .env in the root directory and add your configuration variables. At a minimum, you'll need:
+Create a file named `.env` in the root directory and add your configuration variables. At a minimum, you'll need:
 
 ```bash
 # Cookie credentials
 COOKIE_NAME=placemark-core
 COOKIE_PASSWORD=YOUR_PERSONAL_PASSWORD_HERE
-
-# MongoDB connection string
-DB=mongodb://localhost/placemark-core
-
-# Cloudinary credentials
-CLOUDINARY_NAME=YOUR_CLOUDINARY_NAME
-CLOUDINARY_API_KEY=YOUR_CLOUDINARY_API_KEY
-CLOUDINARY_SECRET=YOUR_CLOUDINARY_SECRET
 
 # Other variables (e.g., PORT)
 # ...
@@ -67,35 +64,17 @@ npm run dev
 To run in production/standard mode:
 
 ```bash
-npm start
+npm run start
 ```
 
 The server will typically start on <http://YOUR_HOSTNAME:3000> (or the port specified in your configuration).
 
 ## Testing
 
-The project includes a test suite to cover the API endpoints, database interactions, and authentication logic.
+The project includes a test suite to cover the API endpoints and database interactions.
 
 To run the full test suite:
 
 ```bash
-npm test
+npm run test
 ```
-
-## API Documentation
-
-Once the application is running, the interactive API documentation is available via Swagger:
-
-Access the documentation at:
-
-> <http://YOUR_HOSTNAME:3000/documentation> (adjust port if necessary).
-
-This documentation provides details on all available endpoints, required parameters, and response schemas.
-
-## Deployment
-
-The application is deployed and live at:
-
-> </>
-
-_Note: It may take 1-2 minutes until the instance is spun up upon first visiting the website._
