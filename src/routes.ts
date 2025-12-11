@@ -59,11 +59,15 @@ export const routes = [
     path: "/dashboard",
     config: dashboardController.index,
   },
-
   {
     method: "POST" as const,
-    path: "/category",
+    path: "/dashboard/category",
     config: dashboardController.addCategory,
+  },
+  {
+    method: "GET" as const,
+    path: "/dashboard/category/{id}",
+    config: dashboardController.deleteCategory,
   },
 
   {

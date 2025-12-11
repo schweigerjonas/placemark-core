@@ -24,8 +24,14 @@ export const dashboardController = {
         title: categoryDetails.title,
         userID: loggedInUser._id,
       };
-
       await db.categoryStore?.addCategory(category);
+      return h.redirect("/dashboard");
+    },
+  },
+  deleteCategory: {
+    handler: async function (request: Request, h: ResponseToolkit) {
+      const { id } = request.params;
+      await db.categoryStore?.deleteCategoryById(id);
       return h.redirect("/dashboard");
     },
   },
