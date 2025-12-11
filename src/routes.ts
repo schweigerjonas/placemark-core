@@ -71,8 +71,13 @@ export const routes = [
   },
 
   {
+    method: "GET" as const,
+    path: "/category/{id}",
+    config: categoryController.index,
+  },
+  {
     method: "POST" as const,
-    path: "/category/poi",
+    path: "/category/{id}/poi",
     config: categoryController.addPOI,
   },
   {

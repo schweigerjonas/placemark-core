@@ -4,6 +4,24 @@ import { db } from "../models/db.js";
 import { PointOfInterestValidator } from "../models/joi-schemas.js";
 
 export const categoryController = {
+  index: {
+    handler: async function (request: Request, h: ResponseToolkit) {
+      const { id } = request.params;
+      const category = await db.categoryStore?.getCategoryById(id);
+
+      if (!category) {
+        console.error("Error: Category not found.");
+        return h.redirect("/dashboard");
+      }
+
+      const viewData = {
+        title: category.title,
+        category: category,
+      };
+
+      return h.view("category", viewData);
+    },
+  },
   addPOI: {
     validate: {
       payload: PointOfInterestValidator,
