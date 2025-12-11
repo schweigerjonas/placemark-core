@@ -4,6 +4,7 @@ import { userJsonStore } from "./json/user-json-store.js";
 
 export const db: Db = {
   userStore: null,
+  categoryStore: null,
   poiStore: null,
 
   init(dbType: string) {
@@ -11,6 +12,7 @@ export const db: Db = {
       case "json":
       default:
         this.userStore = userJsonStore as UserStore;
+        // this.categoryStore = categoryJsonStore as CategoryStore;
         this.poiStore = poiJsonStore as PointOfInterestStore;
         break;
     }
