@@ -5,11 +5,11 @@ export const dashboardController = {
   index: {
     handler: async function (request: Request, h: ResponseToolkit) {
       const loggedInUser = request.auth.credentials;
-      const pois = await db.poiStore?.getAllPOIs();
+      const categories = await db.categoryStore?.getAllCategories();
       const viewData = {
         title: "Placemark Dashboard",
         user: loggedInUser,
-        pois: pois,
+        categories: categories,
       };
       return h.view("dashboard", viewData);
     },
