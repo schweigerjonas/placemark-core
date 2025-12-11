@@ -7,6 +7,7 @@ export type PointOfInterest = {
   name: string;
   description: string;
   location: Location;
+  categoryID: string;
   _id: string;
 };
 

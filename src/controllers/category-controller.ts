@@ -30,13 +30,22 @@ export const categoryController = {
         convert: true,
       },
       failAction: function (request: Request, h: ResponseToolkit, error: any) {
-        return h.view("dashboard", { title: "Sign up error", errors: error.details }).takeover().code(400);
+        return h.view("category", { title: "Sign up error", errors: error.details }).takeover().code(400);
       },
     },
     handler: async function (request: Request, h: ResponseToolkit) {
+      const { id } = request.params;
       const poi = request.payload as PointOfInterestDetails;
-      await db.poiStore?.addPOI(poi);
-      return h.redirect("/dashboard");
+      const category = await db.categoryStore?.getCategoryById(id);
+
+      if (!category) {
+        console.error("Error: Category not found.");
+        return h.redirect("/dashboard");
+      }
+
+      await db.poiStore?.addPOI(category._id, poi);
+
+      return h.redirect(`/category/${id}`);
     },
   },
   deletePOI: {

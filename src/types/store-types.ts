@@ -23,8 +23,9 @@ export interface CategoryStore {
 }
 
 export interface PointOfInterestStore {
-  addPOI(poi: PointOfInterestDetails): Promise<PointOfInterest>;
+  addPOI(categoryID: string, poi: PointOfInterestDetails): Promise<PointOfInterest>;
   getAllPOIs(): Promise<PointOfInterest[]>;
+  getPOIsByCategoryId(id: string): Promise<PointOfInterest[] | null>;
   getPOIById(id: string): Promise<PointOfInterest | null>;
   updatePOI(poi: PointOfInterest, updatedPOI: PointOfInterestDetails): Promise<void>;
   deleteAllPOIs(): Promise<void>;
