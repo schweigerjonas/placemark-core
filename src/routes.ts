@@ -62,6 +62,12 @@ export const routes = [
 
   {
     method: "POST" as const,
+    path: "/category",
+    config: dashboardController.addCategory,
+  },
+
+  {
+    method: "POST" as const,
     path: "/category/poi",
     config: categoryController.addPOI,
   },
