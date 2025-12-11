@@ -3,7 +3,7 @@ import { userApi } from "./api/user-api.js";
 import { accountController } from "./controllers/account-controller.js";
 import { categoryController } from "./controllers/category-controller.js";
 import { dashboardController } from "./controllers/dashboard-controller.js";
-import { poiController } from "./controllers/poi-controller.js";
+import { editPOIController } from "./controllers/edit-poi-controller.js";
 import { profileController } from "./controllers/profile-controller.js";
 
 export const routes = [
@@ -89,12 +89,12 @@ export const routes = [
   {
     method: "GET" as const,
     path: "/poi/{id}",
-    config: poiController.index,
+    config: editPOIController.index,
   },
   {
     method: "POST" as const,
     path: "/poi/{id}",
-    config: poiController.updatePOI,
+    config: editPOIController.updatePOI,
   },
 ];
 

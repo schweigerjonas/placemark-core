@@ -3,13 +3,14 @@ import { db } from "../models/db.js";
 import { PointOfInterestDetails } from "../types/poi-types.js";
 import { PointOfInterestUpdateValidator } from "../models/joi-schemas.js";
 
-export const poiController = {
+export const editPOIController = {
   index: {
     handler: async function (request: Request, h: ResponseToolkit) {
       const { id } = request.params;
       const poi = await db.poiStore?.getPOIById(id);
 
       if (!poi) {
+        console.error("POI not found.");
         return h.redirect("/dashboard");
       }
 
@@ -37,6 +38,7 @@ export const poiController = {
       const poi = await db.poiStore?.getPOIById(id);
 
       if (!poi) {
+        console.error("POI not found.");
         return h.redirect("/dashboard");
       }
 

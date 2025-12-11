@@ -10,7 +10,7 @@ export const categoryController = {
       const category = await db.categoryStore?.getCategoryById(id);
 
       if (!category) {
-        console.error("Error: Category not found.");
+        console.error("Category not found.");
         return h.redirect("/dashboard");
       }
 
@@ -39,7 +39,7 @@ export const categoryController = {
       const category = await db.categoryStore?.getCategoryById(id);
 
       if (!category) {
-        console.error("Error: Category not found.");
+        console.error("Category not found.");
         return h.redirect("/dashboard");
       }
 
