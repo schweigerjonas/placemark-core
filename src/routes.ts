@@ -82,7 +82,7 @@ export const routes = [
   },
   {
     method: "GET" as const,
-    path: "/category/poi/{id}",
+    path: "/category/{categoryID}/poi/{id}",
     config: categoryController.deletePOI,
   },
 

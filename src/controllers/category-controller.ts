@@ -50,9 +50,9 @@ export const categoryController = {
   },
   deletePOI: {
     handler: async function (request: Request, h: ResponseToolkit) {
-      const { id } = request.params;
+      const { categoryID, id } = request.params;
       await db.poiStore?.deletePOIById(id);
-      return h.redirect("/dashboard");
+      return h.redirect(`/category/${categoryID}`);
     },
   },
 };
