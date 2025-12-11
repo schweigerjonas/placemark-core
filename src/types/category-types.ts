@@ -2,8 +2,8 @@ import { PointOfInterest } from "./poi-types";
 
 export type Category = {
   title: string;
-  userID: string;
   pois: PointOfInterest[];
+  userID: string;
   _id: string;
 };
 

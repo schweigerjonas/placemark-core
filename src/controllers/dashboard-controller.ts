@@ -22,6 +22,7 @@ export const dashboardController = {
       const categoryDetails = request.payload as CategoryDetails;
       const category = {
         title: categoryDetails.title,
+        pois: [],
         userID: loggedInUser._id,
       };
       await db.categoryStore?.addCategory(category);
