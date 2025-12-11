@@ -15,7 +15,7 @@ export interface UserStore {
 export interface CategoryStore {
   addCategory(category: CategoryDetails): Promise<Category>;
   getAllCategories(): Promise<Category[]>;
-  getUserCategories(userId: string): Promise<Category | null>;
+  getUserCategories(userID: string): Promise<Category[] | null>;
   getCategoryById(id: string): Promise<Category | null>;
   updateCategory(category: Category, updatedCategory: CategoryDetails): Promise<void>;
   deleteAllCategories(): Promise<void>;
