@@ -3,6 +3,7 @@ import { userApi } from "./api/user-api.js";
 import { accountController } from "./controllers/account-controller.js";
 import { categoryController } from "./controllers/category-controller.js";
 import { dashboardController } from "./controllers/dashboard-controller.js";
+import { editCategoryController } from "./controllers/edit-category-controller.js";
 import { editPOIController } from "./controllers/edit-poi-controller.js";
 import { profileController } from "./controllers/profile-controller.js";
 
@@ -84,6 +85,17 @@ export const routes = [
     method: "GET" as const,
     path: "/category/{categoryID}/poi/{id}",
     config: categoryController.deletePOI,
+  },
+
+  {
+    method: "GET" as const,
+    path: "/category/{id}/edit",
+    config: editCategoryController.index,
+  },
+  {
+    method: "POST" as const,
+    path: "/category/{id}/edit",
+    config: editCategoryController.updateCategory,
   },
 
   {

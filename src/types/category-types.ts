@@ -1,4 +1,4 @@
-import { PointOfInterest } from "./poi-types";
+import { PointOfInterest } from "./poi-types.js";
 
 export type Category = {
   title: string;

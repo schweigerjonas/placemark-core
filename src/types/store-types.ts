@@ -17,7 +17,7 @@ export interface CategoryStore {
   getAllCategories(): Promise<Category[]>;
   getUserCategories(userID: string): Promise<Category[] | null>;
   getCategoryById(id: string): Promise<Category | null>;
-  updateCategory(category: Category, updatedCategory: CategoryDetails): Promise<void>;
+  updateCategory(id: string, updatedCategory: CategoryDetails): Promise<void>;
   deleteAllCategories(): Promise<void>;
   deleteCategoryById(id: string): Promise<void>;
 }

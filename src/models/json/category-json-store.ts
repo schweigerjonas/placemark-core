@@ -34,13 +34,25 @@ export const categoryJsonStore: CategoryStore = {
     if (category === undefined) return null;
     const categoryPOIs = await poiJsonStore.getPOIsByCategoryId(category._id);
     if (categoryPOIs === null) return null;
-    category.pois = categoryPOIs;
-    return category;
+
+    const populatedCategory = {
+      ...category,
+      pois: categoryPOIs,
+    } as Category;
+
+    return populatedCategory;
   },
 
-  async updateCategory(category: Category, updatedCategory: CategoryDetails): Promise<void> {
-    category.title = updatedCategory.title || category.title;
-    await db.write();
+  async updateCategory(id: string, updatedCategory: CategoryDetails): Promise<void> {
+    await db.read();
+
+    const categoryToUpdate = db.data.categories.find((categ) => categ._id === id);
+
+    if (categoryToUpdate) {
+      categoryToUpdate.title = updatedCategory.title || categoryToUpdate.title;
+
+      await db.write();
+    }
   },
 
   async deleteAllCategories() {

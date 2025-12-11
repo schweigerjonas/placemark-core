@@ -1,0 +1,25 @@
+{{> menu}}
+
+<section class="section">
+  <div class="title">
+    {{category.title}}
+  </div>
+  <div class="box">
+    <p class="title is-4">Update Category</p>
+    <form action="/category/{{category._id}}/edit" method="POST">
+      {{> category-details}}
+      <div class="field is-horizontal">
+        <div class="field-label is-normal"></div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <button class="button is-primary">
+                <span>Submit Changes</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
