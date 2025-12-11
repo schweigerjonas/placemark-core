@@ -43,7 +43,7 @@ export const editPOIController = {
       }
 
       await db.poiStore?.updatePOI(poi, updatedPOIDetails);
-      return h.redirect(`/poi/${poi._id}`);
+      return h.redirect(`/poi/${poi._id}/edit`);
     },
   },
 };

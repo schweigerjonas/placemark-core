@@ -88,12 +88,12 @@ export const routes = [
 
   {
     method: "GET" as const,
-    path: "/poi/{id}",
+    path: "/poi/{id}/edit",
     config: editPOIController.index,
   },
   {
     method: "POST" as const,
-    path: "/poi/{id}",
+    path: "/poi/{id}/edit",
     config: editPOIController.updatePOI,
   },
 ];
