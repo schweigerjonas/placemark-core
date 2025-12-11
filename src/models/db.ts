@@ -1,4 +1,5 @@
-import { Db, PointOfInterestStore, UserStore } from "../types/store-types.js";
+import { CategoryStore, Db, PointOfInterestStore, UserStore } from "../types/store-types.js";
+import { categoryJsonStore } from "./json/category-json-store.js";
 import { poiJsonStore } from "./json/poi-json-store.js";
 import { userJsonStore } from "./json/user-json-store.js";
 
@@ -12,7 +13,7 @@ export const db: Db = {
       case "json":
       default:
         this.userStore = userJsonStore as UserStore;
-        // this.categoryStore = categoryJsonStore as CategoryStore;
+        this.categoryStore = categoryJsonStore as CategoryStore;
         this.poiStore = poiJsonStore as PointOfInterestStore;
         break;
     }
