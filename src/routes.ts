@@ -119,7 +119,7 @@ export const apiRoutes = [
   { method: "DELETE" as const, path: "/api/user", config: userApi.deleteAll },
   { method: "DELETE" as const, path: "/api/user/{id}", config: userApi.delete },
 
-  { method: "POST" as const, path: "/api/category", config: categoryApi.create },
+  { method: "POST" as const, path: "/api/user/{id}/category", config: categoryApi.create },
   { method: "GET" as const, path: "/api/category", config: categoryApi.findAll },
   { method: "GET" as const, path: "/api/category/{id}", config: categoryApi.find },
   { method: "PUT" as const, path: "/api/category/{id}", config: categoryApi.update },
