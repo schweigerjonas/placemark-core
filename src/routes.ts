@@ -1,3 +1,4 @@
+import { categoryApi } from "./api/category-api.js";
 import { poiApi } from "./api/poi-api.js";
 import { userApi } from "./api/user-api.js";
 import { accountController } from "./controllers/account-controller.js";
@@ -111,17 +112,24 @@ export const routes = [
 ];
 
 export const apiRoutes = [
-  { method: "POST" as const, path: "/api/user", config: userApi.create },
-  { method: "GET" as const, path: "/api/user", config: userApi.findAll },
-  { method: "GET" as const, path: "/api/user/{id}", config: userApi.find },
-  { method: "PUT" as const, path: "/api/user/{id}", config: userApi.update },
-  { method: "DELETE" as const, path: "/api/user", config: userApi.deleteAll },
-  { method: "DELETE" as const, path: "/api/user/{id}", config: userApi.delete },
+  { method: "POST" as const, path: "/api/users", config: userApi.create },
+  { method: "GET" as const, path: "/api/users", config: userApi.findAll },
+  { method: "GET" as const, path: "/api/users/{id}", config: userApi.find },
+  { method: "PUT" as const, path: "/api/users/{id}", config: userApi.update },
+  { method: "DELETE" as const, path: "/api/users", config: userApi.deleteAll },
+  { method: "DELETE" as const, path: "/api/users/{id}", config: userApi.delete },
 
-  { method: "POST" as const, path: "/api/category/{id}/poi", config: poiApi.create },
-  { method: "GET" as const, path: "/api/poi", config: poiApi.findAll },
-  { method: "GET" as const, path: "/api/poi/{id}", config: poiApi.find },
-  { method: "PUT" as const, path: "/api/poi/{id}", config: poiApi.update },
-  { method: "DELETE" as const, path: "/api/poi", config: poiApi.deleteAll },
-  { method: "DELETE" as const, path: "/api/poi/{id}", config: poiApi.delete },
+  { method: "POST" as const, path: "/api/users/{id}/categories", config: categoryApi.create },
+  { method: "GET" as const, path: "/api/categories", config: categoryApi.findAll },
+  { method: "GET" as const, path: "/api/categories/{id}", config: categoryApi.find },
+  { method: "PUT" as const, path: "/api/categories/{id}", config: categoryApi.update },
+  { method: "DELETE" as const, path: "/api/categories", config: categoryApi.deleteAll },
+  { method: "DELETE" as const, path: "/api/categories/{id}", config: categoryApi.delete },
+
+  { method: "POST" as const, path: "/api/categories/{id}/pois", config: poiApi.create },
+  { method: "GET" as const, path: "/api/pois", config: poiApi.findAll },
+  { method: "GET" as const, path: "/api/pois/{id}", config: poiApi.find },
+  { method: "PUT" as const, path: "/api/pois/{id}", config: poiApi.update },
+  { method: "DELETE" as const, path: "/api/pois", config: poiApi.deleteAll },
+  { method: "DELETE" as const, path: "/api/pois/{id}", config: poiApi.delete },
 ];
