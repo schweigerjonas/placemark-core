@@ -61,7 +61,7 @@ export const service = {
   },
 
   async deleteAllCategories() {
-    const res = await axios.delete(`${this.url}/api/categories`);
+    const res = await axios.delete(`${this.url}/api/category`);
     return res.data;
   },
 
