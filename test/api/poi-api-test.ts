@@ -5,21 +5,26 @@ import { neuschwansteinCastle, testPOIs } from "../fixtures.js";
 import { PointOfInterestDetails } from "../../src/types/poi-types.js";
 
 const pois = new Array(testPOIs.length);
+const TEST_CATEGORY_ID = "category_ID";
 
 suite("POI API tests", () => {
   setup(async () => {
     db.init("json");
 
+    await service.deleteAllUsers();
+    // TODO needs implementation
+    // await service.deleteAllCategories();
     await service.deleteAllPOIs();
+
     for (let i = 0; i < testPOIs.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
-      pois[i] = await service.createPOI(testPOIs[i]);
+      pois[i] = await service.createPOI(TEST_CATEGORY_ID, testPOIs[i]);
     }
   });
   teardown(async () => {});
 
   test("create POI", async () => {
-    const newPOI = await service.createPOI(neuschwansteinCastle);
+    const newPOI = await service.createPOI(TEST_CATEGORY_ID, neuschwansteinCastle);
     const newPOIDetails: PointOfInterestDetails = {
       name: newPOI.name,
       description: newPOI.description,
@@ -85,7 +90,7 @@ suite("POI API tests", () => {
   });
 
   test("delete POI", async () => {
-    const poi = await service.createPOI(neuschwansteinCastle);
+    const poi = await service.createPOI(TEST_CATEGORY_ID, neuschwansteinCastle);
     const response = await service.deletePOI(poi._id);
     assert.equal(response.status, 204);
     try {
