@@ -1,31 +1,46 @@
 import { assert } from "chai";
 import { db } from "../../src/models/db.js";
 import { assertSubset } from "../test-utils.js";
-import { neuschwansteinCastle, testPOIs } from "../fixtures.js";
+import { historicSites, maggie, neuschwansteinCastle, testPOIs } from "../fixtures.js";
 import { PointOfInterest, PointOfInterestDetails } from "../../src/types/poi-types.js";
+import { Category } from "../../src/types/category-types.js";
+import { User } from "../../src/types/user-types.js";
 
 suite("POI model tests", () => {
+  let user: User | null = null;
+  let category: Category | null = null;
   const pois: PointOfInterest[] = [];
 
   setup(async () => {
     db.init("json");
 
-    // check poiStore gets initialized
-    // enables use of non-null assertion operator in tests
-    if (!db.poiStore) {
-      throw new Error("db.poiStore not initialized. Setup failed.");
+    // check that stores get initialized
+    // enables non-null assertion in tests
+    if (!db.userStore || !db.categoryStore || !db.poiStore) {
+      throw new Error("Not all database stores initialized. Setup failed.");
     }
 
+    await db.userStore!.deleteAllUsers();
+    await db.categoryStore!.deleteAllCategories();
     await db.poiStore!.deleteAllPOIs();
+
+    user = await db.userStore!.addUser(maggie);
+    category = await db.categoryStore!.addCategory(user._id, historicSites);
 
     for (let i = 0; i < testPOIs.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
-      pois[i] = await db.poiStore!.addPOI(testPOIs[i]);
+      pois[i] = await db.poiStore!.addPOI(category._id, testPOIs[i]);
+    }
+
+    // check that user and category get initialized
+    // enables non-null assertion in all tests
+    if (!user || !category) {
+      throw new Error("Failed to assign user or category. Setup failed.");
     }
   });
 
   test("create POI", async () => {
-    const poi = await db.poiStore!.addPOI(neuschwansteinCastle);
+    const poi = await db.poiStore!.addPOI(category!._id, neuschwansteinCastle);
     assert.exists(poi);
     assertSubset(neuschwansteinCastle, poi);
   });
@@ -36,7 +51,7 @@ suite("POI model tests", () => {
   });
 
   test("get POI", async () => {
-    const poi = await db.poiStore!.addPOI(neuschwansteinCastle);
+    const poi = await db.poiStore!.addPOI(category!._id, neuschwansteinCastle);
     const returnedPOI = await db.poiStore!.getPOIById(poi._id);
     assert.deepEqual(returnedPOI, poi);
   });
@@ -60,7 +75,7 @@ suite("POI model tests", () => {
         lng: "11.0",
       },
     };
-    const poi = await db.poiStore!.addPOI(neuschwansteinCastle);
+    const poi = await db.poiStore!.addPOI(category!._id, neuschwansteinCastle);
     await db.poiStore!.updatePOI(poi, updatedDetails);
     const updatedPOI = await db.poiStore!.getPOIById(poi._id);
 
