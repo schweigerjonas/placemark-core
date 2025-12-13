@@ -1,18 +1,18 @@
 {{> menu active="dashboard"}}
 
 <section class="section">
-  {{> list-point-of-interest}}
+  {{> list-category}}
   <div class="box">
-    <p class="title is-4">Enter POI Details</p>
-    <form action="/category/poi" method="POST">
-      {{> point-of-interest-details}}
+    <p class="title is-4">Enter Category Details</p>
+    <form action="/dashboard/category" method="POST">
+      {{> category-details}}
       <div class="field is-horizontal">
         <div class="field-label is-normal"></div>
         <div class="field-body">
           <div class="field">
             <div class="control">
               <button class="button is-primary">
-                <span>Add POI</span>
+                <span>Add Category</span>
               </button>
             </div>
           </div>

@@ -1,3 +1,4 @@
+import { CategoryDetails } from "../src/types/category-types.js";
 import { PointOfInterestDetails } from "../src/types/poi-types.js";
 import { UserDetails } from "../src/types/user-types.js";
 
@@ -68,5 +69,25 @@ export const testPOIs: PointOfInterestDetails[] = [
       lat: "47.9990",
       lng: "7.8421",
     },
+  },
+];
+
+export const historicSites: CategoryDetails = {
+  title: "Historic Sites",
+  pois: [],
+};
+
+export const testCategories: CategoryDetails[] = [
+  {
+    title: "Nature & Outdoors",
+    pois: [],
+  },
+  {
+    title: "Museums & Galleries",
+    pois: [],
+  },
+  {
+    title: "Local Cuisine",
+    pois: [],
   },
 ];

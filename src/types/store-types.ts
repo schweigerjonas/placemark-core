@@ -1,3 +1,4 @@
+import { Category, CategoryDetails } from "./category-types.js";
 import { PointOfInterest, PointOfInterestDetails } from "./poi-types.js";
 import { User, UserDetails } from "./user-types.js";
 
@@ -11,9 +12,20 @@ export interface UserStore {
   deleteUserById(id: string): Promise<void>;
 }
 
+export interface CategoryStore {
+  addCategory(userID: string, category: CategoryDetails): Promise<Category>;
+  getAllCategories(): Promise<Category[]>;
+  getUserCategories(userID: string): Promise<Category[] | null>;
+  getCategoryById(id: string): Promise<Category | null>;
+  updateCategory(id: string, updatedCategory: CategoryDetails): Promise<void>;
+  deleteAllCategories(): Promise<void>;
+  deleteCategoryById(id: string): Promise<void>;
+}
+
 export interface PointOfInterestStore {
-  addPOI(poi: PointOfInterestDetails): Promise<PointOfInterest>;
+  addPOI(categoryID: string, poi: PointOfInterestDetails): Promise<PointOfInterest>;
   getAllPOIs(): Promise<PointOfInterest[]>;
+  getPOIsByCategoryId(id: string): Promise<PointOfInterest[] | null>;
   getPOIById(id: string): Promise<PointOfInterest | null>;
   updatePOI(poi: PointOfInterest, updatedPOI: PointOfInterestDetails): Promise<void>;
   deleteAllPOIs(): Promise<void>;
@@ -22,11 +34,13 @@ export interface PointOfInterestStore {
 
 export interface jsonDb {
   users: User[];
+  categories: Category[];
   pois: PointOfInterest[];
 }
 
 export type Db = {
   userStore: UserStore | null;
+  categoryStore: CategoryStore | null;
   poiStore: PointOfInterestStore | null;
   init(dbType: string): void;
 };

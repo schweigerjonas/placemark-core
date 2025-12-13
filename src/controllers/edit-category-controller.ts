@@ -1,9 +1,9 @@
 import { Request, ResponseToolkit } from "@hapi/hapi";
-import { PointOfInterestDetails } from "../types/poi-types.js";
 import { db } from "../models/db.js";
-import { PointOfInterestValidator } from "../models/joi-schemas.js";
+import { CategoryDetails } from "../types/category-types.js";
+import { CategoryUpdateSpec } from "../models/joi-schemas.js";
 
-export const categoryController = {
+export const editCategoryController = {
   index: {
     handler: async function (request: Request, h: ResponseToolkit) {
       const { id } = request.params;
@@ -18,24 +18,22 @@ export const categoryController = {
         title: category.title,
         category: category,
       };
-
-      return h.view("category", viewData);
+      return h.view("edit-category", viewData);
     },
   },
-  addPOI: {
+  updateCategory: {
     validate: {
-      payload: PointOfInterestValidator,
+      payload: CategoryUpdateSpec,
       options: {
         abortEarly: false,
-        convert: true,
       },
       failAction: function (request: Request, h: ResponseToolkit, error: any) {
-        return h.view("category", { title: "Sign up error", errors: error.details }).takeover().code(400);
+        return h.view("edit-category", { title: "Update category error", errors: error.details }).takeover().code(400);
       },
     },
     handler: async function (request: Request, h: ResponseToolkit) {
       const { id } = request.params;
-      const poi = request.payload as PointOfInterestDetails;
+      const updatedCategoryDetails = request.payload as CategoryDetails;
       const category = await db.categoryStore?.getCategoryById(id);
 
       if (!category) {
@@ -43,16 +41,8 @@ export const categoryController = {
         return h.redirect("/dashboard");
       }
 
-      await db.poiStore?.addPOI(category._id, poi);
-
-      return h.redirect(`/category/${id}`);
-    },
-  },
-  deletePOI: {
-    handler: async function (request: Request, h: ResponseToolkit) {
-      const { categoryID, id } = request.params;
-      await db.poiStore?.deletePOIById(id);
-      return h.redirect(`/category/${categoryID}`);
+      await db.categoryStore?.updateCategory(category._id, updatedCategoryDetails);
+      return h.redirect(`/category/${category._id}/edit`);
     },
   },
 };

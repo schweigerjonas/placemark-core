@@ -39,8 +39,8 @@ export const service = {
   },
 
   // POI API methods
-  async createPOI(poi: PointOfInterestDetails) {
-    const res = await axios.post(`${this.url}/api/poi`, poi);
+  async createPOI(categoryID: string, poi: PointOfInterestDetails) {
+    const res = await axios.post(`${this.url}/api/category/${categoryID}/poi`, poi);
     return res.data;
   },
 

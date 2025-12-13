@@ -20,6 +20,14 @@ export const UserUpdateSpec = Joi.object({
   password: Joi.string().allow("").optional(),
 });
 
+export const CategorySpec = Joi.object({
+  title: Joi.string().required(),
+});
+
+export const CategoryUpdateSpec = Joi.object({
+  title: Joi.string().allow("").optional(),
+});
+
 const LocationSpec = Joi.object({
   lat: Joi.number().min(-90).max(90).required(),
   lng: Joi.number().min(-180).max(180).required(),
@@ -34,7 +42,7 @@ const FlatPointOfInterestSpec = Joi.object({
 
 const FlatPointOfInterestUpdateSpec = Joi.object({
   name: Joi.string().allow("").optional(),
-  description: Joi.string().optional(),
+  description: Joi.string().allow("").optional(),
   lat: LocationSpec.extract("lat").allow("").empty("").optional(),
   lng: LocationSpec.extract("lng").allow("").empty("").optional(),
 });

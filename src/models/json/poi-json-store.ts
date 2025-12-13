@@ -4,11 +4,12 @@ import { PointOfInterestStore } from "../../types/store-types.js";
 import { db } from "./store-utils.js";
 
 export const poiJsonStore: PointOfInterestStore = {
-  async addPOI(poi: PointOfInterestDetails): Promise<PointOfInterest> {
+  async addPOI(categoryID: string, poi: PointOfInterestDetails): Promise<PointOfInterest> {
     await db.read();
 
     const newPOI: PointOfInterest = {
       ...poi,
+      categoryID: categoryID,
       _id: uuidv4(),
     };
 
@@ -20,6 +21,13 @@ export const poiJsonStore: PointOfInterestStore = {
   async getAllPOIs(): Promise<PointOfInterest[]> {
     await db.read();
     return db.data.pois;
+  },
+
+  async getPOIsByCategoryId(id: string): Promise<PointOfInterest[] | null> {
+    await db.read();
+    const categoryPOIs = db.data.pois.filter((poi) => poi.categoryID === id);
+    if (categoryPOIs === undefined) return null;
+    return categoryPOIs;
   },
 
   async getPOIById(id: string): Promise<PointOfInterest | null> {
