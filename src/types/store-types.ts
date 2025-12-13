@@ -13,7 +13,7 @@ export interface UserStore {
 }
 
 export interface CategoryStore {
-  addCategory(category: CategoryDetails): Promise<Category>;
+  addCategory(userID: string, category: CategoryDetails): Promise<Category>;
   getAllCategories(): Promise<Category[]>;
   getUserCategories(userID: string): Promise<Category[] | null>;
   getCategoryById(id: string): Promise<Category | null>;

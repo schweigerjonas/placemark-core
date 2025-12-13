@@ -5,10 +5,11 @@ import { Category, CategoryDetails } from "../../types/category-types.js";
 import { poiJsonStore } from "./poi-json-store.js";
 
 export const categoryJsonStore: CategoryStore = {
-  async addCategory(category: CategoryDetails): Promise<Category> {
+  async addCategory(userID: string, category: CategoryDetails): Promise<Category> {
     await db.read();
     const newCategory: Category = {
       ...category,
+      userID: userID,
       _id: uuidv4(),
     };
     db.data.categories.push(newCategory);

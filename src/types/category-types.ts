@@ -7,4 +7,4 @@ export type Category = {
   _id: string;
 };
 
-export type CategoryDetails = Omit<Category, "_id">;
+export type CategoryDetails = Omit<Category, "_id" | "userID">;

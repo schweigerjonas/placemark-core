@@ -11,4 +11,4 @@ export type PointOfInterest = {
   _id: string;
 };
 
-export type PointOfInterestDetails = Omit<PointOfInterest, "_id">;
+export type PointOfInterestDetails = Omit<PointOfInterest, "_id" | "categoryID">;

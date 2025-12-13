@@ -33,9 +33,8 @@ export const dashboardController = {
       const category = {
         title: categoryDetails.title,
         pois: [],
-        userID: loggedInUser._id,
       };
-      await db.categoryStore?.addCategory(category);
+      await db.categoryStore?.addCategory(loggedInUser._id, category);
       return h.redirect("/dashboard");
     },
   },
