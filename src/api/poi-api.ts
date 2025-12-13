@@ -8,7 +8,7 @@ export const poiApi = {
     auth: false,
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
-        const poi = await db.poiStore?.addPOI(request.payload as PointOfInterestDetails);
+        const poi = await db.poiStore?.addPOI(request.params.id, request.payload as PointOfInterestDetails);
         if (poi) {
           return h.response(poi).code(201);
         }

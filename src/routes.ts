@@ -118,7 +118,7 @@ export const apiRoutes = [
   { method: "DELETE" as const, path: "/api/user", config: userApi.deleteAll },
   { method: "DELETE" as const, path: "/api/user/{id}", config: userApi.delete },
 
-  { method: "POST" as const, path: "/api/poi", config: poiApi.create },
+  { method: "POST" as const, path: "/api/category/{id}/poi", config: poiApi.create },
   { method: "GET" as const, path: "/api/poi", config: poiApi.findAll },
   { method: "GET" as const, path: "/api/poi/{id}", config: poiApi.find },
   { method: "PUT" as const, path: "/api/poi/{id}", config: poiApi.update },
