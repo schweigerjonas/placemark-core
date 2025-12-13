@@ -1,3 +1,4 @@
+import { categoryApi } from "./api/category-api.js";
 import { poiApi } from "./api/poi-api.js";
 import { userApi } from "./api/user-api.js";
 import { accountController } from "./controllers/account-controller.js";
@@ -117,6 +118,13 @@ export const apiRoutes = [
   { method: "PUT" as const, path: "/api/user/{id}", config: userApi.update },
   { method: "DELETE" as const, path: "/api/user", config: userApi.deleteAll },
   { method: "DELETE" as const, path: "/api/user/{id}", config: userApi.delete },
+
+  { method: "POST" as const, path: "/api/category", config: categoryApi.create },
+  { method: "GET" as const, path: "/api/category", config: categoryApi.findAll },
+  { method: "GET" as const, path: "/api/category/{id}", config: categoryApi.find },
+  { method: "PUT" as const, path: "/api/category/{id}", config: categoryApi.update },
+  { method: "DELETE" as const, path: "/api/category", config: categoryApi.deleteAll },
+  { method: "DELETE" as const, path: "/api/category/{id}", config: categoryApi.delete },
 
   { method: "POST" as const, path: "/api/category/{id}/poi", config: poiApi.create },
   { method: "GET" as const, path: "/api/poi", config: poiApi.findAll },
