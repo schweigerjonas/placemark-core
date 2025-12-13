@@ -33,7 +33,7 @@ const FlatPointOfInterestSpec = Joi.object({
 });
 
 const FlatPointOfInterestUpdateSpec = Joi.object({
-  name: Joi.string().allow("").optional(),
+  name: Joi.string().optional(),
   description: Joi.string().optional(),
   lat: LocationSpec.extract("lat").allow("").empty("").optional(),
   lng: LocationSpec.extract("lng").allow("").empty("").optional(),
