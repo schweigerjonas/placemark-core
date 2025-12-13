@@ -3,6 +3,7 @@ import axios from "axios";
 import { url } from "../fixtures.js";
 import { UserDetails } from "../../src/types/user-types.js";
 import { PointOfInterestDetails } from "../../src/types/poi-types.js";
+import { CategoryDetails } from "../../src/types/category-types.js";
 
 export const service = {
   url: url,
@@ -35,6 +36,37 @@ export const service = {
 
   async deleteUser(id: string) {
     const res = await axios.delete(`${this.url}/api/user/${id}`);
+    return res;
+  },
+
+  // Category API methods
+  async createCategory(userID: string, category: CategoryDetails) {
+    const res = await axios.post(`${this.url}/api/user/${userID}/category`, category);
+    return res.data;
+  },
+
+  async getAllCategories() {
+    const res = await axios.get(`${this.url}/api/category`);
+    return res.data;
+  },
+
+  async getCategory(id: string) {
+    const res = await axios.get(`${this.url}/api/category/${id}`);
+    return res.data;
+  },
+
+  async updateCategory(id: string, categoryDetails: CategoryDetails) {
+    const res = await axios.put(`${this.url}/api/category/${id}`, categoryDetails);
+    return res.data;
+  },
+
+  async deleteAllCategories() {
+    const res = await axios.delete(`${this.url}/api/categories`);
+    return res.data;
+  },
+
+  async deleteCategory(id: string) {
+    const res = await axios.delete(`${this.url}/api/category/${id}`);
     return res;
   },
 
