@@ -20,6 +20,14 @@ export const UserUpdateSpec = Joi.object({
   password: Joi.string().allow("").optional(),
 });
 
+export const CategorySpec = Joi.object({
+  title: Joi.string().required(),
+});
+
+export const CategoryUpdateSpec = Joi.object({
+  title: Joi.string().allow("").optional(),
+});
+
 const LocationSpec = Joi.object({
   lat: Joi.number().min(-90).max(90).required(),
   lng: Joi.number().min(-180).max(180).required(),
