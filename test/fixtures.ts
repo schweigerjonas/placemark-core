@@ -32,7 +32,7 @@ export const testUsers: UserDetails[] = [
     lastName: "Simpson",
     email: "bart@simpson.com",
     password: "secret",
-    role: "user",
+    role: "admin",
   },
 ];
 
