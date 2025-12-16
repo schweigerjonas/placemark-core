@@ -62,6 +62,11 @@ export const routes = [
     path: "/admin/dashboard",
     config: adminController.index,
   },
+  {
+    method: "GET" as const,
+    path: "/admin/dashboard/{id}",
+    config: adminController.deleteUser,
+  },
 
   {
     method: "GET" as const,
