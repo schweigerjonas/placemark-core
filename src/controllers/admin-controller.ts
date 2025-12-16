@@ -4,6 +4,9 @@ import { Role, User } from "../types/user-types.js";
 
 export const adminController = {
   index: {
+    auth: {
+      scope: Role.Admin,
+    },
     handler: async function (request: Request, h: ResponseToolkit) {
       const loggedInUser = request.auth.credentials as User;
       const users = await db.userStore?.getAllUsers();
@@ -17,6 +20,9 @@ export const adminController = {
     },
   },
   deleteUser: {
+    auth: {
+      scope: Role.Admin,
+    },
     handler: async function (request: Request, h: ResponseToolkit) {
       const { id } = request.params;
       await db.userStore?.deleteUserById(id);

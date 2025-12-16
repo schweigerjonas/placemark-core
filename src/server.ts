@@ -10,6 +10,7 @@ import { fileURLToPath } from "url";
 import { apiRoutes, routes } from "./routes.js";
 import { db } from "./models/db.js";
 import { accountController } from "./controllers/account-controller.js";
+import { Role } from "./types/user-types.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -36,7 +37,9 @@ async function init() {
     redirectTo: "/",
     validate: accountController.validate,
   });
-  server.auth.default("session");
+  server.auth.default({
+    strategy: "session",
+  });
   server.views({
     engines: {
       hbs: Handlebars,
