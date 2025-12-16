@@ -2,6 +2,7 @@ import { categoryApi } from "./api/category-api.js";
 import { poiApi } from "./api/poi-api.js";
 import { userApi } from "./api/user-api.js";
 import { accountController } from "./controllers/account-controller.js";
+import { adminController } from "./controllers/admin-controller.js";
 import { categoryController } from "./controllers/category-controller.js";
 import { dashboardController } from "./controllers/dashboard-controller.js";
 import { editCategoryController } from "./controllers/edit-category-controller.js";
@@ -54,6 +55,17 @@ export const routes = [
     method: "GET" as const,
     path: "/profile/delete/{id}",
     config: profileController.delete,
+  },
+
+  {
+    method: "GET" as const,
+    path: "/admin/dashboard",
+    config: adminController.index,
+  },
+  {
+    method: "GET" as const,
+    path: "/admin/dashboard/{id}",
+    config: adminController.deleteUser,
   },
 
   {

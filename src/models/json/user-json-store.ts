@@ -9,7 +9,7 @@ export const userJsonStore: UserStore = {
 
     const newUser: User = {
       ...user,
-      role: "user",
+      role: user.role || "user",
       _id: uuidv4(),
     };
 
