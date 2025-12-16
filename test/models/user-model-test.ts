@@ -2,7 +2,7 @@ import { assert } from "chai";
 import { db } from "../../src/models/db.js";
 import { assertSubset } from "../test-utils.js";
 import { maggie, testUsers } from "../fixtures.js";
-import { User, UserDetails } from "../../src/types/user-types.js";
+import { Role, User, UserDetails } from "../../src/types/user-types.js";
 
 suite("User model tests", () => {
   const users: User[] = [];
@@ -63,7 +63,7 @@ suite("User model tests", () => {
       lastName: "SimpsonUpdated",
       email: "maggie@simpsonupdated.com",
       password: "secretupdated",
-      role: "admin",
+      role: Role.Admin,
     };
     const user = await db.userStore!.addUser(maggie);
     await db.userStore!.updateUser(user, updatedDetails);

@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { db } from "./store-utils.js";
-import { User, UserDetails } from "../../types/user-types.js";
+import { Role, User, UserDetails } from "../../types/user-types.js";
 import { UserStore } from "../../types/store-types.js";
 
 export const userJsonStore: UserStore = {
@@ -9,7 +9,7 @@ export const userJsonStore: UserStore = {
 
     const newUser: User = {
       ...user,
-      role: user.role || "user",
+      role: user.role || Role.User,
       _id: uuidv4(),
     };
 

@@ -1,6 +1,6 @@
 import { Request, ResponseToolkit } from "@hapi/hapi";
 import { db } from "../models/db.js";
-import { User } from "../types/user-types.js";
+import { Role, User } from "../types/user-types.js";
 
 export const adminController = {
   index: {
@@ -10,7 +10,7 @@ export const adminController = {
       const viewData = {
         title: "Admin Dashboard",
         user: loggedInUser,
-        isAdmin: loggedInUser!.role === "admin",
+        isAdmin: loggedInUser!.role === Role.Admin,
         users: users,
       };
       return h.view("admin-dashboard", viewData);

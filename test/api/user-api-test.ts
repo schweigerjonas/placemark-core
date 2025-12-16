@@ -3,7 +3,7 @@ import { maggie, testUsers } from "../fixtures.js";
 import { assertSubset } from "../test-utils.js";
 import { service } from "./service.js";
 import { db } from "../../src/models/db.js";
-import { UserDetails } from "../../src/types/user-types.js";
+import { Role, UserDetails } from "../../src/types/user-types.js";
 
 const users = new Array(testUsers.length);
 
@@ -58,7 +58,7 @@ suite("User API tests", () => {
       lastName: "SimpsonUpdated",
       email: "homer@simpsonupdated.com",
       password: "secretupdated",
-      role: "admin",
+      role: Role.Admin,
     };
     await service.updateUser(users[0]._id, updatedDetails);
     const updatedUser = await service.getUser(users[0]._id);

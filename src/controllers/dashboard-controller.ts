@@ -1,6 +1,6 @@
 import { Request, ResponseToolkit } from "@hapi/hapi";
 import { db } from "../models/db.js";
-import { User } from "../types/user-types.js";
+import { Role, User } from "../types/user-types.js";
 import { CategoryDetails } from "../types/category-types.js";
 import { CategorySpec } from "../models/joi-schemas.js";
 
@@ -13,7 +13,7 @@ export const dashboardController = {
       const viewData = {
         title: "Placemark Dashboard",
         user: loggedInUser,
-        isAdmin: user!.role === "admin",
+        isAdmin: user!.role === Role.Admin,
         categories: categories,
       };
       return h.view("dashboard", viewData);
