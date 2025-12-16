@@ -9,9 +9,11 @@ export const dashboardController = {
     handler: async function (request: Request, h: ResponseToolkit) {
       const loggedInUser = request.auth.credentials as User;
       const categories = await db.categoryStore?.getUserCategories(loggedInUser._id);
+      const user = await db.userStore?.getUserById(loggedInUser._id);
       const viewData = {
         title: "Placemark Dashboard",
         user: loggedInUser,
+        isAdmin: user!.role === "admin",
         categories: categories,
       };
       return h.view("dashboard", viewData);
