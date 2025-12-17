@@ -8,7 +8,11 @@ const userSchema = new Schema<User>({
   lastName: String,
   email: String,
   password: String,
-  role: Role,
+  role: {
+    type: String,
+    enum: Role,
+    default: Role.User,
+  },
 });
 
 export const UserMongoose = Mongoose.model("User", userSchema);
