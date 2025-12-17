@@ -47,7 +47,7 @@ suite("User model tests", () => {
   });
 
   test("get user fail", async () => {
-    const noUserWithId = await db.userStore!.getUserById("12345");
+    const noUserWithId = await db.userStore!.getUserById("123");
     assert.isNull(noUserWithId);
     const noUserWithEmail = await db.userStore!.getUserByEmail("wrong@email.com");
     assert.isNull(noUserWithEmail);

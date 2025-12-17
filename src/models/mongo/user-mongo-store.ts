@@ -1,8 +1,9 @@
 import { Types } from "mongoose";
 import { User, Role, UserDetails } from "../../types/user-types.js";
 import { UserMongoose } from "./user.js";
+import { UserStore } from "../../types/store-types.js";
 
-export const userMongoStore = {
+export const userMongoStore: UserStore = {
   async addUser(user: UserDetails): Promise<User | null> {
     user = {
       ...user,
@@ -53,7 +54,7 @@ export const userMongoStore = {
     try {
       await UserMongoose.deleteOne({ _id: id });
     } catch (err) {
-      console.log("bad id");
+      console.error("bad id");
     }
   },
 };

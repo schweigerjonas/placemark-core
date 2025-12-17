@@ -3,7 +3,7 @@ import { PointOfInterest, PointOfInterestDetails } from "./poi-types.js";
 import { User, UserDetails } from "./user-types.js";
 
 export interface UserStore {
-  addUser(user: UserDetails): Promise<User>;
+  addUser(user: UserDetails): Promise<User | null>;
   getAllUsers(): Promise<User[]>;
   getUserById(id: string): Promise<User | null>;
   getUserByEmail(email: string): Promise<User | null>;
@@ -13,7 +13,7 @@ export interface UserStore {
 }
 
 export interface CategoryStore {
-  addCategory(userID: string, category: CategoryDetails): Promise<Category>;
+  addCategory(userID: string, category: CategoryDetails): Promise<Category | null>;
   getAllCategories(): Promise<Category[]>;
   getUserCategories(userID: string): Promise<Category[] | null>;
   getCategoryById(id: string): Promise<Category | null>;
@@ -23,7 +23,7 @@ export interface CategoryStore {
 }
 
 export interface PointOfInterestStore {
-  addPOI(categoryID: string, poi: PointOfInterestDetails): Promise<PointOfInterest>;
+  addPOI(categoryID: string, poi: PointOfInterestDetails): Promise<PointOfInterest | null>;
   getAllPOIs(): Promise<PointOfInterest[]>;
   getPOIsByCategoryId(id: string): Promise<PointOfInterest[] | null>;
   getPOIById(id: string): Promise<PointOfInterest | null>;
