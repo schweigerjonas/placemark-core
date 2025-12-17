@@ -4,15 +4,14 @@ import { UserMongoose } from "./user.js";
 import { UserStore } from "../../types/store-types.js";
 
 export const userMongoStore: UserStore = {
-  async addUser(user: UserDetails): Promise<User | null> {
+  async addUser(user: UserDetails): Promise<User> {
     user = {
       ...user,
       role: user.role || Role.User,
     };
     const newUser = new UserMongoose(user);
     const userObj = await newUser.save();
-    const u = await this.getUserById(userObj._id);
-    return u;
+    return userObj.toObject();
   },
 
   async getAllUsers(): Promise<User[]> {

@@ -10,7 +10,7 @@ suite("Category model tests", () => {
   const categories: Category[] = [];
 
   setup(async () => {
-    db.init("json");
+    db.init("mongo");
 
     // check that stores get initialized
     // enables non-null assertion in tests
@@ -23,15 +23,15 @@ suite("Category model tests", () => {
 
     user = await db.userStore!.addUser(maggie);
 
-    for (let i = 0; i < testCategories.length; i += 1) {
-      // eslint-disable-next-line no-await-in-loop
-      categories[i] = await db.categoryStore!.addCategory(user._id, testCategories[i]);
-    }
-
-    // check that user and category get initialized
+    // check that user gets initialized
     // enables non-null assertion in all tests
     if (!user) {
       throw new Error("Failed to assign user or category. Setup failed.");
+    }
+
+    for (let i = 0; i < testCategories.length; i += 1) {
+      // eslint-disable-next-line no-await-in-loop
+      categories[i] = await db.categoryStore!.addCategory(user._id, testCategories[i]);
     }
   });
 
