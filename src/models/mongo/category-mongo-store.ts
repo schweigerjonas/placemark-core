@@ -2,6 +2,7 @@ import Mongoose, { Types } from "mongoose";
 import { CategoryDetails, Category } from "../../types/category-types.js";
 import { CategoryMongoose } from "./category.js";
 import { CategoryStore } from "../../types/store-types.js";
+import { poiMongoStore } from "./poi-mongo-store.js";
 
 export const categoryMongoStore: CategoryStore = {
   async addCategory(userID: string, categoryDetails: CategoryDetails): Promise<Category> {
@@ -29,9 +30,12 @@ export const categoryMongoStore: CategoryStore = {
       return null;
     }
     const category = await CategoryMongoose.findOne({ _id: id }).lean();
-    // if (category) {
-    //   category.pois = await poiMongoStore.getPOIsByCategoryId(category._id);
-    // }
+    if (category) {
+      const pois = await poiMongoStore.getPOIsByCategoryId(category._id);
+      if (pois) {
+        category.pois = pois;
+      }
+    }
     return category;
   },
 

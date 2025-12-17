@@ -13,7 +13,7 @@ suite("POI API tests", () => {
   let category: Category | null = null;
 
   setup(async () => {
-    db.init("json");
+    db.init("mongo");
 
     await service.deleteAllUsers();
     await service.deleteAllCategories();

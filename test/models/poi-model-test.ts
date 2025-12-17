@@ -12,7 +12,7 @@ suite("POI model tests", () => {
   const pois: PointOfInterest[] = [];
 
   setup(async () => {
-    db.init("json");
+    db.init("mongo");
 
     // check that stores get initialized
     // enables non-null assertion in tests
