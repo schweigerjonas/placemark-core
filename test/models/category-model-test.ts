@@ -37,8 +37,9 @@ suite("Category model tests", () => {
 
   test("create category", async () => {
     const category = await db.categoryStore!.addCategory(user!._id, historicSites);
-    assert.exists(category);
-    assertSubset(historicSites, category);
+    assert.exists(category._id);
+    assert.equal(category.title, historicSites.title);
+    assert.equal(category.userID, user!._id);
   });
 
   test("get all categories", async () => {

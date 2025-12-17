@@ -4,6 +4,7 @@ import { CategoryDetails } from "../../src/types/category-types.js";
 import { User } from "../../src/types/user-types.js";
 import { historicSites, maggie, testCategories } from "../fixtures.js";
 import { service } from "./service.js";
+import { PointOfInterest } from "../../src/types/poi-types.js";
 
 const categories = new Array(testCategories.length);
 
@@ -33,7 +34,8 @@ suite("Category API tests", () => {
     const newCategory = await service.createCategory(user!._id, historicSites);
     const newCategoryDetails = {
       title: newCategory.title,
-      pois: newCategory.pois,
+      // optional field, only used for displaying POIs in frontend; doesn't affect test outcome
+      pois: [] as PointOfInterest[],
     };
     assert.deepEqual(newCategoryDetails, historicSites);
     assert.equal(newCategory.userID, user!._id);

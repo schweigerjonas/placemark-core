@@ -25,14 +25,14 @@ export const categoryMongoStore: CategoryStore = {
   },
 
   async getCategoryById(id: string): Promise<Category | null> {
-    if (Mongoose.isValidObjectId(id)) {
-      const category = await CategoryMongoose.findOne({ _id: id }).lean();
-      // if (category) {
-      //   category.pois = await poiMongoStore.getPOIsByCategoryId(category._id);
-      // }
-      return category;
+    if (!Types.ObjectId.isValid(id)) {
+      return null;
     }
-    return null;
+    const category = await CategoryMongoose.findOne({ _id: id }).lean();
+    // if (category) {
+    //   category.pois = await poiMongoStore.getPOIsByCategoryId(category._id);
+    // }
+    return category;
   },
 
   async updateCategory(id: string, updatedCategory: CategoryDetails): Promise<void> {
