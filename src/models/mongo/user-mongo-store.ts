@@ -23,11 +23,8 @@ export const userMongoStore = {
     if (!Types.ObjectId.isValid(id)) {
       return null;
     }
-    if (id) {
-      const user = await UserMongoose.findOne({ _id: id }).lean();
-      return user;
-    }
-    return null;
+    const user = await UserMongoose.findOne({ _id: id }).lean();
+    return user;
   },
 
   async getUserByEmail(email: string): Promise<User | null> {
