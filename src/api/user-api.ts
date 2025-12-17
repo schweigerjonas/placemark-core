@@ -1,4 +1,5 @@
 import Boom from "@hapi/boom";
+import { Types } from "mongoose";
 import { Request, ResponseToolkit } from "@hapi/hapi";
 import { db } from "../models/db.js";
 import { UserDetails } from "../types/user-types.js";
@@ -35,6 +36,10 @@ export const userApi = {
   find: {
     auth: false,
     handler: async function (request: Request, h: ResponseToolkit) {
+      if (!Types.ObjectId.isValid(request.params.id)) {
+        return Boom.badRequest("No user with this id");
+      }
+
       try {
         const user = await db.userStore?.getUserById(request.params.id);
         if (!user) {
@@ -42,6 +47,7 @@ export const userApi = {
         }
         return user;
       } catch (err) {
+        console.error(err);
         return Boom.serverUnavailable("No user with this id");
       }
     },

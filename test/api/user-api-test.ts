@@ -9,7 +9,7 @@ const users = new Array(testUsers.length);
 
 suite("User API tests", () => {
   setup(async () => {
-    db.init("json");
+    db.init("mongo");
 
     await service.deleteAllUsers();
     for (let i = 0; i < testUsers.length; i += 1) {
@@ -36,7 +36,7 @@ suite("User API tests", () => {
       assert.fail("Should not return a response");
     } catch (error: any) {
       assert(error.response.data.message === "No user with this id");
-      assert.equal(error.response.data.statusCode, 404);
+      assert.equal(error.response.data.statusCode, 400);
     }
   });
 

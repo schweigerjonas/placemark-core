@@ -1,16 +1,17 @@
+import { Types } from "mongoose";
 import { User, Role, UserDetails } from "../../types/user-types.js";
 import { UserMongoose } from "./user.js";
 
 export const userMongoStore = {
-  async addUser(user: UserDetails): Promise<User> {
+  async addUser(user: UserDetails): Promise<User | null> {
     user = {
       ...user,
       role: user.role || Role.User,
     };
     const newUser = new UserMongoose(user);
     const userObj = await newUser.save();
-
-    return userObj;
+    const u = await this.getUserById(userObj._id);
+    return u;
   },
 
   async getAllUsers(): Promise<User[]> {
@@ -19,6 +20,9 @@ export const userMongoStore = {
   },
 
   async getUserById(id: string): Promise<User | null> {
+    if (!Types.ObjectId.isValid(id)) {
+      return null;
+    }
     if (id) {
       const user = await UserMongoose.findOne({ _id: id }).lean();
       return user;
