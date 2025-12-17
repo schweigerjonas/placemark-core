@@ -2,6 +2,7 @@ import { CategoryStore, Db, PointOfInterestStore, UserStore } from "../types/sto
 import { categoryJsonStore } from "./json/category-json-store.js";
 import { poiJsonStore } from "./json/poi-json-store.js";
 import { userJsonStore } from "./json/user-json-store.js";
+import { connectMongo } from "./mongo/connect.js";
 import { userMongoStore } from "./mongo/user-mongo-store.js";
 
 export const db: Db = {
@@ -12,7 +13,7 @@ export const db: Db = {
   init(dbType: string) {
     switch (dbType) {
       case "mongo":
-        this.userStore = userMongoStore;
+        connectMongo(db);
         break;
       case "json":
       default:
