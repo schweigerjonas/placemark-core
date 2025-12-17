@@ -1,9 +1,10 @@
+import { Types } from "mongoose";
 import { PointOfInterest } from "./poi-types.js";
 
 export type Category = {
   title: string;
   pois: PointOfInterest[];
-  userID: string;
+  userID: Types.ObjectId | string;
   _id: string;
 };
 
