@@ -2,6 +2,7 @@ import * as dotenv from "dotenv";
 import Mongoose from "mongoose";
 import { Db } from "../../types/store-types.js";
 import { userMongoStore } from "./user-mongo-store.js";
+import { categoryMongoStore } from "./category-mongo-store.js";
 
 export function connectMongo(db: Db) {
   dotenv.config({ quiet: true });
@@ -12,6 +13,7 @@ export function connectMongo(db: Db) {
   const mongoDB = Mongoose.connection;
 
   db.userStore = userMongoStore;
+  db.categoryStore = categoryMongoStore;
 
   mongoDB.on("error", (err) => {
     console.log(`database connection error: ${err}`);
