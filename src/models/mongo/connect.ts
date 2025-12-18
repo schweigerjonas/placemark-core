@@ -6,6 +6,10 @@ import { categoryMongoStore } from "./category-mongo-store.js";
 import { poiMongoStore } from "./poi-mongo-store.js";
 
 export function connectMongo(db: Db) {
+  if (Mongoose.connection.readyState !== 0) {
+    return;
+  }
+
   dotenv.config({ quiet: true });
 
   Mongoose.set("strictQuery", true);
@@ -21,7 +25,7 @@ export function connectMongo(db: Db) {
     console.log(`database connection error: ${err}`);
   });
 
-  mongoDB.on("disconnected", () => {
+  mongoDB.once("disconnected", () => {
     console.log("database disconnected");
   });
 

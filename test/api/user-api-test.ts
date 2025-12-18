@@ -8,9 +8,11 @@ import { Role, UserDetails } from "../../src/types/user-types.js";
 const users = new Array(testUsers.length);
 
 suite("User API tests", () => {
-  setup(async () => {
+  suiteSetup(async () => {
     db.init("mongo");
+  });
 
+  setup(async () => {
     await service.deleteAllUsers();
     for (let i = 0; i < testUsers.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop

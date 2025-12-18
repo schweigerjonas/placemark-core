@@ -12,9 +12,11 @@ suite("POI API tests", () => {
   let user: User | null = null;
   let category: Category | null = null;
 
-  setup(async () => {
+  suiteSetup(async () => {
     db.init("mongo");
+  });
 
+  setup(async () => {
     await service.deleteAllUsers();
     await service.deleteAllCategories();
     await service.deleteAllPOIs();

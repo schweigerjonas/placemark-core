@@ -11,9 +11,11 @@ suite("POI model tests", () => {
   let category: Category | null = null;
   const pois: PointOfInterest[] = [];
 
-  setup(async () => {
+  suiteSetup(async () => {
     db.init("mongo");
+  });
 
+  setup(async () => {
     // check that stores get initialized
     // enables non-null assertion in tests
     if (!db.userStore || !db.categoryStore || !db.poiStore) {

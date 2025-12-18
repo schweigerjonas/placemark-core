@@ -1,4 +1,3 @@
-import EventEmitter from "events";
 import { assert } from "chai";
 import { db } from "../../src/models/db.js";
 import { assertSubset } from "../test-utils.js";
@@ -8,9 +7,11 @@ import { Role, User, UserDetails } from "../../src/types/user-types.js";
 suite("User model tests", () => {
   const users: User[] = [];
 
-  setup(async () => {
+  suiteSetup(async () => {
     db.init("mongo");
+  });
 
+  setup(async () => {
     // check userStore gets initialized
     // enables use of non-null assertion operator in tests
     if (!db.userStore) {
@@ -23,8 +24,6 @@ suite("User model tests", () => {
       // eslint-disable-next-line no-await-in-loop
       users[i] = await db.userStore!.addUser(testUsers[i]);
     }
-
-    EventEmitter.setMaxListeners(25);
   });
 
   test("create user", async () => {

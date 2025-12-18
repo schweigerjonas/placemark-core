@@ -4,7 +4,6 @@ import { CategoryDetails } from "../../src/types/category-types.js";
 import { User } from "../../src/types/user-types.js";
 import { historicSites, maggie, testCategories } from "../fixtures.js";
 import { service } from "./service.js";
-import { PointOfInterest } from "../../src/types/poi-types.js";
 import { assertSubset } from "../test-utils.js";
 
 const categories = new Array(testCategories.length);
@@ -12,9 +11,11 @@ const categories = new Array(testCategories.length);
 suite("Category API tests", () => {
   let user: User | null = null;
 
-  setup(async () => {
+  suiteSetup(async () => {
     db.init("mongo");
+  });
 
+  setup(async () => {
     await service.deleteAllUsers();
     await service.deleteAllCategories();
 

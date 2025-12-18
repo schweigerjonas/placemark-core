@@ -9,9 +9,11 @@ suite("Category model tests", () => {
   let user: User | null = null;
   const categories: Category[] = [];
 
-  setup(async () => {
+  suiteSetup(async () => {
     db.init("mongo");
+  });
 
+  setup(async () => {
     // check that stores get initialized
     // enables non-null assertion in tests
     if (!db.userStore || !db.categoryStore) {
