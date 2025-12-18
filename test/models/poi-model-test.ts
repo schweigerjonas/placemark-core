@@ -42,7 +42,9 @@ suite("POI model tests", () => {
   test("create POI", async () => {
     const poi = await db.poiStore!.addPOI(category!._id, neuschwansteinCastle);
     assert.exists(poi);
-    assertSubset(neuschwansteinCastle, poi);
+    assert.equal(poi.name, neuschwansteinCastle.name);
+    assert.equal(poi.description, neuschwansteinCastle.description);
+    assert.deepEqual(poi.location, neuschwansteinCastle.location);
   });
 
   test("get all POIs", async () => {

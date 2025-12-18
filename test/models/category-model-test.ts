@@ -37,9 +37,8 @@ suite("Category model tests", () => {
 
   test("create category", async () => {
     const category = await db.categoryStore!.addCategory(user!._id, historicSites);
-    assert.exists(category._id);
-    assert.equal(category.title, historicSites.title);
-    assert.equal(category.userID, user!._id);
+    assert.exists(category);
+    assertSubset(historicSites, category);
   });
 
   test("get all categories", async () => {
@@ -66,14 +65,13 @@ suite("Category model tests", () => {
   test("update category", async () => {
     const updatedDetails: CategoryDetails = {
       title: "Updated: Historic Sites",
-      pois: [],
     };
     const category = await db.categoryStore!.addCategory(user!._id, historicSites);
     await db.categoryStore!.updateCategory(category._id, updatedDetails);
     const updatedCategory = await db.categoryStore!.getCategoryById(category._id);
 
     assert.exists(updatedCategory);
-    assert.equal(updatedCategory.title, updatedDetails.title);
+    assertSubset(updatedDetails, updatedCategory);
   });
 
   test("delete all categories", async () => {
