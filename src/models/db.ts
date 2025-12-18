@@ -3,7 +3,6 @@ import { categoryJsonStore } from "./json/category-json-store.js";
 import { poiJsonStore } from "./json/poi-json-store.js";
 import { userJsonStore } from "./json/user-json-store.js";
 import { connectMongo } from "./mongo/connect.js";
-import { userMongoStore } from "./mongo/user-mongo-store.js";
 
 export const db: Db = {
   userStore: null,

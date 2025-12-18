@@ -1,6 +1,5 @@
 import { assert } from "chai";
 import { db } from "../../src/models/db.js";
-import { assertSubset } from "../test-utils.js";
 import { historicSites, maggie, neuschwansteinCastle, testPOIs } from "../fixtures.js";
 import { PointOfInterest, PointOfInterestDetails } from "../../src/types/poi-types.js";
 import { Category } from "../../src/types/category-types.js";
