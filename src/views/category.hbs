@@ -1,27 +1,32 @@
 {{> menu}}
 
-<section class="section">
-  <div class="title">
-    {{category.title}}
-  </div>
-  {{> list-point-of-interest}}
-  <div class="box">
-    <p class="title is-4">Enter POI Details</p>
-    <form action="/category/{{category._id}}/poi" method="POST">
-      {{> point-of-interest-details}}
-      <div class="field is-horizontal">
-        <div class="field-label is-normal"></div>
-        <div class="field-body">
-          <div class="field">
-            <div class="control">
-              <button class="button is-primary">
-                <span>Add POI</span>
-              </button>
+<section class="section columns is-vcentered">
+  <div class="column has-text-centered">
+    <div class="title">
+      {{category.title}}
+    </div>
+    {{> list-point-of-interest}}
+    <div class="box">
+      <p class="title is-4">Enter POI Details</p>
+      <form action="/category/{{category._id}}/poi" method="POST">
+        {{> point-of-interest-details}}
+        <div class="field is-horizontal">
+          <div class="field-label is-normal"></div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <button class="button is-primary">
+                  <span>Add POI</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
+  </div>
+  <div class="column">
+    {{> category-image}}
   </div>
 </section>
 
