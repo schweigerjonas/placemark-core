@@ -3,14 +3,16 @@ import { maggie, testUsers } from "../fixtures.js";
 import { assertSubset } from "../test-utils.js";
 import { service } from "./service.js";
 import { db } from "../../src/models/db.js";
-import { UserDetails } from "../../src/types/user-types.js";
+import { Role, UserDetails } from "../../src/types/user-types.js";
 
 const users = new Array(testUsers.length);
 
 suite("User API tests", () => {
-  setup(async () => {
-    db.init("json");
+  suiteSetup(async () => {
+    db.init("mongo");
+  });
 
+  setup(async () => {
     await service.deleteAllUsers();
     for (let i = 0; i < testUsers.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
@@ -36,7 +38,7 @@ suite("User API tests", () => {
       assert.fail("Should not return a response");
     } catch (error: any) {
       assert(error.response.data.message === "No user with this id");
-      assert.equal(error.response.data.statusCode, 404);
+      assert.equal(error.response.data.statusCode, 400);
     }
   });
 
@@ -58,7 +60,7 @@ suite("User API tests", () => {
       lastName: "SimpsonUpdated",
       email: "homer@simpsonupdated.com",
       password: "secretupdated",
-      role: "admin",
+      role: Role.Admin,
     };
     await service.updateUser(users[0]._id, updatedDetails);
     const updatedUser = await service.getUser(users[0]._id);

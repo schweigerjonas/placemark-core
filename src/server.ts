@@ -36,7 +36,9 @@ async function init() {
     redirectTo: "/",
     validate: accountController.validate,
   });
-  server.auth.default("session");
+  server.auth.default({
+    strategy: "session",
+  });
   server.views({
     engines: {
       hbs: Handlebars,
@@ -49,7 +51,7 @@ async function init() {
     isCached: false,
   });
   server.validator(Joi);
-  db.init("json");
+  db.init("mongo");
   server.route(routes);
   server.route(apiRoutes);
 

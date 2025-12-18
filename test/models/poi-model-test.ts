@@ -1,6 +1,5 @@
 import { assert } from "chai";
 import { db } from "../../src/models/db.js";
-import { assertSubset } from "../test-utils.js";
 import { historicSites, maggie, neuschwansteinCastle, testPOIs } from "../fixtures.js";
 import { PointOfInterest, PointOfInterestDetails } from "../../src/types/poi-types.js";
 import { Category } from "../../src/types/category-types.js";
@@ -11,9 +10,11 @@ suite("POI model tests", () => {
   let category: Category | null = null;
   const pois: PointOfInterest[] = [];
 
-  setup(async () => {
-    db.init("json");
+  suiteSetup(async () => {
+    db.init("mongo");
+  });
 
+  setup(async () => {
     // check that stores get initialized
     // enables non-null assertion in tests
     if (!db.userStore || !db.categoryStore || !db.poiStore) {
@@ -42,7 +43,9 @@ suite("POI model tests", () => {
   test("create POI", async () => {
     const poi = await db.poiStore!.addPOI(category!._id, neuschwansteinCastle);
     assert.exists(poi);
-    assertSubset(neuschwansteinCastle, poi);
+    assert.equal(poi.name, neuschwansteinCastle.name);
+    assert.equal(poi.description, neuschwansteinCastle.description);
+    assert.deepEqual(poi.location, neuschwansteinCastle.location);
   });
 
   test("get all POIs", async () => {

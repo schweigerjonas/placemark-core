@@ -9,9 +9,11 @@ suite("Category model tests", () => {
   let user: User | null = null;
   const categories: Category[] = [];
 
-  setup(async () => {
-    db.init("json");
+  suiteSetup(async () => {
+    db.init("mongo");
+  });
 
+  setup(async () => {
     // check that stores get initialized
     // enables non-null assertion in tests
     if (!db.userStore || !db.categoryStore) {
@@ -23,15 +25,15 @@ suite("Category model tests", () => {
 
     user = await db.userStore!.addUser(maggie);
 
-    for (let i = 0; i < testCategories.length; i += 1) {
-      // eslint-disable-next-line no-await-in-loop
-      categories[i] = await db.categoryStore!.addCategory(user._id, testCategories[i]);
-    }
-
-    // check that user and category get initialized
+    // check that user gets initialized
     // enables non-null assertion in all tests
     if (!user) {
       throw new Error("Failed to assign user or category. Setup failed.");
+    }
+
+    for (let i = 0; i < testCategories.length; i += 1) {
+      // eslint-disable-next-line no-await-in-loop
+      categories[i] = await db.categoryStore!.addCategory(user._id, testCategories[i]);
     }
   });
 
@@ -65,14 +67,13 @@ suite("Category model tests", () => {
   test("update category", async () => {
     const updatedDetails: CategoryDetails = {
       title: "Updated: Historic Sites",
-      pois: [],
     };
     const category = await db.categoryStore!.addCategory(user!._id, historicSites);
     await db.categoryStore!.updateCategory(category._id, updatedDetails);
     const updatedCategory = await db.categoryStore!.getCategoryById(category._id);
 
     assert.exists(updatedCategory);
-    assert.equal(updatedCategory.title, updatedDetails.title);
+    assertSubset(updatedDetails, updatedCategory);
   });
 
   test("delete all categories", async () => {

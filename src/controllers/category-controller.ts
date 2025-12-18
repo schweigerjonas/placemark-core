@@ -14,9 +14,12 @@ export const categoryController = {
         return h.redirect("/dashboard");
       }
 
+      const categoryPOIs = await db.poiStore?.getPOIsByCategoryId(category._id);
+
       const viewData = {
         title: category.title,
         category: category,
+        pois: categoryPOIs,
       };
 
       return h.view("category", viewData);

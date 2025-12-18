@@ -1,6 +1,6 @@
 import { CategoryDetails } from "../src/types/category-types.js";
 import { PointOfInterestDetails } from "../src/types/poi-types.js";
-import { UserDetails } from "../src/types/user-types.js";
+import { Role, UserDetails } from "../src/types/user-types.js";
 
 export const url = "http://localhost:3000";
 
@@ -9,7 +9,7 @@ export const maggie: UserDetails = {
   lastName: "Simpson",
   email: "maggie@simpson.com",
   password: "secret",
-  role: "user",
+  role: Role.User,
 };
 
 export const testUsers: UserDetails[] = [
@@ -18,21 +18,21 @@ export const testUsers: UserDetails[] = [
     lastName: "Simpson",
     email: "homer@simpson.com",
     password: "secret",
-    role: "user",
+    role: Role.User,
   },
   {
     firstName: "Marge",
     lastName: "Simpson",
     email: "marge@simpson.com",
     password: "secret",
-    role: "user",
+    role: Role.User,
   },
   {
     firstName: "Bart",
     lastName: "Simpson",
     email: "bart@simpson.com",
     password: "secret",
-    role: "admin",
+    role: Role.Admin,
   },
 ];
 
@@ -74,20 +74,16 @@ export const testPOIs: PointOfInterestDetails[] = [
 
 export const historicSites: CategoryDetails = {
   title: "Historic Sites",
-  pois: [],
 };
 
 export const testCategories: CategoryDetails[] = [
   {
     title: "Nature & Outdoors",
-    pois: [],
   },
   {
     title: "Museums & Galleries",
-    pois: [],
   },
   {
     title: "Local Cuisine",
-    pois: [],
   },
 ];

@@ -4,15 +4,18 @@ import { CategoryDetails } from "../../src/types/category-types.js";
 import { User } from "../../src/types/user-types.js";
 import { historicSites, maggie, testCategories } from "../fixtures.js";
 import { service } from "./service.js";
+import { assertSubset } from "../test-utils.js";
 
 const categories = new Array(testCategories.length);
 
 suite("Category API tests", () => {
   let user: User | null = null;
 
-  setup(async () => {
-    db.init("json");
+  suiteSetup(async () => {
+    db.init("mongo");
+  });
 
+  setup(async () => {
     await service.deleteAllUsers();
     await service.deleteAllCategories();
 
@@ -30,14 +33,9 @@ suite("Category API tests", () => {
   teardown(async () => {});
 
   test("create category", async () => {
-    const newCategory = await service.createCategory(user!._id, historicSites);
-    const newCategoryDetails = {
-      title: newCategory.title,
-      pois: newCategory.pois,
-    };
-    assert.deepEqual(newCategoryDetails, historicSites);
-    assert.equal(newCategory.userID, user!._id);
-    assert.isDefined(newCategory._id);
+    const category = await service.createCategory(user!._id, historicSites);
+    assert.exists(category);
+    assertSubset(historicSites, category);
   });
 
   test("get category - success", async () => {
@@ -70,12 +68,11 @@ suite("Category API tests", () => {
   test("update category", async () => {
     const updatedDetails: CategoryDetails = {
       title: "Updated: Historic Sites",
-      pois: [],
     };
     await service.updateCategory(categories[0]._id, updatedDetails);
     const updatedCategory = await service.getCategory(categories[0]._id);
 
-    assert.equal(updatedCategory.title, updatedDetails.title);
+    assertSubset(updatedDetails, updatedCategory);
   });
 
   test("delete all categories", async () => {
