@@ -74,20 +74,16 @@ export const testPOIs: PointOfInterestDetails[] = [
 
 export const historicSites: CategoryDetails = {
   title: "Historic Sites",
-  pois: [],
 };
 
 export const testCategories: CategoryDetails[] = [
   {
     title: "Nature & Outdoors",
-    pois: [],
   },
   {
     title: "Museums & Galleries",
-    pois: [],
   },
   {
     title: "Local Cuisine",
-    pois: [],
   },
 ];

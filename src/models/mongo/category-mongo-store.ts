@@ -1,4 +1,4 @@
-import Mongoose, { Types } from "mongoose";
+import { Types } from "mongoose";
 import { CategoryDetails, Category } from "../../types/category-types.js";
 import { CategoryMongoose } from "./category.js";
 import { CategoryStore } from "../../types/store-types.js";
@@ -31,12 +31,9 @@ export const categoryMongoStore: CategoryStore = {
     }
     const category = await CategoryMongoose.findOne({ _id: id }).lean();
     if (category) {
-      const pois = await poiMongoStore.getPOIsByCategoryId(category._id);
-      if (pois) {
-        category.pois = pois;
-      }
+      return category;
     }
-    return category;
+    return null;
   },
 
   async updateCategory(id: string, updatedCategory: CategoryDetails): Promise<void> {

@@ -2,7 +2,6 @@ import { v4 as uuidv4 } from "uuid";
 import { db } from "./store-utils.js";
 import { CategoryStore } from "../../types/store-types.js";
 import { Category, CategoryDetails } from "../../types/category-types.js";
-import { poiJsonStore } from "./poi-json-store.js";
 
 export const categoryJsonStore: CategoryStore = {
   async addCategory(userID: string, category: CategoryDetails): Promise<Category> {
@@ -33,15 +32,7 @@ export const categoryJsonStore: CategoryStore = {
     await db.read();
     const category = db.data.categories.find((categ) => categ._id === id);
     if (category === undefined) return null;
-    const categoryPOIs = await poiJsonStore.getPOIsByCategoryId(category._id);
-    if (categoryPOIs === null) return null;
-
-    const populatedCategory = {
-      ...category,
-      pois: categoryPOIs,
-    } as Category;
-
-    return populatedCategory;
+    return category;
   },
 
   async updateCategory(id: string, updatedCategory: CategoryDetails): Promise<void> {
