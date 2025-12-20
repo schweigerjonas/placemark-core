@@ -2,6 +2,10 @@ import { Types } from "mongoose";
 
 export type Category = {
   title: string;
+  img: {
+    url: string;
+    publicID: string;
+  };
   userID: Types.ObjectId | string;
   _id: string;
 };

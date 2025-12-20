@@ -29,14 +29,26 @@ export const seedData = {
     _model: "Category",
     sites: {
       title: "Historic Sites",
+      img: {
+        url: "http://res.cloudinary.com/dif8elawf/image/upload/v1766220295/xyhpmoohwdhnrbxqtojd.png",
+        publicID: "v1766220295",
+      },
       userID: "->users.homer",
     },
     nature: {
       title: "Nature & Outdoors",
+      img: {
+        url: "http://res.cloudinary.com/dif8elawf/image/upload/v1766220306/cn7ypvwvfbjnnu3ddgoz.png",
+        publicID: "v1766220306",
+      },
       userID: "->users.homer",
     },
     routes: {
       title: "Scenic Routes",
+      img: {
+        url: "http://res.cloudinary.com/dif8elawf/image/upload/v1766220316/qg7gtohkxouyee9g04en.png",
+        publicID: "v1766220316",
+      },
       userID: "->users.homer",
     },
   },

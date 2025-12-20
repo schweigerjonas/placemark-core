@@ -121,6 +121,17 @@ export const routes = [
     path: "/poi/{id}/edit",
     config: editPOIController.updatePOI,
   },
+
+  {
+    method: "POST" as const,
+    path: "/category/{id}/img",
+    config: categoryController.uploadImage,
+  },
+  {
+    method: "GET" as const,
+    path: "/category/{id}/img",
+    config: categoryController.deleteImage,
+  },
 ];
 
 export const apiRoutes = [
