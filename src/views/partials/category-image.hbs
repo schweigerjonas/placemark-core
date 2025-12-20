@@ -1,14 +1,16 @@
 <div class="card">
-  <div class="card-image">
-    <figure class="image is-256x256">
-      <img src={{category.img}} />
-    </figure>
-  </div>
+  {{#if category.img.url}}
+    <div class="card-image">
+      <figure class="image is-square" style="max-height: 512px">
+        <img src={{category.img.url}} />
+      </figure>
+    </div>
+  {{/if}}
   <div class="card-content">
     <form action="/category/{{category._id}}/img" method="POST" enctype="multipart/form-data">
       <div id="file-select" class="file has-name is-fullwidth">
-        <label class="file-label">
-          <input class="file-input" name="imagefile" type="file" name="resume" accept="image/png, image/jpeg" />
+        <label class="file-label mr-2">
+          <input class="file-input" name="imageFile" type="file" name="resume" accept="image/png, image/jpeg" />
           <span class="file-cta">
             <span class="file-icon">
               <i class="fas fa-upload"></i>
@@ -22,6 +24,13 @@
         <button type="submit" class="button is-info">Upload</button>
       </div>
     </form>
+    {{#if category.img.url}}
+      <a href="/category/{{category._id}}/img" class="button">
+        <span class="icon is-small">
+          <i class="fas fa-trash"></i>
+        </span>
+      </a>
+    {{/if}}
   </div>
 </div>
 

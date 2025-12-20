@@ -22,13 +22,13 @@
         </a>
       </div>
 
-      <div class="column is-6">
-        <figure class="image">
-          {{#if img}}
-            <img src={{img}} />
-          {{/if}}
-        </figure>
-      </div>
+      {{#if img.url}}
+        <div class="column is-6">
+          <figure class="image is-square" style="max-height: 512px">
+            <img src={{img.url}} />
+          </figure>
+        </div>
+      {{/if}}
     </div>
   </div>
 {{/each}}
