@@ -32,6 +32,12 @@ export interface PointOfInterestStore {
   deletePOIById(id: string): Promise<void>;
 }
 
+export interface ImageStore {
+  getAllImages(): Promise<any>;
+  uploadImage(imageFile: any): Promise<any>;
+  deleteImage(imgID: string): Promise<void>;
+}
+
 export interface jsonDb {
   users: User[];
   categories: Category[];

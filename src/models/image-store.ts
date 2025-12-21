@@ -1,6 +1,7 @@
 import * as cloudinary from "cloudinary";
 import dotenv from "dotenv";
 import { writeFileSync } from "fs";
+import { ImageStore } from "../types/store-types.js";
 
 dotenv.config({ quiet: true });
 
@@ -11,7 +12,7 @@ const credentials = {
 };
 cloudinary.v2.config(credentials);
 
-export const imageStore = {
+export const imageStore: ImageStore = {
   getAllImages: async function () {
     const result = await cloudinary.v2.api.resources();
     return result.resources;
