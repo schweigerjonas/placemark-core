@@ -1,16 +1,15 @@
 import { assert } from "chai";
 import { db } from "../../src/models/db.js";
-import { assertSubset } from "../test-utils.js";
 import { historicSites, maggie, testCategories } from "../fixtures.js";
-import { Category, CategoryDetails } from "../../src/types/category-types.js";
+import { CategoryDetails } from "../../src/types/category-types.js";
 import { User } from "../../src/types/user-types.js";
 
 suite("Category model tests", () => {
   let user: User | null = null;
-  const categories: Category[] = [];
+  const categories = new Array(testCategories.length);
 
   suiteSetup(async () => {
-    db.init("mongo");
+    await db.init("mongo");
   });
 
   setup(async () => {
@@ -40,7 +39,8 @@ suite("Category model tests", () => {
   test("create category", async () => {
     const category = await db.categoryStore!.addCategory(user!._id, historicSites);
     assert.exists(category);
-    assertSubset(historicSites, category);
+    assert.equal(category.title, historicSites.title);
+    assert.deepEqual(category.img, historicSites.img);
   });
 
   test("get all categories", async () => {
@@ -67,13 +67,18 @@ suite("Category model tests", () => {
   test("update category", async () => {
     const updatedDetails: CategoryDetails = {
       title: "Updated: Historic Sites",
+      img: {
+        url: "Updated: URL",
+        publicID: "Updated: ID",
+      },
     };
     const category = await db.categoryStore!.addCategory(user!._id, historicSites);
     await db.categoryStore!.updateCategory(category._id, updatedDetails);
     const updatedCategory = await db.categoryStore!.getCategoryById(category._id);
 
     assert.exists(updatedCategory);
-    assertSubset(updatedDetails, updatedCategory);
+    assert.equal(updatedCategory.title, updatedDetails.title);
+    assert.deepEqual(updatedCategory.img, updatedDetails.img);
   });
 
   test("delete all categories", async () => {

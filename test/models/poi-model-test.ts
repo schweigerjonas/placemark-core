@@ -11,7 +11,7 @@ suite("POI model tests", () => {
   const pois: PointOfInterest[] = [];
 
   suiteSetup(async () => {
-    db.init("mongo");
+    await db.init("mongo");
   });
 
   setup(async () => {

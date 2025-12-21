@@ -74,16 +74,32 @@ export const testPOIs: PointOfInterestDetails[] = [
 
 export const historicSites: CategoryDetails = {
   title: "Historic Sites",
+  img: {
+    url: "",
+    publicID: "",
+  },
 };
 
 export const testCategories: CategoryDetails[] = [
   {
     title: "Nature & Outdoors",
+    img: {
+      url: "",
+      publicID: "",
+    },
   },
   {
     title: "Museums & Galleries",
+    img: {
+      url: "",
+      publicID: "",
+    },
   },
   {
     title: "Local Cuisine",
+    img: {
+      url: "",
+      publicID: "",
+    },
   },
 ];

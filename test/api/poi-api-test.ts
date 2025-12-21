@@ -13,7 +13,7 @@ suite("POI API tests", () => {
   let category: Category | null = null;
 
   suiteSetup(async () => {
-    db.init("mongo");
+    await db.init("mongo");
   });
 
   setup(async () => {

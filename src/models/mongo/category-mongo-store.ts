@@ -2,7 +2,6 @@ import { Types } from "mongoose";
 import { CategoryDetails, Category } from "../../types/category-types.js";
 import { CategoryMongoose } from "./category.js";
 import { CategoryStore } from "../../types/store-types.js";
-import { poiMongoStore } from "./poi-mongo-store.js";
 
 export const categoryMongoStore: CategoryStore = {
   async addCategory(userID: string, categoryDetails: CategoryDetails): Promise<Category> {
