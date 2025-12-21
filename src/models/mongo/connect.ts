@@ -16,7 +16,7 @@ async function seed() {
   // console.log(dbData);
 }
 
-export function connectMongo(db: Db) {
+export async function connectMongo(db: Db) {
   if (Mongoose.connection.readyState !== 0) {
     return;
   }
@@ -24,7 +24,7 @@ export function connectMongo(db: Db) {
   dotenv.config({ quiet: true });
 
   Mongoose.set("strictQuery", true);
-  Mongoose.connect(process.env.DB as string);
+  await Mongoose.connect(process.env.DB as string);
 
   const mongoDB = Mongoose.connection;
 

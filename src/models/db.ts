@@ -9,10 +9,10 @@ export const db: Db = {
   categoryStore: null,
   poiStore: null,
 
-  init(dbType: string) {
+  async init(dbType: string): Promise<void> {
     switch (dbType) {
       case "mongo":
-        connectMongo(db);
+        await connectMongo(db);
         break;
       case "json":
       default:

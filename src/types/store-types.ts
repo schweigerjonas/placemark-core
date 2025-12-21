@@ -42,5 +42,5 @@ export type Db = {
   userStore: UserStore | null;
   categoryStore: CategoryStore | null;
   poiStore: PointOfInterestStore | null;
-  init(dbType: string): void;
+  init(dbType: string): Promise<void>;
 };
