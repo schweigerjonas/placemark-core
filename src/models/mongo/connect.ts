@@ -40,8 +40,13 @@ export async function connectMongo(db: Db) {
     console.log("database disconnected");
   });
 
-  mongoDB.once("open", () => {
+  if (mongoDB.readyState === 1) {
     console.log(`database connected to ${mongoDB.name} on ${mongoDB.host}`);
     seed();
-  });
+  } else {
+    mongoDB.once("open", () => {
+      console.log(`database connected to ${mongoDB.name} on ${mongoDB.host}`);
+      seed();
+    });
+  }
 }
