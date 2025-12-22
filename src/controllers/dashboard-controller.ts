@@ -33,7 +33,7 @@ export const dashboardController = {
       const loggedInUser = request.auth.credentials as User;
       const categoryDetails = request.payload as CategoryDetails;
       const category = {
-        title: categoryDetails.title,
+        ...categoryDetails,
         img: {
           url: "",
           publicID: "",

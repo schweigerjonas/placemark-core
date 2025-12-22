@@ -39,8 +39,15 @@ export const categoryController = {
     },
     handler: async function (request: Request, h: ResponseToolkit) {
       const { id } = request.params;
-      const poi = request.payload as PointOfInterestDetails;
       const category = await db.categoryStore?.getCategoryById(id);
+      const poiDetails = request.payload as PointOfInterestDetails;
+      const poi = {
+        ...poiDetails,
+        img: {
+          url: "",
+          publicID: "",
+        },
+      } as PointOfInterestDetails;
 
       if (!category) {
         console.error("Category not found.");

@@ -47,7 +47,7 @@ export const categoryMongoStore: CategoryStore = {
         { _id: id },
         {
           title: updatedCategory.title || category.title,
-          img: updatedCategory.img,
+          img: updatedCategory.img || category.img,
         }
       );
     }
