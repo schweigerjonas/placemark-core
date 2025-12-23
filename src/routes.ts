@@ -159,6 +159,8 @@ export const routes = [
 ];
 
 export const apiRoutes = [
+  { method: "POST" as const, path: "/api/users/authenticate", config: userApi.authenticate },
+
   { method: "POST" as const, path: "/api/users", config: userApi.create },
   { method: "GET" as const, path: "/api/users", config: userApi.findAll },
   { method: "GET" as const, path: "/api/users/{id}", config: userApi.find },
