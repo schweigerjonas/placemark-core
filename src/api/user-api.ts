@@ -101,7 +101,7 @@ export const userApi = {
     },
     tags: ["api"],
     description: "Delete all users",
-    notes: "Removes all users from Placemark",
+    notes: "Removes all users",
   },
 
   delete: {
@@ -120,7 +120,7 @@ export const userApi = {
     },
     tags: ["api"],
     description: "Delete a specific user",
-    notes: "Removes a specific user from Placemark",
+    notes: "Removes a specific user",
     validate: { params: { id: IDSpec }, failAction: validationError },
   },
 };

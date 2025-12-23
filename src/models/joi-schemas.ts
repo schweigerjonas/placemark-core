@@ -31,12 +31,29 @@ export const UserUpdateSpec = Joi.object({
   role: Joi.string().example("USER").allow("").optional(),
 });
 
-export const CategorySpec = Joi.object({
-  title: Joi.string().required(),
-});
+const ImageSpec = Joi.object({
+  url: Joi.string().uri().example("https://res.cloudinary.com/demo/image/upload/sample.jpg").required(),
+  publicID: IDSpec,
+}).label("ImageDetails");
+
+export const CategorySpec = Joi.object()
+  .keys({
+    title: Joi.string().example("Historic Sites").required(),
+    img: ImageSpec.optional(),
+    userID: IDSpec,
+  })
+  .label("CategoryDetails");
+
+export const CategorySpecPlus = CategorySpec.keys({
+  _id: IDSpec,
+  __v: Joi.number(),
+}).label("CategoryDetailsPlus");
+
+export const CategoryArray = Joi.array().items(CategorySpecPlus).label("CategoryArray");
 
 export const CategoryUpdateSpec = Joi.object({
-  title: Joi.string().allow("").optional(),
+  title: Joi.string().example("Historic Sites").allow("").optional(),
+  img: ImageSpec.optional(),
 });
 
 const LocationSpec = Joi.object({
