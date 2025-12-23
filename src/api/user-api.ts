@@ -64,7 +64,9 @@ export const userApi = {
   },
 
   findAll: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const users = await db.userStore?.getAllUsers();
@@ -80,7 +82,9 @@ export const userApi = {
   },
 
   find: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request: Request, h: ResponseToolkit) {
       if (!Types.ObjectId.isValid(request.params.id)) {
         return Boom.badRequest("No user with this id");
@@ -105,7 +109,9 @@ export const userApi = {
   },
 
   update: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const user = await db.userStore?.getUserById(request.params.id);
@@ -125,7 +131,9 @@ export const userApi = {
   },
 
   deleteAll: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         await db.userStore?.deleteAllUsers();
@@ -140,7 +148,9 @@ export const userApi = {
   },
 
   delete: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const user = await db.userStore?.getUserById(request.params.id);
