@@ -2,7 +2,7 @@ import { assert } from "chai";
 import { db } from "../../src/models/db.js";
 import { service } from "./service.js";
 import { historicSites, maggie, neuschwansteinCastle, testPOIs } from "../fixtures.js";
-import { PointOfInterestDetails, PointOfInterestPayload } from "../../src/types/poi-types.js";
+import { PointOfInterestDetails } from "../../src/types/poi-types.js";
 import { Category } from "../../src/types/category-types.js";
 import { User } from "../../src/types/user-types.js";
 
