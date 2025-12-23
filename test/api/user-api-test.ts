@@ -9,7 +9,7 @@ const users = new Array(testUsers.length);
 
 suite("User API tests", () => {
   suiteSetup(async () => {
-    db.init("mongo");
+    await db.init("mongo");
   });
 
   setup(async () => {

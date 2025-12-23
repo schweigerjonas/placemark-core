@@ -51,7 +51,7 @@ async function init() {
     isCached: false,
   });
   server.validator(Joi);
-  db.init("mongo");
+  await db.init("mongo");
   server.route(routes);
   server.route(apiRoutes);
 

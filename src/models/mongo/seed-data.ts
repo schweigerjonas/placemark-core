@@ -29,14 +29,26 @@ export const seedData = {
     _model: "Category",
     sites: {
       title: "Historic Sites",
+      img: {
+        url: "http://res.cloudinary.com/dif8elawf/image/upload/v1766220295/xyhpmoohwdhnrbxqtojd.png",
+        publicID: "v1766220295",
+      },
       userID: "->users.homer",
     },
     nature: {
       title: "Nature & Outdoors",
+      img: {
+        url: "http://res.cloudinary.com/dif8elawf/image/upload/v1766220306/cn7ypvwvfbjnnu3ddgoz.png",
+        publicID: "v1766220306",
+      },
       userID: "->users.homer",
     },
     routes: {
       title: "Scenic Routes",
+      img: {
+        url: "http://res.cloudinary.com/dif8elawf/image/upload/v1766220316/qg7gtohkxouyee9g04en.png",
+        publicID: "v1766220316",
+      },
       userID: "->users.homer",
     },
   },
@@ -49,6 +61,10 @@ export const seedData = {
         lat: "52.5163",
         lng: "13.3777",
       },
+      img: {
+        url: "",
+        publicID: "",
+      },
       categoryID: "->categories.sites",
     },
     road: {
@@ -58,6 +74,10 @@ export const seedData = {
         lat: "49.7912",
         lng: "9.9535",
       },
+      img: {
+        url: "",
+        publicID: "",
+      },
       categoryID: "->categories.routes",
     },
     forest: {
@@ -66,6 +86,10 @@ export const seedData = {
       location: {
         lat: "47.9990",
         lng: "7.8421",
+      },
+      img: {
+        url: "",
+        publicID: "",
       },
       categoryID: "->categories.nature",
     },

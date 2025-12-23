@@ -1,23 +1,29 @@
 import { assert } from "chai";
+import { suite, suiteSetup, setup, teardown, test } from "mocha";
 import { db } from "../../src/models/db.js";
 import { CategoryDetails } from "../../src/types/category-types.js";
 import { User } from "../../src/types/user-types.js";
 import { historicSites, maggie, testCategories } from "../fixtures.js";
 import { service } from "./service.js";
-import { assertSubset } from "../test-utils.js";
-
-const categories = new Array(testCategories.length);
 
 suite("Category API tests", () => {
   let user: User | null = null;
+  let categories: any[] = [];
 
   suiteSetup(async () => {
-    db.init("mongo");
+    await db.init("mongo");
   });
 
   setup(async () => {
+    // check that stores get initialized
+    // enables non-null assertion in tests
+    if (!db.userStore || !db.categoryStore) {
+      throw new Error("Not all database stores initialized. Setup failed.");
+    }
+
     await service.deleteAllUsers();
     await service.deleteAllCategories();
+    categories = [];
 
     user = await service.createUser(maggie);
 
@@ -35,7 +41,8 @@ suite("Category API tests", () => {
   test("create category", async () => {
     const category = await service.createCategory(user!._id, historicSites);
     assert.exists(category);
-    assertSubset(historicSites, category);
+    assert.equal(category.title, historicSites.title);
+    assert.deepEqual(category.img, historicSites.img);
   });
 
   test("get category - success", async () => {
@@ -68,11 +75,16 @@ suite("Category API tests", () => {
   test("update category", async () => {
     const updatedDetails: CategoryDetails = {
       title: "Updated: Historic Sites",
+      img: {
+        url: "Updated: URL",
+        publicID: "Updated: ID",
+      },
     };
     await service.updateCategory(categories[0]._id, updatedDetails);
     const updatedCategory = await service.getCategory(categories[0]._id);
 
-    assertSubset(updatedDetails, updatedCategory);
+    assert.equal(updatedCategory.title, updatedDetails.title);
+    assert.deepEqual(updatedCategory.img, updatedDetails.img);
   });
 
   test("delete all categories", async () => {

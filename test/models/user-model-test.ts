@@ -8,7 +8,7 @@ suite("User model tests", () => {
   const users: User[] = [];
 
   suiteSetup(async () => {
-    db.init("mongo");
+    await db.init("mongo");
   });
 
   setup(async () => {

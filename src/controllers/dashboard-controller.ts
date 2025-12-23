@@ -33,9 +33,12 @@ export const dashboardController = {
       const loggedInUser = request.auth.credentials as User;
       const categoryDetails = request.payload as CategoryDetails;
       const category = {
-        title: categoryDetails.title,
-        pois: [],
-      };
+        ...categoryDetails,
+        img: {
+          url: "",
+          publicID: "",
+        },
+      } as CategoryDetails;
       await db.categoryStore?.addCategory(loggedInUser._id, category);
       return h.redirect("/dashboard");
     },

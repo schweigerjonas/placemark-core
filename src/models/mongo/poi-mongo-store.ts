@@ -45,6 +45,7 @@ export const poiMongoStore: PointOfInterestStore = {
           lat: updatedPOI.location.lat || poi.location.lat,
           lng: updatedPOI.location.lng || poi.location.lng,
         },
+        img: updatedPOI.img || poi.img,
       }
     );
   },
