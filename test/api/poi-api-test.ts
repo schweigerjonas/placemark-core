@@ -49,6 +49,10 @@ suite("POI API tests", () => {
         lat: newPOI.location.lat,
         lng: newPOI.location.lng,
       },
+      img: {
+        url: newPOI.img.url,
+        publicID: newPOI.img.publicID,
+      },
     };
     assert.deepEqual(newPOIDetails, neuschwansteinCastle);
     assert.isDefined(newPOI._id);
@@ -89,6 +93,10 @@ suite("POI API tests", () => {
         lat: "48.0",
         lng: "11.0",
       },
+      img: {
+        url: "Updated: URL",
+        publicID: "Updated: ID",
+      },
     };
     await service.updatePOI(pois[0]._id, updatedDetails);
     const updatedPOI = await service.getPOI(pois[0]._id);
@@ -96,6 +104,7 @@ suite("POI API tests", () => {
     assert.equal(updatedPOI.name, updatedDetails.name);
     assert.equal(updatedPOI.description, updatedDetails.description);
     assert.deepEqual(updatedPOI.location, updatedDetails.location);
+    assert.deepEqual(updatedPOI.img, updatedDetails.img);
   });
 
   test("delete all POIs", async () => {

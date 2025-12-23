@@ -77,6 +77,10 @@ suite("POI model tests", () => {
         lat: "48.0",
         lng: "11.0",
       },
+      img: {
+        url: "Updated: URL",
+        publicID: "Updated: ID",
+      },
     };
     const poi = await db.poiStore!.addPOI(category!._id, neuschwansteinCastle);
     await db.poiStore!.updatePOI(poi, updatedDetails);
@@ -86,6 +90,7 @@ suite("POI model tests", () => {
     assert.equal(updatedPOI.name, updatedDetails.name);
     assert.equal(updatedPOI.description, updatedDetails.description);
     assert.deepEqual(updatedPOI.location, updatedDetails.location);
+    assert.deepEqual(updatedPOI.img, updatedDetails.img);
   });
 
   test("delete all POIs", async () => {
