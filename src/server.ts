@@ -1,6 +1,7 @@
 import Hapi from "@hapi/hapi";
 import Vision from "@hapi/vision";
 import Cookie from "@hapi/cookie";
+import Inert from "@hapi/inert";
 import Handlebars from "handlebars";
 import Joi from "joi";
 import path from "path";
@@ -27,6 +28,7 @@ async function init() {
 
   await server.register(Cookie);
   await server.register(Vision);
+  await server.register(Inert);
   server.auth.strategy("session", "cookie", {
     cookie: {
       name: process.env.COOKIE_NAME,

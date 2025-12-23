@@ -143,6 +143,19 @@ export const routes = [
     path: "/poi/{id}/img",
     config: editPOIController.deleteImage,
   },
+
+  {
+    method: "GET" as const,
+    path: "/{param*}",
+    config: {
+      auth: false,
+      handler: {
+        directory: {
+          path: "./public",
+        },
+      },
+    },
+  },
 ];
 
 export const apiRoutes = [
