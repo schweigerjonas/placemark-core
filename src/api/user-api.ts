@@ -3,6 +3,8 @@ import { Types } from "mongoose";
 import { Request, ResponseToolkit } from "@hapi/hapi";
 import { db } from "../models/db.js";
 import { UserDetails } from "../types/user-types.js";
+import { IDSpec, UserArray, UserSpec, UserSpecPlus, UserUpdateSpec } from "../models/joi-schemas.js";
+import { validationError } from "./logger.js";
 
 export const userApi = {
   create: {
@@ -19,6 +21,11 @@ export const userApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Create a user",
+    notes: "Returns the created user",
+    validate: { payload: UserSpec, failAction: validationError },
+    response: { schema: UserSpecPlus, failAction: validationError },
   },
 
   findAll: {
@@ -31,6 +38,10 @@ export const userApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Get all users",
+    notes: "Returns details of all users",
+    response: { schema: UserArray, failAction: validationError },
   },
 
   find: {
@@ -51,6 +62,11 @@ export const userApi = {
         return Boom.serverUnavailable("No user with this id");
       }
     },
+    tags: ["api"],
+    description: "Get a specific user",
+    notes: "Returns user details",
+    validate: { params: { id: IDSpec }, failAction: validationError },
+    response: { schema: UserSpecPlus, failAction: validationError },
   },
 
   update: {
@@ -67,6 +83,10 @@ export const userApi = {
         return Boom.serverUnavailable("Database error");
       }
     },
+    tags: ["api"],
+    description: "Update an existing user",
+    notes: "Updates the user",
+    validate: { params: { id: IDSpec }, payload: UserUpdateSpec, failAction: validationError },
   },
 
   deleteAll: {
@@ -79,6 +99,9 @@ export const userApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Delete all users",
+    notes: "Removes all users",
   },
 
   delete: {
@@ -95,5 +118,9 @@ export const userApi = {
         return Boom.serverUnavailable("No user with this id");
       }
     },
+    tags: ["api"],
+    description: "Delete a specific user",
+    notes: "Removes a specific user",
+    validate: { params: { id: IDSpec }, failAction: validationError },
   },
 };

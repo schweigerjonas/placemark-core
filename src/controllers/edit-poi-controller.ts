@@ -30,7 +30,10 @@ export const editPOIController = {
         convert: true,
       },
       failAction: function (request: Request, h: ResponseToolkit, error: any) {
-        return h.view("point-of-interest", { title: "Update POI error", errors: error.details }).takeover().code(400);
+        return h
+          .view("point-of-interest", { title: "Update POI error", errors: error.details })
+          .takeover()
+          .code(400);
       },
     },
     handler: async function (request: Request, h: ResponseToolkit) {

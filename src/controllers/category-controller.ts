@@ -34,7 +34,10 @@ export const categoryController = {
         convert: true,
       },
       failAction: function (request: Request, h: ResponseToolkit, error: any) {
-        return h.view("category", { title: "Sign up error", errors: error.details }).takeover().code(400);
+        return h
+          .view("category", { title: "Sign up error", errors: error.details })
+          .takeover()
+          .code(400);
       },
     },
     handler: async function (request: Request, h: ResponseToolkit) {

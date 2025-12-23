@@ -2,6 +2,8 @@ import Boom from "@hapi/boom";
 import { Request, ResponseToolkit } from "@hapi/hapi";
 import { db } from "../models/db.js";
 import { CategoryDetails } from "../types/category-types.js";
+import { CategoryArray, CategorySpec, CategorySpecPlus, CategoryUpdateSpec, IDSpec } from "../models/joi-schemas.js";
+import { validationError } from "./logger.js";
 
 export const categoryApi = {
   create: {
@@ -17,6 +19,11 @@ export const categoryApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Create a category",
+    notes: "Returns created category",
+    validate: { payload: CategorySpec, failAction: validationError },
+    response: { schema: CategorySpecPlus, failAction: validationError },
   },
   findAll: {
     auth: false,
@@ -28,6 +35,10 @@ export const categoryApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Get all categories",
+    notes: "Returns details of all categories",
+    response: { schema: CategoryArray, failAction: validationError },
   },
   find: {
     auth: false,
@@ -42,6 +53,11 @@ export const categoryApi = {
         return Boom.serverUnavailable("No category with this id");
       }
     },
+    tags: ["api"],
+    description: "Get a specific category",
+    notes: "Returns category details",
+    validate: { params: { id: IDSpec }, failAction: validationError },
+    response: { schema: CategorySpecPlus, failAction: validationError },
   },
   update: {
     auth: false,
@@ -57,6 +73,10 @@ export const categoryApi = {
         return Boom.serverUnavailable("Database error");
       }
     },
+    tags: ["api"],
+    description: "Update an existing category",
+    notes: "Updates the category",
+    validate: { params: { id: IDSpec }, payload: CategoryUpdateSpec, failAction: validationError },
   },
   deleteAll: {
     auth: false,
@@ -68,6 +88,9 @@ export const categoryApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Delete all categories",
+    notes: "Removes all categories",
   },
   delete: {
     auth: false,
@@ -83,5 +106,9 @@ export const categoryApi = {
         return Boom.serverUnavailable("No category with this id");
       }
     },
+    tags: ["api"],
+    description: "Delete a specific category",
+    notes: "Removes a specific category",
+    validate: { params: { id: IDSpec }, failAction: validationError },
   },
 };

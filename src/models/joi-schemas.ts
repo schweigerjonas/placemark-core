@@ -1,54 +1,74 @@
 import Joi, { CustomHelpers } from "joi";
 
-export const UserSpec = Joi.object({
-  firstName: Joi.string().required(),
-  lastName: Joi.string().required(),
-  email: Joi.string().email().required(),
-  password: Joi.string().required(),
-});
+export const IDSpec = Joi.alternatives().try(Joi.string(), Joi.object()).description("valid ID");
 
-export const UserCredentialsSpec = Joi.object({
-  email: Joi.string().email().required(),
-  password: Joi.string().required(),
-});
+export const UserCredentialsSpec = Joi.object()
+  .keys({
+    email: Joi.string().email().example("homer@simpson.com").required(),
+    password: Joi.string().example("secret").required(),
+  })
+  .label("UserCredentials");
+
+export const UserSpec = UserCredentialsSpec.keys({
+  firstName: Joi.string().example("Homer").required(),
+  lastName: Joi.string().example("Simpson").required(),
+  role: Joi.string().example("USER").required(),
+}).label("UserDetails");
+
+export const UserSpecPlus = UserSpec.keys({
+  _id: IDSpec,
+  __v: Joi.number(),
+}).label("UserDetailsPlus");
+
+export const UserArray = Joi.array().items(UserSpecPlus).label("UserArray");
 
 // UpdateSpecs are for validation of updates where empty fields are allowed
 export const UserUpdateSpec = Joi.object({
-  firstName: Joi.string().allow("").optional(),
-  lastName: Joi.string().allow("").optional(),
-  email: Joi.string().email().allow("").optional(),
-  password: Joi.string().allow("").optional(),
-});
+  firstName: Joi.string().example("Homer").allow("").optional(),
+  lastName: Joi.string().example("Simpson").allow("").optional(),
+  email: Joi.string().email().example("homer@simpson.com").allow("").optional(),
+  password: Joi.string().example("secret").allow("").optional(),
+  role: Joi.string().example("USER").allow("").optional(),
+}).label("UserUpdateDetails");
 
-export const CategorySpec = Joi.object({
-  title: Joi.string().required(),
-});
+const ImageSpec = Joi.object({
+  url: Joi.string()
+    .uri()
+    .example("https://res.cloudinary.com/demo/image/upload/sample.jpg")
+    .allow("")
+    .required(),
+  publicID: IDSpec.allow(""),
+}).label("ImageDetails");
+
+export const ImageArray = Joi.array().items(ImageSpec).label("ImageArray");
+
+export const CategorySpec = Joi.object()
+  .keys({
+    title: Joi.string().example("Historic Sites").required(),
+    img: ImageSpec.optional(),
+    userID: IDSpec.optional(),
+  })
+  .label("CategoryDetails");
+
+export const CategorySpecPlus = CategorySpec.keys({
+  _id: IDSpec,
+  __v: Joi.number(),
+}).label("CategoryDetailsPlus");
+
+export const CategoryArray = Joi.array().items(CategorySpecPlus).label("CategoryArray");
 
 export const CategoryUpdateSpec = Joi.object({
-  title: Joi.string().allow("").optional(),
-});
+  title: Joi.string().example("Historic Sites").allow("").optional(),
+  img: ImageSpec.optional(),
+}).label("CategoryUpdateDetails");
 
 const LocationSpec = Joi.object({
-  lat: Joi.number().min(-90).max(90).required(),
-  lng: Joi.number().min(-180).max(180).required(),
-});
-
-const FlatPointOfInterestSpec = Joi.object({
-  name: Joi.string().required(),
-  description: Joi.string().required(),
-  lat: LocationSpec.extract("lat").required(),
-  lng: LocationSpec.extract("lng").required(),
-});
-
-const FlatPointOfInterestUpdateSpec = Joi.object({
-  name: Joi.string().allow("").optional(),
-  description: Joi.string().allow("").optional(),
-  lat: LocationSpec.extract("lat").allow("").empty("").optional(),
-  lng: LocationSpec.extract("lng").allow("").empty("").optional(),
-});
+  lat: Joi.number().min(-90).max(90).precision(6).example(52.5163).required(),
+  lng: Joi.number().min(-180).max(180).precision(6).example(13.3777).required(),
+}).label("LocationDetails");
 
 const transformPointOfInterest = (value: any, helpers: CustomHelpers) => {
-  const { name, description, lat, lng } = value;
+  const { name, description, lat, lng, img } = value;
 
   return {
     name,
@@ -57,8 +77,84 @@ const transformPointOfInterest = (value: any, helpers: CustomHelpers) => {
       lat,
       lng,
     },
+    img,
   };
 };
 
-export const PointOfInterestValidator = FlatPointOfInterestSpec.custom(transformPointOfInterest);
-export const PointOfInterestUpdateValidator = FlatPointOfInterestUpdateSpec.custom(transformPointOfInterest);
+const NestedPointOfInterestSpec = Joi.object()
+  .keys({
+    name: Joi.string().example("Brandenburg Gate").required(),
+    description: Joi.string()
+      .example("Iconic neoclassical triumphal arch in Berlin, symbolizing reunification.")
+      .required(),
+    location: LocationSpec.required(),
+    img: ImageSpec.optional(),
+    categoryID: IDSpec.optional(),
+  })
+  .label("NestedPointOfInterestDetails");
+
+const FlatPointOfInterestSpec = Joi.object()
+  .keys({
+    name: Joi.string().example("Brandenburg Gate").required(),
+    description: Joi.string()
+      .example("Iconic neoclassical triumphal arch in Berlin, symbolizing reunification.")
+      .required(),
+    lat: Joi.number().min(-90).max(90).precision(6).example(52.5163).required(),
+    lng: Joi.number().min(-180).max(180).precision(6).example(13.3777).required(),
+    img: ImageSpec.optional(),
+    categoryID: IDSpec.optional(),
+  })
+  .custom(transformPointOfInterest)
+  .label("FlatPointOfInterestDetails");
+
+export const PointOfInterestValidator = Joi.alternatives()
+  .try(NestedPointOfInterestSpec, FlatPointOfInterestSpec)
+  .label("PointOfInterestDetails");
+
+export const PointOfInterestSpecPlus = Joi.object()
+  .keys({
+    name: Joi.string().example("Brandenburg Gate").required(),
+    description: Joi.string()
+      .example("Iconic neoclassical triumphal arch in Berlin, symbolizing reunification.")
+      .required(),
+    location: LocationSpec.required(),
+    img: ImageSpec.optional(),
+    categoryID: IDSpec.optional(),
+    _id: IDSpec,
+    __v: Joi.number(),
+  })
+  .label("PointOfInterestDetailsPlus");
+
+export const PointOfInterestArray = Joi.array()
+  .items(PointOfInterestSpecPlus)
+  .label("PointOfInterestArray");
+
+const NestedPointOfInterestUpdateSpec = Joi.object()
+  .keys({
+    name: Joi.string().example("Brandenburg Gate").allow("").optional(),
+    description: Joi.string()
+      .example("Iconic neoclassical triumphal arch in Berlin, symbolizing reunification.")
+      .allow("")
+      .optional(),
+    location: LocationSpec.optional(),
+    img: ImageSpec.optional(),
+  })
+  .label("NestedPointOfInterestUpdateSpec");
+
+const FlatPointOfInterestUpdateSpec = Joi.object()
+  .keys({
+    name: Joi.string().example("Brandenburg Gate").allow("").optional(),
+    description: Joi.string()
+      .example("Iconic neoclassical triumphal arch in Berlin, symbolizing reunification.")
+      .allow("")
+      .optional(),
+    lat: Joi.number().min(-90).max(90).precision(6).example(52.5163).allow("").empty("").optional(),
+    lng: Joi.number().min(-90).max(90).precision(6).example(13.3777).allow("").empty("").required(),
+    img: ImageSpec.optional(),
+  })
+  .custom(transformPointOfInterest)
+  .label("FlatPointOfInterestUpdateDetails");
+
+export const PointOfInterestUpdateValidator = Joi.alternatives()
+  .try(NestedPointOfInterestUpdateSpec, FlatPointOfInterestUpdateSpec)
+  .label("PointOfInterestUpdateDetails");
