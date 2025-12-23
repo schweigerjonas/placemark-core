@@ -29,18 +29,20 @@ export const UserUpdateSpec = Joi.object({
   email: Joi.string().email().example("homer@simpson.com").allow("").optional(),
   password: Joi.string().example("secret").allow("").optional(),
   role: Joi.string().example("USER").allow("").optional(),
-});
+}).label("UserUpdateDetails");
 
 const ImageSpec = Joi.object({
   url: Joi.string().uri().example("https://res.cloudinary.com/demo/image/upload/sample.jpg").required(),
   publicID: IDSpec,
 }).label("ImageDetails");
 
+export const ImageArray = Joi.array().items(ImageSpec).label("ImageArray");
+
 export const CategorySpec = Joi.object()
   .keys({
     title: Joi.string().example("Historic Sites").required(),
     img: ImageSpec.optional(),
-    userID: IDSpec,
+    userID: IDSpec.optional(),
   })
   .label("CategoryDetails");
 
@@ -54,29 +56,15 @@ export const CategoryArray = Joi.array().items(CategorySpecPlus).label("Category
 export const CategoryUpdateSpec = Joi.object({
   title: Joi.string().example("Historic Sites").allow("").optional(),
   img: ImageSpec.optional(),
-});
+}).label("CategoryUpdateDetails");
 
-const LocationSpec = Joi.object({
-  lat: Joi.number().min(-90).max(90).required(),
-  lng: Joi.number().min(-180).max(180).required(),
-});
-
-const FlatPointOfInterestSpec = Joi.object({
-  name: Joi.string().required(),
-  description: Joi.string().required(),
-  lat: LocationSpec.extract("lat").required(),
-  lng: LocationSpec.extract("lng").required(),
-});
-
-const FlatPointOfInterestUpdateSpec = Joi.object({
-  name: Joi.string().allow("").optional(),
-  description: Joi.string().allow("").optional(),
-  lat: LocationSpec.extract("lat").allow("").empty("").optional(),
-  lng: LocationSpec.extract("lng").allow("").empty("").optional(),
-});
+// const LocationSpec = Joi.object({
+//   lat: Joi.number().min(-90).max(90).required(),
+//   lng: Joi.number().min(-180).max(180).required(),
+// }).label("LocationDetails");
 
 const transformPointOfInterest = (value: any, helpers: CustomHelpers) => {
-  const { name, description, lat, lng } = value;
+  const { name, description, lat, lng, img } = value;
 
   return {
     name,
@@ -85,8 +73,36 @@ const transformPointOfInterest = (value: any, helpers: CustomHelpers) => {
       lat,
       lng,
     },
+    img,
   };
 };
 
-export const PointOfInterestValidator = FlatPointOfInterestSpec.custom(transformPointOfInterest);
-export const PointOfInterestUpdateValidator = FlatPointOfInterestUpdateSpec.custom(transformPointOfInterest);
+export const PointOfInterestSpec = Joi.object()
+  .keys({
+    name: Joi.string().example("Brandenburg Gate").required(),
+    description: Joi.string().example("Iconic neoclassical triumphal arch in Berlin, symbolizing reunification.").required(),
+    lat: Joi.number().min(-90).max(90).example(52.5163).required(),
+    lng: Joi.number().min(-180).max(180).example(13.3777).required(),
+    img: ImageSpec.optional(),
+    categoryID: IDSpec.optional(),
+  })
+  .custom(transformPointOfInterest)
+  .label("PointOfInterestDetails");
+
+export const PointOfInterestSpecPlus = PointOfInterestSpec.keys({
+  _id: IDSpec,
+  __v: Joi.number(),
+}).label("PointOfInterestDetailsPlus");
+
+export const PointOfInterestArray = Joi.array().items(PointOfInterestSpecPlus).label("PointOfInterestArray");
+
+export const PointOfInterestUpdateSpec = Joi.object()
+  .keys({
+    name: Joi.string().example("Brandenburg Gate").allow("").optional(),
+    description: Joi.string().example("Iconic neoclassical triumphal arch in Berlin, symbolizing reunification.").allow("").optional(),
+    lat: Joi.number().min(-90).max(90).example(52.5163).allow("").empty("").optional(),
+    lng: Joi.number().min(-90).max(90).example(13.3777).allow("").empty("").required(),
+    img: ImageSpec.optional(),
+  })
+  .custom(transformPointOfInterest)
+  .label("PointOfInterestUpdateDetails");

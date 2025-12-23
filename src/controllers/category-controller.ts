@@ -1,7 +1,7 @@
 import { Request, ResponseToolkit } from "@hapi/hapi";
 import { PointOfInterestDetails } from "../types/poi-types.js";
 import { db } from "../models/db.js";
-import { PointOfInterestValidator } from "../models/joi-schemas.js";
+import { PointOfInterestSpec } from "../models/joi-schemas.js";
 import { imageStore } from "../models/image-store.js";
 
 export const categoryController = {
@@ -28,7 +28,7 @@ export const categoryController = {
   },
   addPOI: {
     validate: {
-      payload: PointOfInterestValidator,
+      payload: PointOfInterestSpec,
       options: {
         abortEarly: false,
         convert: true,

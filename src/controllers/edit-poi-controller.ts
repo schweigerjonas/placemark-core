@@ -1,7 +1,7 @@
 import { Request, ResponseToolkit } from "@hapi/hapi";
 import { db } from "../models/db.js";
 import { PointOfInterestDetails } from "../types/poi-types.js";
-import { PointOfInterestUpdateValidator } from "../models/joi-schemas.js";
+import { PointOfInterestUpdateSpec } from "../models/joi-schemas.js";
 import { imageStore } from "../models/image-store.js";
 
 export const editPOIController = {
@@ -24,7 +24,7 @@ export const editPOIController = {
   },
   updatePOI: {
     validate: {
-      payload: PointOfInterestUpdateValidator,
+      payload: PointOfInterestUpdateSpec,
       options: {
         abortEarly: false,
         convert: true,
