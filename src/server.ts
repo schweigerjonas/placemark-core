@@ -4,6 +4,7 @@ import Cookie from "@hapi/cookie";
 import Inert from "@hapi/inert";
 import Handlebars from "handlebars";
 import Joi from "joi";
+import HapiSwagger from "hapi-swagger";
 import path from "path";
 import dotenv from "dotenv";
 
@@ -14,6 +15,13 @@ import { accountController } from "./controllers/account-controller.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+const swaggerOptions = {
+  info: {
+    title: "Placemark API",
+    version: "0.1",
+  },
+};
 
 async function init() {
   const result = dotenv.config({ quiet: true });
@@ -29,6 +37,14 @@ async function init() {
   await server.register(Cookie);
   await server.register(Vision);
   await server.register(Inert);
+  await server.register([
+    Inert,
+    Vision,
+    {
+      plugin: HapiSwagger,
+      options: swaggerOptions,
+    },
+  ]);
   server.auth.strategy("session", "cookie", {
     cookie: {
       name: process.env.COOKIE_NAME,
