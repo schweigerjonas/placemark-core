@@ -19,7 +19,7 @@ const __dirname = path.dirname(__filename);
 const swaggerOptions = {
   info: {
     title: "Placemark API",
-    version: "0.1",
+    version: "1.0",
   },
 };
 

@@ -1,23 +1,34 @@
 import Joi, { CustomHelpers } from "joi";
 
-export const UserSpec = Joi.object({
-  firstName: Joi.string().required(),
-  lastName: Joi.string().required(),
-  email: Joi.string().email().required(),
-  password: Joi.string().required(),
-});
+export const IDSpec = Joi.alternatives().try(Joi.string(), Joi.object()).description("valid ID");
 
-export const UserCredentialsSpec = Joi.object({
-  email: Joi.string().email().required(),
-  password: Joi.string().required(),
-});
+export const UserCredentialsSpec = Joi.object()
+  .keys({
+    email: Joi.string().email().example("homer@simpson.com").required(),
+    password: Joi.string().example("secret").required(),
+  })
+  .label("UserCredentials");
+
+export const UserSpec = UserCredentialsSpec.keys({
+  firstName: Joi.string().example("Homer").required(),
+  lastName: Joi.string().example("Simpson").required(),
+  role: Joi.string().example("USER").required(),
+}).label("UserDetails");
+
+export const UserSpecPlus = UserSpec.keys({
+  _id: IDSpec,
+  __v: Joi.number(),
+}).label("UserDetailsPlus");
+
+export const UserArray = Joi.array().items(UserSpecPlus).label("UserArray");
 
 // UpdateSpecs are for validation of updates where empty fields are allowed
 export const UserUpdateSpec = Joi.object({
-  firstName: Joi.string().allow("").optional(),
-  lastName: Joi.string().allow("").optional(),
-  email: Joi.string().email().allow("").optional(),
-  password: Joi.string().allow("").optional(),
+  firstName: Joi.string().example("Homer").allow("").optional(),
+  lastName: Joi.string().example("Simpson").allow("").optional(),
+  email: Joi.string().email().example("homer@simpson.com").allow("").optional(),
+  password: Joi.string().example("secret").allow("").optional(),
+  role: Joi.string().example("USER").allow("").optional(),
 });
 
 export const CategorySpec = Joi.object({
