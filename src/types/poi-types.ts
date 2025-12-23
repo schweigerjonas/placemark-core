@@ -16,3 +16,11 @@ export type PointOfInterest = {
 };
 
 export type PointOfInterestDetails = Omit<PointOfInterest, "_id" | "categoryID">;
+
+export type PointOfInterestPayload = {
+  name: string;
+  description: string;
+  lat: string;
+  lng: string;
+  img: Image;
+};

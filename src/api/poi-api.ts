@@ -2,7 +2,13 @@ import Boom from "@hapi/boom";
 import { Request, ResponseToolkit } from "@hapi/hapi";
 import { db } from "../models/db.js";
 import { PointOfInterestDetails } from "../types/poi-types.js";
-import { IDSpec, PointOfInterestArray, PointOfInterestSpec, PointOfInterestSpecPlus, PointOfInterestUpdateSpec } from "../models/joi-schemas.js";
+import {
+  IDSpec,
+  PointOfInterestArray,
+  PointOfInterestSpecPlus,
+  PointOfInterestUpdateValidator,
+  PointOfInterestValidator,
+} from "../models/joi-schemas.js";
 import { validationError } from "./logger.js";
 
 export const poiApi = {
@@ -10,7 +16,10 @@ export const poiApi = {
     auth: false,
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
-        const poi = await db.poiStore?.addPOI(request.params.id, request.payload as PointOfInterestDetails);
+        const poi = await db.poiStore?.addPOI(
+          request.params.id,
+          request.payload as PointOfInterestDetails
+        );
         if (poi) {
           return h.response(poi).code(201);
         }
@@ -22,7 +31,7 @@ export const poiApi = {
     tags: ["api"],
     description: "Create a POI",
     notes: "Returns created POI",
-    validate: { payload: PointOfInterestSpec, failAction: validationError },
+    validate: { payload: PointOfInterestValidator, failAction: validationError },
     response: { schema: PointOfInterestSpecPlus, failAction: validationError },
   },
 
@@ -79,7 +88,11 @@ export const poiApi = {
     tags: ["api"],
     description: "Update an existing POI",
     notes: "Updates the POI",
-    validate: { params: { id: IDSpec }, payload: PointOfInterestUpdateSpec, failAction: validationError },
+    validate: {
+      params: { id: IDSpec },
+      payload: PointOfInterestUpdateValidator,
+      failAction: validationError,
+    },
   },
 
   deleteAll: {

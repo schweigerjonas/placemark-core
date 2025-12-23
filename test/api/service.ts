@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { url } from "../fixtures.js";
 import { UserDetails } from "../../src/types/user-types.js";
-import { PointOfInterestDetails } from "../../src/types/poi-types.js";
+import { PointOfInterestDetails, PointOfInterestPayload } from "../../src/types/poi-types.js";
 import { CategoryDetails } from "../../src/types/category-types.js";
 
 export const service = {

@@ -76,7 +76,7 @@ suite("Category API tests", () => {
     const updatedDetails: CategoryDetails = {
       title: "Updated: Historic Sites",
       img: {
-        url: "Updated: URL",
+        url: "http://www.example-url.com",
         publicID: "Updated: ID",
       },
     };

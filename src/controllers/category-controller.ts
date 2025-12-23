@@ -1,7 +1,7 @@
 import { Request, ResponseToolkit } from "@hapi/hapi";
 import { PointOfInterestDetails } from "../types/poi-types.js";
 import { db } from "../models/db.js";
-import { PointOfInterestSpec } from "../models/joi-schemas.js";
+import { PointOfInterestValidator } from "../models/joi-schemas.js";
 import { imageStore } from "../models/image-store.js";
 
 export const categoryController = {
@@ -28,13 +28,16 @@ export const categoryController = {
   },
   addPOI: {
     validate: {
-      payload: PointOfInterestSpec,
+      payload: PointOfInterestValidator,
       options: {
         abortEarly: false,
         convert: true,
       },
       failAction: function (request: Request, h: ResponseToolkit, error: any) {
-        return h.view("category", { title: "Sign up error", errors: error.details }).takeover().code(400);
+        return h
+          .view("category", { title: "Sign up error", errors: error.details })
+          .takeover()
+          .code(400);
       },
     },
     handler: async function (request: Request, h: ResponseToolkit) {
