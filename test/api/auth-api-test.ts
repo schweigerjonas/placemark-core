@@ -4,7 +4,7 @@ import { service } from "./service.js";
 import { maggie, maggieCredentials } from "../fixtures.js";
 import { decodeToken } from "../../src/api/jwt-utils.js";
 
-suite("Authentication API tests", async () => {
+suite("Authentication API tests", () => {
   setup(async () => {
     service.clearAuth();
     await service.createUser(maggie);

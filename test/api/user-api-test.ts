@@ -1,5 +1,6 @@
 import { assert } from "chai";
-import { maggie, testUsers } from "../fixtures.js";
+import { suite, suiteSetup, setup, test } from "mocha";
+import { maggie, maggieCredentials, testUsers } from "../fixtures.js";
 import { assertSubset } from "../test-utils.js";
 import { service } from "./service.js";
 import { db } from "../../src/models/db.js";
@@ -13,13 +14,20 @@ suite("User API tests", () => {
   });
 
   setup(async () => {
+    service.clearAuth();
+    await service.createUser(maggie);
+    await service.authenticate(maggieCredentials);
+
     await service.deleteAllUsers();
+
+    await service.createUser(maggie);
+    await service.authenticate(maggieCredentials);
+
     for (let i = 0; i < testUsers.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
       users[i] = await service.createUser(testUsers[i]);
     }
   });
-  teardown(async () => {});
 
   test("create user", async () => {
     const newUser = await service.createUser(maggie);
@@ -44,6 +52,9 @@ suite("User API tests", () => {
 
   test("get user - deleted user", async () => {
     await service.deleteAllUsers();
+
+    await service.createUser(maggie);
+    await service.authenticate(maggieCredentials);
 
     try {
       const returnedUser = await service.getUser(users[0]._id);
@@ -74,10 +85,14 @@ suite("User API tests", () => {
 
   test("delete all users", async () => {
     let returnedUsers = await service.getAllUsers();
-    assert.equal(returnedUsers.length, 3);
+    assert.equal(returnedUsers.length, 4);
     await service.deleteAllUsers();
+
+    await service.createUser(maggie);
+    await service.authenticate(maggieCredentials);
+
     returnedUsers = await service.getAllUsers();
-    assert.equal(returnedUsers.length, 0);
+    assert.equal(returnedUsers.length, 1);
   });
 
   test("delete user", async () => {
