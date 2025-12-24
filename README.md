@@ -1,6 +1,6 @@
 ## placemark-core
 
-[![GitHub Release](https://img.shields.io/badge/release-v1.0.0-blue)](https://github.com/schweigerjonas/placemark-core/releases/tag/v2.0.0)
+[![GitHub Release](https://img.shields.io/badge/release-v2.0.0-blue)](https://github.com/schweigerjonas/placemark-core/releases/tag/v2.0.0)
 
 **placemark-core** is a web application built with the [Hapi](https://hapi.dev/) framework that allows users to register, log in, and manage points of interest. This application-core is focused on the backend of the project.
 
