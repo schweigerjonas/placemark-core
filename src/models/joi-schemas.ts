@@ -2,6 +2,17 @@ import Joi, { CustomHelpers } from "joi";
 
 export const IDSpec = Joi.alternatives().try(Joi.string(), Joi.object()).description("valid ID");
 
+export const JwtAuth = Joi.object().keys({
+  success: Joi.boolean().example("true").required(),
+  name: Joi.string().example("Homer Simpson"),
+  token: Joi.string()
+    .example(
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NGJhNDRiMzllNWFhMDNmMThhYzI2YyIsImVtYWlsIjoibmVkQGZsYW5kZXJzLmNvbSIsInNjb3BlIjpbXSwiaWF0IjoxNzY2NTY0OTY4LCJleHAiOjE3NjY1Njg1Njh9.LaNV3YJSche-vqNc8cM0XoqRjvkA-bLAWhhRqZvmG1c"
+    )
+    .required(),
+  _id: IDSpec.required(),
+});
+
 export const UserCredentialsSpec = Joi.object()
   .keys({
     email: Joi.string().email().example("homer@simpson.com").required(),

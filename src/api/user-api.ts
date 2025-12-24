@@ -5,7 +5,9 @@ import { db } from "../models/db.js";
 import { User, UserDetails } from "../types/user-types.js";
 import {
   IDSpec,
+  JwtAuth,
   UserArray,
+  UserCredentialsSpec,
   UserSpec,
   UserSpecPlus,
   UserUpdateSpec,
@@ -40,6 +42,11 @@ export const userApi = {
         return Boom.serverUnavailable("Database error");
       }
     },
+    tags: ["api"],
+    description: "Authenticate a user",
+    notes: "If user has valid email/password, create and return a JWT token",
+    validate: { payload: UserCredentialsSpec, failAction: validationError },
+    response: { schema: JwtAuth, failAction: validationError },
   },
 
   create: {
@@ -47,6 +54,7 @@ export const userApi = {
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const payload = request.payload as UserDetails;
+        console.log(payload);
         const user = await db.userStore?.addUser(payload);
         if (user) {
           return h.response(user).code(201);
