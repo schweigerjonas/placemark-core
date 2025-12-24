@@ -2,14 +2,16 @@ import { assert } from "chai";
 import { db } from "../../src/models/db.js";
 import { assertSubset } from "../test-utils.js";
 import { maggie, testUsers } from "../fixtures.js";
-import { User, UserDetails } from "../../src/types/user-types.js";
+import { Role, User, UserDetails } from "../../src/types/user-types.js";
 
 suite("User model tests", () => {
   const users: User[] = [];
 
-  setup(async () => {
-    db.init("json");
+  suiteSetup(async () => {
+    await db.init("mongo");
+  });
 
+  setup(async () => {
     // check userStore gets initialized
     // enables use of non-null assertion operator in tests
     if (!db.userStore) {
@@ -44,7 +46,7 @@ suite("User model tests", () => {
   });
 
   test("get user fail", async () => {
-    const noUserWithId = await db.userStore!.getUserById("12345");
+    const noUserWithId = await db.userStore!.getUserById("123");
     assert.isNull(noUserWithId);
     const noUserWithEmail = await db.userStore!.getUserByEmail("wrong@email.com");
     assert.isNull(noUserWithEmail);
@@ -63,7 +65,7 @@ suite("User model tests", () => {
       lastName: "SimpsonUpdated",
       email: "maggie@simpsonupdated.com",
       password: "secretupdated",
-      role: "admin",
+      role: Role.Admin,
     };
     const user = await db.userStore!.addUser(maggie);
     await db.userStore!.updateUser(user, updatedDetails);

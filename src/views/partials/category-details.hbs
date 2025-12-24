@@ -1,0 +1,19 @@
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Title</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <p class="control">
+        <!-- expression for value="..." is used to have empty string as default value -->
+        <input
+          class="input"
+          type="text"
+          placeholder="Enter Title"
+          name="title"
+          value="{{#if category.title}}{{category.title}}{{else}}{{/if}}"
+        />
+      </p>
+    </div>
+  </div>
+</div>

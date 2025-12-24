@@ -1,31 +1,68 @@
 import { assert } from "chai";
+import { suite, suiteSetup, setup, test } from "mocha";
 import { db } from "../../src/models/db.js";
 import { service } from "./service.js";
-import { neuschwansteinCastle, testPOIs } from "../fixtures.js";
+import {
+  historicSites,
+  maggie,
+  maggieCredentials,
+  neuschwansteinCastle,
+  testPOIs,
+} from "../fixtures.js";
 import { PointOfInterestDetails } from "../../src/types/poi-types.js";
+import { Category } from "../../src/types/category-types.js";
+import { User } from "../../src/types/user-types.js";
 
 const pois = new Array(testPOIs.length);
 
 suite("POI API tests", () => {
+  let user: User | null = null;
+  let category: Category | null = null;
+
+  suiteSetup(async () => {
+    await db.init("mongo");
+  });
+
   setup(async () => {
-    db.init("json");
+    service.clearAuth();
+    user = await service.createUser(maggie);
+    await service.authenticate(maggieCredentials);
 
     await service.deleteAllPOIs();
+    await service.deleteAllCategories();
+    await service.deleteAllUsers();
+
+    user = await service.createUser(maggie);
+    await service.authenticate(maggieCredentials);
+
+    if (!user) {
+      throw new Error("Failed to create user. Setup failed.");
+    }
+
+    category = await service.createCategory(user._id, historicSites);
+
+    if (!category) {
+      throw new Error("Failed to create category. Setup failed.");
+    }
+
     for (let i = 0; i < testPOIs.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
-      pois[i] = await service.createPOI(testPOIs[i]);
+      pois[i] = await service.createPOI(category._id, testPOIs[i]);
     }
   });
-  teardown(async () => {});
 
   test("create POI", async () => {
-    const newPOI = await service.createPOI(neuschwansteinCastle);
+    const newPOI = await service.createPOI(category!._id, neuschwansteinCastle);
     const newPOIDetails: PointOfInterestDetails = {
       name: newPOI.name,
       description: newPOI.description,
       location: {
         lat: newPOI.location.lat,
         lng: newPOI.location.lng,
+      },
+      img: {
+        url: newPOI.img.url,
+        publicID: newPOI.img.publicID,
       },
     };
     assert.deepEqual(newPOIDetails, neuschwansteinCastle);
@@ -64,8 +101,12 @@ suite("POI API tests", () => {
       name: "Neuschwanstein Castle Updated",
       description: "Updated: A 19th-century Romanesque Revival palace built by King Ludwig II.",
       location: {
-        lat: "48.0",
-        lng: "11.0",
+        lat: "48.342",
+        lng: "11.23",
+      },
+      img: {
+        url: "http://www.example-url.com",
+        publicID: "Updated: ID",
       },
     };
     await service.updatePOI(pois[0]._id, updatedDetails);
@@ -74,6 +115,7 @@ suite("POI API tests", () => {
     assert.equal(updatedPOI.name, updatedDetails.name);
     assert.equal(updatedPOI.description, updatedDetails.description);
     assert.deepEqual(updatedPOI.location, updatedDetails.location);
+    assert.deepEqual(updatedPOI.img, updatedDetails.img);
   });
 
   test("delete all POIs", async () => {
@@ -85,7 +127,7 @@ suite("POI API tests", () => {
   });
 
   test("delete POI", async () => {
-    const poi = await service.createPOI(neuschwansteinCastle);
+    const poi = await service.createPOI(category!._id, neuschwansteinCastle);
     const response = await service.deletePOI(poi._id);
     assert.equal(response.status, 204);
     try {

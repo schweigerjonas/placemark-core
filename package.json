@@ -18,12 +18,13 @@
     "build": "tsc -p tsconfig.json && mkdir -p dist/src/views dist/public && cp -R src/views/* dist/src/views/ && cp -R public/* dist/public/",
     "start": "npm run build && node dist/src/server.js",
     "dev": "tsx watch src/server.ts",
-    "test": "./node_modules/mocha/bin/_mocha --inline-diffs --ui tdd ./test/**/*.ts",
+    "test": "./node_modules/mocha/bin/_mocha --inline-diffs --exit --ui tdd ./test/**/*.ts",
     "lint": "./node_modules/.bin/eslint . --ext .ts"
   },
   "devDependencies": {
     "@types/chai": "^5.2.3",
     "@types/hapi__cookie": "^12.0.5",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/mocha": "^10.0.10",
     "@types/node": "^24.10.1",
     "@typescript-eslint/eslint-plugin": "^8.47.0",
@@ -44,11 +45,18 @@
     "@hapi/boom": "^10.0.1",
     "@hapi/cookie": "^12.0.1",
     "@hapi/hapi": "^21.4.4",
+    "@hapi/inert": "^7.1.0",
     "@hapi/vision": "^7.0.3",
+    "cloudinary": "^2.8.0",
     "dotenv": "^17.2.3",
     "handlebars": "^4.7.8",
-    "joi": "^18.0.2",
+    "hapi-auth-jwt2": "^11.0.0",
+    "hapi-swagger": "^17.3.2",
+    "joi": "^17.0.0",
+    "jsonwebtoken": "^9.0.3",
     "lowdb": "^7.0.1",
+    "mais-mongoose-seeder": "^1.0.7",
+    "mongoose": "^9.0.1",
     "uuid": "^13.0.0"
   }
 }
