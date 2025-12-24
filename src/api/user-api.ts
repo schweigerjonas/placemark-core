@@ -54,7 +54,6 @@ export const userApi = {
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const payload = request.payload as UserDetails;
-        console.log(payload);
         const user = await db.userStore?.addUser(payload);
         if (user) {
           return h.response(user).code(201);
