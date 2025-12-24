@@ -37,7 +37,7 @@ async function init() {
   const result = dotenv.config({ quiet: true });
   if (result.error) {
     console.log(result.error.message);
-    process.exit(1);
+    // process.exit(1);
   }
 
   const server = Hapi.server({
