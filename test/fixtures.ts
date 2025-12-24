@@ -1,6 +1,6 @@
 import { CategoryDetails } from "../src/types/category-types.js";
 import { PointOfInterestDetails } from "../src/types/poi-types.js";
-import { Role, UserDetails } from "../src/types/user-types.js";
+import { Role, User, UserDetails } from "../src/types/user-types.js";
 
 export const url = "http://localhost:3000";
 
@@ -11,6 +11,11 @@ export const maggie: UserDetails = {
   password: "secret",
   role: Role.User,
 };
+
+export const maggieCredentials = {
+  email: "maggie@simpson.com",
+  password: "secret",
+} as User;
 
 export const testUsers: UserDetails[] = [
   {

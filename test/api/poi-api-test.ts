@@ -1,7 +1,14 @@
 import { assert } from "chai";
+import { suite, suiteSetup, setup, test } from "mocha";
 import { db } from "../../src/models/db.js";
 import { service } from "./service.js";
-import { historicSites, maggie, neuschwansteinCastle, testPOIs } from "../fixtures.js";
+import {
+  historicSites,
+  maggie,
+  maggieCredentials,
+  neuschwansteinCastle,
+  testPOIs,
+} from "../fixtures.js";
 import { PointOfInterestDetails } from "../../src/types/poi-types.js";
 import { Category } from "../../src/types/category-types.js";
 import { User } from "../../src/types/user-types.js";
@@ -17,11 +24,16 @@ suite("POI API tests", () => {
   });
 
   setup(async () => {
-    await service.deleteAllUsers();
-    await service.deleteAllCategories();
+    service.clearAuth();
+    user = await service.createUser(maggie);
+    await service.authenticate(maggieCredentials);
+
     await service.deleteAllPOIs();
+    await service.deleteAllCategories();
+    await service.deleteAllUsers();
 
     user = await service.createUser(maggie);
+    await service.authenticate(maggieCredentials);
 
     if (!user) {
       throw new Error("Failed to create user. Setup failed.");
@@ -38,7 +50,6 @@ suite("POI API tests", () => {
       pois[i] = await service.createPOI(category._id, testPOIs[i]);
     }
   });
-  teardown(async () => {});
 
   test("create POI", async () => {
     const newPOI = await service.createPOI(category!._id, neuschwansteinCastle);

@@ -1,12 +1,22 @@
 import axios from "axios";
 
 import { url } from "../fixtures.js";
-import { UserDetails } from "../../src/types/user-types.js";
+import { User, UserDetails } from "../../src/types/user-types.js";
 import { PointOfInterestDetails } from "../../src/types/poi-types.js";
 import { CategoryDetails } from "../../src/types/category-types.js";
 
 export const service = {
   url: url,
+
+  async authenticate(user: User) {
+    const response = await axios.post(`${this.url}/api/users/authenticate`, user);
+    axios.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
+    return response.data;
+  },
+
+  async clearAuth() {
+    axios.defaults.headers.common.Authorization = "";
+  },
 
   // User API methods
   async createUser(user: UserDetails) {

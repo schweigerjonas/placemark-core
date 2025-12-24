@@ -13,7 +13,9 @@ import { validationError } from "./logger.js";
 
 export const poiApi = {
   create: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const poi = await db.poiStore?.addPOI(
@@ -36,7 +38,9 @@ export const poiApi = {
   },
 
   findAll: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const pois = await db.poiStore?.getAllPOIs();
@@ -52,7 +56,9 @@ export const poiApi = {
   },
 
   find: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const poi = await db.poiStore?.getPOIById(request.params.id);
@@ -72,7 +78,9 @@ export const poiApi = {
   },
 
   update: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const poi = await db.poiStore?.getPOIById(request.params.id);
@@ -96,7 +104,9 @@ export const poiApi = {
   },
 
   deleteAll: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         await db.poiStore?.deleteAllPOIs();
@@ -111,7 +121,9 @@ export const poiApi = {
   },
 
   delete: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const poi = await db.poiStore?.getPOIById(request.params.id);

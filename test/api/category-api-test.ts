@@ -1,9 +1,9 @@
 import { assert } from "chai";
-import { suite, suiteSetup, setup, teardown, test } from "mocha";
+import { suite, suiteSetup, setup, test } from "mocha";
 import { db } from "../../src/models/db.js";
 import { CategoryDetails } from "../../src/types/category-types.js";
 import { User } from "../../src/types/user-types.js";
-import { historicSites, maggie, testCategories } from "../fixtures.js";
+import { historicSites, maggie, maggieCredentials, testCategories } from "../fixtures.js";
 import { service } from "./service.js";
 
 suite("Category API tests", () => {
@@ -21,11 +21,17 @@ suite("Category API tests", () => {
       throw new Error("Not all database stores initialized. Setup failed.");
     }
 
-    await service.deleteAllUsers();
+    service.clearAuth();
+    user = await service.createUser(maggie);
+    await service.authenticate(maggieCredentials);
+
     await service.deleteAllCategories();
+    await service.deleteAllUsers();
     categories = [];
 
+    service.clearAuth();
     user = await service.createUser(maggie);
+    await service.authenticate(maggieCredentials);
 
     if (!user) {
       throw new Error("Failed to create user. Setup failed.");
@@ -36,7 +42,6 @@ suite("Category API tests", () => {
       categories[i] = await service.createCategory(user._id, testCategories[i]);
     }
   });
-  teardown(async () => {});
 
   test("create category", async () => {
     const category = await service.createCategory(user!._id, historicSites);
@@ -103,7 +108,10 @@ suite("Category API tests", () => {
       const returnedCategory = await service.getCategory(category._id);
       assert.fail("Should not return a response");
     } catch (error: any) {
-      assert(error.response.data.message === "No category with this id", "Incorrect Response Message");
+      assert(
+        error.response.data.message === "No category with this id",
+        "Incorrect Response Message"
+      );
     }
   });
 });
