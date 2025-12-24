@@ -1,7 +1,7 @@
 import { Request, ResponseToolkit } from "@hapi/hapi";
 import { UserDetails } from "../types/user-types.js";
 import { db } from "../models/db.js";
-import { UserCredentialsSpec, UserSpec } from "../models/joi-schemas.js";
+import { SignupSpec, UserCredentialsSpec } from "../models/joi-schemas.js";
 
 export const accountController = {
   index: {
@@ -19,10 +19,13 @@ export const accountController = {
   signup: {
     auth: false,
     validate: {
-      payload: UserSpec,
+      payload: SignupSpec,
       options: { abortEarly: false },
       failAction: function (request: Request, h: ResponseToolkit, error: any) {
-        return h.view("signup", { title: "Sign up error", errors: error.details }).takeover().code(400);
+        return h
+          .view("signup", { title: "Sign up error", errors: error.details })
+          .takeover()
+          .code(400);
       },
     },
     handler: async function (request: Request, h: ResponseToolkit) {
@@ -43,7 +46,10 @@ export const accountController = {
       payload: UserCredentialsSpec,
       options: { abortEarly: false },
       failAction: function (request: Request, h: ResponseToolkit, error: any) {
-        return h.view("login", { title: "Login error", errors: error.details }).takeover().code(400);
+        return h
+          .view("login", { title: "Login error", errors: error.details })
+          .takeover()
+          .code(400);
       },
     },
     handler: async function (request: Request, h: ResponseToolkit) {
