@@ -34,6 +34,7 @@ export const userApi = {
           .response({
             success: true,
             name: `${user.firstName} ${user.lastName}`,
+            role: user.role,
             token: token,
             _id: user._id,
           })
