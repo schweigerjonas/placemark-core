@@ -14,6 +14,7 @@ import {
 } from "../models/joi-schemas.js";
 import { validationError } from "./logger.js";
 import { createToken } from "./jwt-utils.js";
+import { createHash, validatePassword } from "../models/mongo/hash-utils.js";
 
 export const userApi = {
   authenticate: {
@@ -25,7 +26,7 @@ export const userApi = {
         if (user === null) {
           return Boom.unauthorized("User not found");
         }
-        const passwordsMatch: boolean = payload.password === user.password;
+        const passwordsMatch: boolean = await validatePassword(payload.password, user.password);
         if (!passwordsMatch) {
           return Boom.unauthorized("Invalid password");
         }
@@ -55,6 +56,10 @@ export const userApi = {
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const payload = request.payload as UserDetails;
+
+        const hashedPassword = await createHash(payload.password);
+        payload.password = hashedPassword;
+
         const user = await db.userStore?.addUser(payload);
         if (user) {
           return h.response(user).code(201);
