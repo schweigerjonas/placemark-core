@@ -53,6 +53,11 @@ export const UserUpdateSpec = Joi.object({
   role: Joi.string().example("USER").allow("").optional(),
 }).label("UserUpdateDetails");
 
+export const UserPasswordUpdateSpec = Joi.object({
+  currentPassword: Joi.string().example("secret").required(),
+  password: Joi.string().example("updated-secret").required(),
+}).label("UserPasswordUpdateDetails");
+
 const ImageSpec = Joi.object({
   url: Joi.string()
     .uri()

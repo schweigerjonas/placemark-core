@@ -8,6 +8,7 @@ import {
   JwtAuth,
   UserArray,
   UserCredentialsSpec,
+  UserPasswordUpdateSpec,
   UserSpec,
   UserSpecPlus,
   UserUpdateSpec,
@@ -128,6 +129,7 @@ export const userApi = {
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const user = await db.userStore?.getUserById(request.params.id);
+
         if (!user) {
           return Boom.notFound("No user with this id");
         }
@@ -148,6 +150,50 @@ export const userApi = {
     description: "Update an existing user",
     notes: "Updates the user",
     validate: { params: { id: IDSpec }, payload: UserUpdateSpec, failAction: validationError },
+  },
+
+  updatePassword: {
+    auth: {
+      strategy: "jwt",
+    },
+    handler: async function (request: Request, h: ResponseToolkit) {
+      try {
+        const user = await db.userStore?.getUserById(request.params.id);
+
+        if (!user) {
+          return Boom.notFound("No user with this id");
+        }
+
+        // type any because frontend can send object with old and new password for changing password
+        const payload = request.payload as any;
+
+        if (payload.password && payload.currentPassword) {
+          const isValid = await validatePassword(payload.currentPassword, user.password);
+
+          if (!isValid) {
+            return Boom.unauthorized("Current password incorrect");
+          }
+
+          payload.password = await createHash(payload.password);
+          delete payload.currentPassword;
+
+          await db.userStore?.updateUser(user, payload);
+          return h.response().code(201);
+        }
+        return Boom.badData("Password or current password missing");
+      } catch (err) {
+        console.log(err);
+        return Boom.serverUnavailable("Database error");
+      }
+    },
+    tags: ["api"],
+    description: "Update password of an existing user",
+    notes: "Updates the users password",
+    validate: {
+      params: { id: IDSpec },
+      payload: UserPasswordUpdateSpec,
+      failAction: validationError,
+    },
   },
 
   deleteAll: {
