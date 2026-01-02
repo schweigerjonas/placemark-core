@@ -35,6 +35,9 @@ export const UserSpec = UserCredentialsSpec.keys({
 }).label("UserDetails");
 
 export const UserSpecPlus = UserSpec.keys({
+  password: Joi.string()
+    .example("$2a$10$/ZR0hzQsVBQp7BugY5DJ4OuFKhlc/RVWtjTrBrK.YRtHT7PjVC/x.")
+    .required(),
   _id: IDSpec,
   __v: Joi.number(),
 }).label("UserDetailsPlus");
