@@ -131,7 +131,14 @@ export const userApi = {
         if (!user) {
           return Boom.notFound("No user with this id");
         }
-        await db.userStore?.updateUser(user, request.payload as UserDetails);
+
+        const payload = request.payload as UserDetails;
+
+        if (payload.password) {
+          payload.password = await createHash(payload.password);
+        }
+
+        await db.userStore?.updateUser(user, payload);
         return h.response().code(201);
       } catch (err) {
         return Boom.serverUnavailable("Database error");
