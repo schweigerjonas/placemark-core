@@ -35,6 +35,9 @@ export const UserSpec = UserCredentialsSpec.keys({
 }).label("UserDetails");
 
 export const UserSpecPlus = UserSpec.keys({
+  password: Joi.string()
+    .example("$2a$10$/ZR0hzQsVBQp7BugY5DJ4OuFKhlc/RVWtjTrBrK.YRtHT7PjVC/x.")
+    .required(),
   _id: IDSpec,
   __v: Joi.number(),
 }).label("UserDetailsPlus");
@@ -49,6 +52,11 @@ export const UserUpdateSpec = Joi.object({
   password: Joi.string().example("secret").allow("").optional(),
   role: Joi.string().example("USER").allow("").optional(),
 }).label("UserUpdateDetails");
+
+export const UserPasswordUpdateSpec = Joi.object({
+  currentPassword: Joi.string().example("secret").required(),
+  password: Joi.string().example("updated-secret").required(),
+}).label("UserPasswordUpdateDetails");
 
 const ImageSpec = Joi.object({
   url: Joi.string()

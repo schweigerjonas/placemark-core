@@ -165,6 +165,7 @@ export const apiRoutes = [
   { method: "GET" as const, path: "/api/users", config: userApi.findAll },
   { method: "GET" as const, path: "/api/users/{id}", config: userApi.find },
   { method: "PUT" as const, path: "/api/users/{id}", config: userApi.update },
+  { method: "PUT" as const, path: "/api/users/{id}/password", config: userApi.updatePassword },
   { method: "DELETE" as const, path: "/api/users", config: userApi.deleteAll },
   { method: "DELETE" as const, path: "/api/users/{id}", config: userApi.delete },
 

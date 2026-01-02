@@ -8,12 +8,14 @@ import {
   JwtAuth,
   UserArray,
   UserCredentialsSpec,
+  UserPasswordUpdateSpec,
   UserSpec,
   UserSpecPlus,
   UserUpdateSpec,
 } from "../models/joi-schemas.js";
 import { validationError } from "./logger.js";
 import { createToken } from "./jwt-utils.js";
+import { createHash, validatePassword } from "../models/mongo/hash-utils.js";
 
 export const userApi = {
   authenticate: {
@@ -25,7 +27,7 @@ export const userApi = {
         if (user === null) {
           return Boom.unauthorized("User not found");
         }
-        const passwordsMatch: boolean = payload.password === user.password;
+        const passwordsMatch: boolean = await validatePassword(payload.password, user.password);
         if (!passwordsMatch) {
           return Boom.unauthorized("Invalid password");
         }
@@ -55,6 +57,10 @@ export const userApi = {
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const payload = request.payload as UserDetails;
+
+        const hashedPassword = await createHash(payload.password);
+        payload.password = hashedPassword;
+
         const user = await db.userStore?.addUser(payload);
         if (user) {
           return h.response(user).code(201);
@@ -123,10 +129,18 @@ export const userApi = {
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const user = await db.userStore?.getUserById(request.params.id);
+
         if (!user) {
           return Boom.notFound("No user with this id");
         }
-        await db.userStore?.updateUser(user, request.payload as UserDetails);
+
+        const payload = request.payload as UserDetails;
+
+        if (payload.password) {
+          payload.password = await createHash(payload.password);
+        }
+
+        await db.userStore?.updateUser(user, payload);
         return h.response().code(201);
       } catch (err) {
         return Boom.serverUnavailable("Database error");
@@ -136,6 +150,50 @@ export const userApi = {
     description: "Update an existing user",
     notes: "Updates the user",
     validate: { params: { id: IDSpec }, payload: UserUpdateSpec, failAction: validationError },
+  },
+
+  updatePassword: {
+    auth: {
+      strategy: "jwt",
+    },
+    handler: async function (request: Request, h: ResponseToolkit) {
+      try {
+        const user = await db.userStore?.getUserById(request.params.id);
+
+        if (!user) {
+          return Boom.notFound("No user with this id");
+        }
+
+        // type any because frontend can send object with old and new password for changing password
+        const payload = request.payload as any;
+
+        if (payload.password && payload.currentPassword) {
+          const isValid = await validatePassword(payload.currentPassword, user.password);
+
+          if (!isValid) {
+            return Boom.unauthorized("Current password incorrect");
+          }
+
+          payload.password = await createHash(payload.password);
+          delete payload.currentPassword;
+
+          await db.userStore?.updateUser(user, payload);
+          return h.response().code(201);
+        }
+        return Boom.badData("Password or current password missing");
+      } catch (err) {
+        console.log(err);
+        return Boom.serverUnavailable("Database error");
+      }
+    },
+    tags: ["api"],
+    description: "Update password of an existing user",
+    notes: "Updates the users password",
+    validate: {
+      params: { id: IDSpec },
+      payload: UserPasswordUpdateSpec,
+      failAction: validationError,
+    },
   },
 
   deleteAll: {
