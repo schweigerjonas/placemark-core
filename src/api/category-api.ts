@@ -37,9 +37,7 @@ export const categoryApi = {
     response: { schema: CategorySpecPlus, failAction: validationError },
   },
   findAll: {
-    auth: {
-      strategy: "jwt",
-    },
+    auth: false,
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const categories = await db.categoryStore?.getAllCategories();

@@ -38,9 +38,7 @@ export const poiApi = {
   },
 
   findAll: {
-    auth: {
-      strategy: "jwt",
-    },
+    auth: false,
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const pois = await db.poiStore?.getAllPOIs();
