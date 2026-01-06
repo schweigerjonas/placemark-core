@@ -54,9 +54,7 @@ export const poiApi = {
   },
 
   find: {
-    auth: {
-      strategy: "jwt",
-    },
+    auth: false,
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const poi = await db.poiStore?.getPOIById(request.params.id);

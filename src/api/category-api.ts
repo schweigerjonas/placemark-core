@@ -52,9 +52,7 @@ export const categoryApi = {
     response: { schema: CategoryArray, failAction: validationError },
   },
   find: {
-    auth: {
-      strategy: "jwt",
-    },
+    auth: false,
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const category = await db.categoryStore?.getCategoryById(request.params.id);
