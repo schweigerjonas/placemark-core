@@ -33,7 +33,11 @@ export const poiApi = {
     tags: ["api"],
     description: "Create a POI",
     notes: "Returns created POI",
-    validate: { payload: PointOfInterestValidator, failAction: validationError },
+    validate: {
+      params: { id: IDSpec },
+      payload: PointOfInterestValidator,
+      failAction: validationError,
+    },
     response: { schema: PointOfInterestSpecPlus, failAction: validationError },
   },
 
