@@ -13,11 +13,8 @@ export const poiMongoStore: PointOfInterestStore = {
       categoryID: categoryID,
     };
     const newPOI = new PointOfInterestMongoose(poi);
-    await newPOI.save();
-    const populatedPOI = await PointOfInterestMongoose.findById(newPOI._id)
-      .populate("categoryID")
-      .lean();
-    return populatedPOI;
+    const poiObject = await newPOI.save();
+    return poiObject.toObject();
   },
 
   async getAllPOIs(): Promise<PointOfInterest[]> {
