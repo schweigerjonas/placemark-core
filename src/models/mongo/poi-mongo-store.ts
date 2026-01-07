@@ -4,14 +4,20 @@ import { PointOfInterestStore } from "../../types/store-types.js";
 import { PointOfInterestMongoose } from "./poi.js";
 
 export const poiMongoStore: PointOfInterestStore = {
-  async addPOI(categoryID: string, poiDetails: PointOfInterestDetails): Promise<PointOfInterest> {
+  async addPOI(
+    categoryID: string,
+    poiDetails: PointOfInterestDetails
+  ): Promise<PointOfInterest | null> {
     const poi = {
       ...poiDetails,
       categoryID: categoryID,
     };
     const newPOI = new PointOfInterestMongoose(poi);
-    const poiObject = await newPOI.save();
-    return poiObject.toObject();
+    await newPOI.save();
+    const populatedPOI = await PointOfInterestMongoose.findById(newPOI._id)
+      .populate("categoryID")
+      .lean();
+    return populatedPOI;
   },
 
   async getAllPOIs(): Promise<PointOfInterest[]> {

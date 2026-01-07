@@ -37,9 +37,7 @@ export const categoryApi = {
     response: { schema: CategorySpecPlus, failAction: validationError },
   },
   findAll: {
-    auth: {
-      strategy: "jwt",
-    },
+    auth: false,
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const categories = await db.categoryStore?.getAllCategories();
@@ -54,9 +52,7 @@ export const categoryApi = {
     response: { schema: CategoryArray, failAction: validationError },
   },
   find: {
-    auth: {
-      strategy: "jwt",
-    },
+    auth: false,
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const category = await db.categoryStore?.getCategoryById(request.params.id);
