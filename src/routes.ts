@@ -171,6 +171,7 @@ export const apiRoutes = [
 
   { method: "POST" as const, path: "/api/users/{id}/categories", config: categoryApi.create },
   { method: "GET" as const, path: "/api/categories", config: categoryApi.findAll },
+  { method: "GET" as const, path: "/api/users/{id}/categories", config: categoryApi.findAllUser },
   { method: "GET" as const, path: "/api/categories/{id}", config: categoryApi.find },
   { method: "PUT" as const, path: "/api/categories/{id}", config: categoryApi.update },
   { method: "DELETE" as const, path: "/api/categories", config: categoryApi.deleteAll },
