@@ -179,6 +179,7 @@ export const apiRoutes = [
 
   { method: "POST" as const, path: "/api/categories/{id}/pois", config: poiApi.create },
   { method: "GET" as const, path: "/api/pois", config: poiApi.findAll },
+  { method: "GET" as const, path: "/api/categories/{id}/pois", config: poiApi.findAllCategory },
   { method: "GET" as const, path: "/api/pois/{id}", config: poiApi.find },
   { method: "PUT" as const, path: "/api/pois/{id}", config: poiApi.update },
   { method: "DELETE" as const, path: "/api/pois", config: poiApi.deleteAll },

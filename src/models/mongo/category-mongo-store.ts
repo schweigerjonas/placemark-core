@@ -21,6 +21,9 @@ export const categoryMongoStore: CategoryStore = {
 
   async getUserCategories(userID: string): Promise<Category[] | null> {
     const categories = await CategoryMongoose.find({ userID: userID }).lean();
+    if (!categories) {
+      return null;
+    }
     return categories;
   },
 

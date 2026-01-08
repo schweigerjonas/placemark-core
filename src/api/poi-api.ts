@@ -57,6 +57,30 @@ export const poiApi = {
     response: { schema: PointOfInterestArray, failAction: validationError },
   },
 
+  findAllCategory: {
+    auth: {
+      strategy: "jwt",
+    },
+    handler: async function (request: Request, h: ResponseToolkit) {
+      try {
+        const pois = await db.poiStore?.getPOIsByCategoryId(request.params.id);
+
+        if (!pois) {
+          return Boom.notFound("No category with this id, or category doesn't have any POIs");
+        }
+
+        return pois;
+      } catch (err) {
+        return Boom.serverUnavailable("Database error");
+      }
+    },
+    tags: ["api"],
+    description: "Get all POIs for a specific category",
+    notes: "Returns POI details of all POIs of the category",
+    validate: { params: { id: IDSpec }, failAction: validationError },
+    response: { schema: PointOfInterestArray, failAction: validationError },
+  },
+
   find: {
     auth: false,
     handler: async function (request: Request, h: ResponseToolkit) {
