@@ -114,6 +114,7 @@ export const poiApi = {
         await db.poiStore?.updatePOI(poi, request.payload as PointOfInterestDetails);
         return h.response().code(201);
       } catch (err) {
+        console.error(err);
         return Boom.serverUnavailable("Database error");
       }
     },
