@@ -1,4 +1,5 @@
 import { categoryApi } from "./api/category-api.js";
+import { imageApi } from "./api/image-api.js";
 import { poiApi } from "./api/poi-api.js";
 import { userApi } from "./api/user-api.js";
 import { accountController } from "./controllers/account-controller.js";
@@ -184,4 +185,6 @@ export const apiRoutes = [
   { method: "PUT" as const, path: "/api/pois/{id}", config: poiApi.update },
   { method: "DELETE" as const, path: "/api/pois", config: poiApi.deleteAll },
   { method: "DELETE" as const, path: "/api/pois/{id}", config: poiApi.delete },
+
+  { method: "POST" as const, path: "/api/images", config: imageApi.upload },
 ];
