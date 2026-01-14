@@ -4,7 +4,10 @@ import { PointOfInterestStore } from "../../types/store-types.js";
 import { PointOfInterestMongoose } from "./poi.js";
 
 export const poiMongoStore: PointOfInterestStore = {
-  async addPOI(categoryID: string, poiDetails: PointOfInterestDetails): Promise<PointOfInterest> {
+  async addPOI(
+    categoryID: string,
+    poiDetails: PointOfInterestDetails
+  ): Promise<PointOfInterest | null> {
     const poi = {
       ...poiDetails,
       categoryID: categoryID,

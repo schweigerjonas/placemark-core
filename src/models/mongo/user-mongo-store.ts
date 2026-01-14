@@ -36,11 +36,13 @@ export const userMongoStore: UserStore = {
     await UserMongoose.updateOne(
       { _id: user._id },
       {
-        firstName: updatedUser.firstName || user.firstName,
-        lastName: updatedUser.lastName || user.lastName,
-        email: updatedUser.email || user.email,
-        password: updatedUser.password || user.password,
-        role: updatedUser.role || user.role,
+        $set: {
+          firstName: updatedUser.firstName || user.firstName,
+          lastName: updatedUser.lastName || user.lastName,
+          email: updatedUser.email || user.email,
+          password: updatedUser.password || user.password,
+          role: updatedUser.role || user.role,
+        },
       }
     );
   },

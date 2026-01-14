@@ -33,13 +33,11 @@ export const categoryApi = {
     tags: ["api"],
     description: "Create a category",
     notes: "Returns created category",
-    validate: { payload: CategorySpec, failAction: validationError },
+    validate: { params: { id: IDSpec }, payload: CategorySpec, failAction: validationError },
     response: { schema: CategorySpecPlus, failAction: validationError },
   },
   findAll: {
-    auth: {
-      strategy: "jwt",
-    },
+    auth: false,
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const categories = await db.categoryStore?.getAllCategories();
@@ -53,10 +51,31 @@ export const categoryApi = {
     notes: "Returns details of all categories",
     response: { schema: CategoryArray, failAction: validationError },
   },
-  find: {
+  findAllUser: {
     auth: {
       strategy: "jwt",
     },
+    handler: async function (request: Request, h: ResponseToolkit) {
+      try {
+        const categories = await db.categoryStore?.getUserCategories(request.params.id);
+
+        if (!categories) {
+          return Boom.notFound("No user with this id, or user doesn't have any categories");
+        }
+
+        return categories;
+      } catch (err) {
+        return Boom.serverUnavailable("Database error");
+      }
+    },
+    tags: ["api"],
+    description: "Get all categories of a specific user",
+    notes: "Returns category details for all categories of the user",
+    validate: { params: { id: IDSpec }, failAction: validationError },
+    response: { schema: CategoryArray, failAction: validationError },
+  },
+  find: {
+    auth: false,
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const category = await db.categoryStore?.getCategoryById(request.params.id);

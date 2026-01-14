@@ -23,7 +23,7 @@ export interface CategoryStore {
 }
 
 export interface PointOfInterestStore {
-  addPOI(categoryID: string, poi: PointOfInterestDetails): Promise<PointOfInterest>;
+  addPOI(categoryID: string, poi: PointOfInterestDetails): Promise<PointOfInterest | null>;
   getAllPOIs(): Promise<PointOfInterest[]>;
   getPOIsByCategoryId(id: string): Promise<PointOfInterest[] | null>;
   getPOIById(id: string): Promise<PointOfInterest | null>;

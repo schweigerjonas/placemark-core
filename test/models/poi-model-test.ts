@@ -8,7 +8,7 @@ import { User } from "../../src/types/user-types.js";
 suite("POI model tests", () => {
   let user: User | null = null;
   let category: Category | null = null;
-  const pois: PointOfInterest[] = [];
+  const pois: (PointOfInterest | null)[] = [];
 
   suiteSetup(async () => {
     await db.init("mongo");
@@ -55,6 +55,7 @@ suite("POI model tests", () => {
 
   test("get POI", async () => {
     const poi = await db.poiStore!.addPOI(category!._id, neuschwansteinCastle);
+    assert.exists(poi);
     const returnedPOI = await db.poiStore!.getPOIById(poi._id);
     assert.deepEqual(returnedPOI, poi);
   });
@@ -83,6 +84,7 @@ suite("POI model tests", () => {
       },
     };
     const poi = await db.poiStore!.addPOI(category!._id, neuschwansteinCastle);
+    assert.exists(poi);
     await db.poiStore!.updatePOI(poi, updatedDetails);
     const updatedPOI = await db.poiStore!.getPOIById(poi._id);
 
@@ -102,6 +104,7 @@ suite("POI model tests", () => {
   });
 
   test("delete POI", async () => {
+    assert.exists(pois[0]);
     await db.poiStore!.deletePOIById(pois[0]._id);
     const returnedPOIs = await db.poiStore!.getAllPOIs();
     assert.equal(returnedPOIs.length, pois.length - 1);

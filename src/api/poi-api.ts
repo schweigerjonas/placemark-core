@@ -33,14 +33,16 @@ export const poiApi = {
     tags: ["api"],
     description: "Create a POI",
     notes: "Returns created POI",
-    validate: { payload: PointOfInterestValidator, failAction: validationError },
+    validate: {
+      params: { id: IDSpec },
+      payload: PointOfInterestValidator,
+      failAction: validationError,
+    },
     response: { schema: PointOfInterestSpecPlus, failAction: validationError },
   },
 
   findAll: {
-    auth: {
-      strategy: "jwt",
-    },
+    auth: false,
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const pois = await db.poiStore?.getAllPOIs();
@@ -55,10 +57,32 @@ export const poiApi = {
     response: { schema: PointOfInterestArray, failAction: validationError },
   },
 
-  find: {
+  findAllCategory: {
     auth: {
       strategy: "jwt",
     },
+    handler: async function (request: Request, h: ResponseToolkit) {
+      try {
+        const pois = await db.poiStore?.getPOIsByCategoryId(request.params.id);
+
+        if (!pois) {
+          return Boom.notFound("No category with this id, or category doesn't have any POIs");
+        }
+
+        return pois;
+      } catch (err) {
+        return Boom.serverUnavailable("Database error");
+      }
+    },
+    tags: ["api"],
+    description: "Get all POIs for a specific category",
+    notes: "Returns POI details of all POIs of the category",
+    validate: { params: { id: IDSpec }, failAction: validationError },
+    response: { schema: PointOfInterestArray, failAction: validationError },
+  },
+
+  find: {
+    auth: false,
     handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const poi = await db.poiStore?.getPOIById(request.params.id);
@@ -90,6 +114,7 @@ export const poiApi = {
         await db.poiStore?.updatePOI(poi, request.payload as PointOfInterestDetails);
         return h.response().code(201);
       } catch (err) {
+        console.error(err);
         return Boom.serverUnavailable("Database error");
       }
     },

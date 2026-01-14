@@ -5,7 +5,8 @@ export const IDSpec = Joi.alternatives().try(Joi.string(), Joi.object()).descrip
 export const JwtAuth = Joi.object()
   .keys({
     success: Joi.boolean().example("true").required(),
-    name: Joi.string().example("Homer Simpson"),
+    name: Joi.string().example("Homer Simpson").required(),
+    role: Joi.string().example("USER").required(),
     token: Joi.string()
       .example(
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NGJhNDRiMzllNWFhMDNmMThhYzI2YyIsImVtYWlsIjoibmVkQGZsYW5kZXJzLmNvbSIsInNjb3BlIjpbXSwiaWF0IjoxNzY2NTY0OTY4LCJleHAiOjE3NjY1Njg1Njh9.LaNV3YJSche-vqNc8cM0XoqRjvkA-bLAWhhRqZvmG1c"
@@ -34,6 +35,9 @@ export const UserSpec = UserCredentialsSpec.keys({
 }).label("UserDetails");
 
 export const UserSpecPlus = UserSpec.keys({
+  password: Joi.string()
+    .example("$2a$10$/ZR0hzQsVBQp7BugY5DJ4OuFKhlc/RVWtjTrBrK.YRtHT7PjVC/x.")
+    .required(),
   _id: IDSpec,
   __v: Joi.number(),
 }).label("UserDetailsPlus");
@@ -49,7 +53,12 @@ export const UserUpdateSpec = Joi.object({
   role: Joi.string().example("USER").allow("").optional(),
 }).label("UserUpdateDetails");
 
-const ImageSpec = Joi.object({
+export const UserPasswordUpdateSpec = Joi.object({
+  currentPassword: Joi.string().example("secret").required(),
+  password: Joi.string().example("updated-secret").required(),
+}).label("UserPasswordUpdateDetails");
+
+export const ImageSpec = Joi.object({
   url: Joi.string()
     .uri()
     .example("https://res.cloudinary.com/demo/image/upload/sample.jpg")
