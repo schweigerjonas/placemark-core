@@ -45,10 +45,10 @@ export const poiMongoStore: PointOfInterestStore = {
         name: updatedPOI.name || poi.name,
         description: updatedPOI.description || poi.description,
         location: {
-          lat: updatedPOI.location.lat || poi.location.lat,
-          lng: updatedPOI.location.lng || poi.location.lng,
+          lat: updatedPOI.location?.lat ?? poi.location.lat,
+          lng: updatedPOI.location?.lng ?? poi.location.lng,
         },
-        img: updatedPOI.img || poi.img,
+        img: updatedPOI.img,
       }
     );
   },

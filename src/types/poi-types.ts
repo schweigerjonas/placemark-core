@@ -10,7 +10,7 @@ export type PointOfInterest = {
   name: string;
   description: string;
   location: Location;
-  img: Image;
+  img: Image[];
   categoryID: Types.ObjectId | string;
   _id: string;
 };
