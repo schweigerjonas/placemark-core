@@ -38,4 +38,23 @@ export const imageApi = {
     notes: "Returns uploaded image",
     response: { schema: ImageSpec, failAction: validationError },
   },
+
+  delete: {
+    auth: {
+      strategy: "jwt",
+    },
+    handler: async function (request: Request, h: ResponseToolkit) {
+      try {
+        await imageStore.deleteImage(request.params.id);
+
+        return h.response().code(204);
+      } catch (err) {
+        console.error(err);
+        return Boom.serverUnavailable("Database error");
+      }
+    },
+    tags: ["api"],
+    description: "Delete an image",
+    notes: "Removes a specific image",
+  },
 };
