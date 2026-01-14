@@ -58,7 +58,7 @@ export const UserPasswordUpdateSpec = Joi.object({
   password: Joi.string().example("updated-secret").required(),
 }).label("UserPasswordUpdateDetails");
 
-const ImageSpec = Joi.object({
+export const ImageSpec = Joi.object({
   url: Joi.string()
     .uri()
     .example("https://res.cloudinary.com/demo/image/upload/sample.jpg")

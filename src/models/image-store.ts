@@ -2,6 +2,7 @@ import * as cloudinary from "cloudinary";
 import dotenv from "dotenv";
 import { writeFileSync } from "fs";
 import { ImageStore } from "../types/store-types.js";
+import { Image } from "../types/image-types.js";
 
 dotenv.config({ quiet: true });
 
@@ -18,7 +19,7 @@ export const imageStore: ImageStore = {
     return result.resources;
   },
 
-  uploadImage: async function (imageFile: any) {
+  uploadImage: async function (imageFile: any): Promise<Image> {
     writeFileSync("./public/images/temp.img", imageFile);
     const response = await cloudinary.v2.uploader.upload("./public/images/temp.img");
     return {
@@ -28,6 +29,6 @@ export const imageStore: ImageStore = {
   },
 
   deleteImage: async function (imgID: string) {
-    await cloudinary.v2.uploader.destroy(imgID, {});
+    return cloudinary.v2.uploader.destroy(imgID, {});
   },
 };

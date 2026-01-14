@@ -1,4 +1,5 @@
 import { categoryApi } from "./api/category-api.js";
+import { imageApi } from "./api/image-api.js";
 import { poiApi } from "./api/poi-api.js";
 import { userApi } from "./api/user-api.js";
 import { accountController } from "./controllers/account-controller.js";
@@ -171,6 +172,7 @@ export const apiRoutes = [
 
   { method: "POST" as const, path: "/api/users/{id}/categories", config: categoryApi.create },
   { method: "GET" as const, path: "/api/categories", config: categoryApi.findAll },
+  { method: "GET" as const, path: "/api/users/{id}/categories", config: categoryApi.findAllUser },
   { method: "GET" as const, path: "/api/categories/{id}", config: categoryApi.find },
   { method: "PUT" as const, path: "/api/categories/{id}", config: categoryApi.update },
   { method: "DELETE" as const, path: "/api/categories", config: categoryApi.deleteAll },
@@ -178,8 +180,12 @@ export const apiRoutes = [
 
   { method: "POST" as const, path: "/api/categories/{id}/pois", config: poiApi.create },
   { method: "GET" as const, path: "/api/pois", config: poiApi.findAll },
+  { method: "GET" as const, path: "/api/categories/{id}/pois", config: poiApi.findAllCategory },
   { method: "GET" as const, path: "/api/pois/{id}", config: poiApi.find },
   { method: "PUT" as const, path: "/api/pois/{id}", config: poiApi.update },
   { method: "DELETE" as const, path: "/api/pois", config: poiApi.deleteAll },
   { method: "DELETE" as const, path: "/api/pois/{id}", config: poiApi.delete },
+
+  { method: "POST" as const, path: "/api/images", config: imageApi.upload },
+  { method: "DELETE" as const, path: "/api/images/{id}", config: imageApi.delete },
 ];

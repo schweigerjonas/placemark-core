@@ -51,6 +51,29 @@ export const categoryApi = {
     notes: "Returns details of all categories",
     response: { schema: CategoryArray, failAction: validationError },
   },
+  findAllUser: {
+    auth: {
+      strategy: "jwt",
+    },
+    handler: async function (request: Request, h: ResponseToolkit) {
+      try {
+        const categories = await db.categoryStore?.getUserCategories(request.params.id);
+
+        if (!categories) {
+          return Boom.notFound("No user with this id, or user doesn't have any categories");
+        }
+
+        return categories;
+      } catch (err) {
+        return Boom.serverUnavailable("Database error");
+      }
+    },
+    tags: ["api"],
+    description: "Get all categories of a specific user",
+    notes: "Returns category details for all categories of the user",
+    validate: { params: { id: IDSpec }, failAction: validationError },
+    response: { schema: CategoryArray, failAction: validationError },
+  },
   find: {
     auth: false,
     handler: async function (request: Request, h: ResponseToolkit) {
