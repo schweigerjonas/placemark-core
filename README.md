@@ -4,6 +4,7 @@
 
 **placemark-core** is a web application built with the [Hapi](https://hapi.dev/) framework that allows users to register, log in, and manage points of interest. This application-core is focused on the backend of the project.
 
+- [Important Note](#important-note)
 - [Features](#features)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
@@ -12,6 +13,10 @@
 - [Testing](#testing)
 - [API Documentation](#api-documentation)
 - [Deployment](#deployment)
+
+## Important Note
+
+Starting this release (v3.0.0), the project will mainly function as the API for its frontend counterpart [placemark-svelte](https://github.com/schweigerjonas/placemark-svelte). With this in mind, there is no guarantee that all of the functions implemented in previous versions will still work in the UI of this version of the application.
 
 ## Features
 
