@@ -61,10 +61,12 @@ export const seedData = {
         lat: "52.5163",
         lng: "13.3777",
       },
-      img: {
-        url: "",
-        publicID: "",
-      },
+      img: [
+        {
+          url: "",
+          publicID: "",
+        },
+      ],
       categoryID: "->categories.sites",
     },
     road: {
@@ -74,10 +76,12 @@ export const seedData = {
         lat: "49.7912",
         lng: "9.9535",
       },
-      img: {
-        url: "",
-        publicID: "",
-      },
+      img: [
+        {
+          url: "",
+          publicID: "",
+        },
+      ],
       categoryID: "->categories.routes",
     },
     forest: {
@@ -87,10 +91,12 @@ export const seedData = {
         lat: "47.9990",
         lng: "7.8421",
       },
-      img: {
-        url: "",
-        publicID: "",
-      },
+      img: [
+        {
+          url: "",
+          publicID: "",
+        },
+      ],
       categoryID: "->categories.nature",
     },
   },

@@ -16,7 +16,7 @@ const poiSchema = new Schema<PointOfInterest>({
   name: String,
   description: String,
   location: locationSchema,
-  img: imageSchema,
+  img: [imageSchema],
   categoryID: {
     type: Schema.Types.ObjectId,
     ref: "Category",
