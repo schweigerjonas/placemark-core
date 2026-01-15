@@ -68,7 +68,7 @@ export const seedData = {
         },
       ],
       categoryID: "->categories.sites",
-      createdAt: 1736510400,
+      createdAt: 1768086000,
     },
     road: {
       name: "Romantic Road (Würzburg)",
@@ -84,7 +84,7 @@ export const seedData = {
         },
       ],
       categoryID: "->categories.routes",
-      createdAt: 1736683200,
+      createdAt: 1768086000,
     },
     forest: {
       name: "The Black Forest (Freiburg)",
@@ -100,7 +100,7 @@ export const seedData = {
         },
       ],
       categoryID: "->categories.nature",
-      createdAt: 1736856000,
+      createdAt: 1768172400,
     },
   },
 };
