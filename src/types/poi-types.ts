@@ -13,6 +13,7 @@ export type PointOfInterest = {
   img: Image[];
   categoryID: Types.ObjectId | string;
   _id: string;
+  createdAt: number;
 };
 
-export type PointOfInterestDetails = Omit<PointOfInterest, "_id" | "categoryID">;
+export type PointOfInterestDetails = Omit<PointOfInterest, "_id" | "categoryID" | "createdAt">;

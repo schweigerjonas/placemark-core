@@ -149,6 +149,7 @@ export const PointOfInterestSpecPlus = Joi.object()
     categoryID: IDSpec.optional(),
     _id: IDSpec,
     __v: Joi.number(),
+    createdAt: Joi.number().example(1736952863).optional(),
   })
   .label("PointOfInterestDetailsPlus");
 
