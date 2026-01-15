@@ -21,6 +21,7 @@ const poiSchema = new Schema<PointOfInterest>({
     type: Schema.Types.ObjectId,
     ref: "Category",
   },
+  createdAt: { type: Number, default: () => Math.floor(Date.now() / 1000) },
 });
 
 export const PointOfInterestMongoose = Mongoose.model("PointOfInterest", poiSchema);
