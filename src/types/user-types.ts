@@ -9,6 +9,8 @@ export type User = {
   email: string;
   password: string;
   role: Role;
+  username?: string;
+  githubId?: number;
   _id: string;
 };
 

@@ -2,7 +2,7 @@ import Boom from "@hapi/boom";
 import { Types } from "mongoose";
 import { Request, ResponseToolkit } from "@hapi/hapi";
 import { db } from "../models/db.js";
-import { User, UserDetails } from "../types/user-types.js";
+import { Role, User, UserDetails } from "../types/user-types.js";
 import {
   IDSpec,
   JwtAuth,
@@ -233,5 +233,52 @@ export const userApi = {
     description: "Delete a specific user",
     notes: "Removes a specific user",
     validate: { params: { id: IDSpec }, failAction: validationError },
+  },
+
+  authenticateGithub: {
+    auth: false,
+    handler: async function (request: Request, h: ResponseToolkit) {
+      const payload = request.payload as { githubId: number; username: string };
+
+      try {
+        let user = (await db.userStore?.getUserByGithubId(payload.githubId)) as User;
+
+        if (!user) {
+          const newUser: UserDetails = {
+            firstName: payload.username,
+            lastName: "(GitHub)",
+            email: `${payload.username}@github.com`,
+            password: "oauth-protected-account",
+            role: Role.User,
+            githubId: payload.githubId,
+            username: payload.username,
+          };
+
+          const createdUser = await db.userStore?.addUser(newUser);
+
+          if (createdUser) {
+            user = createdUser;
+          }
+        }
+
+        const token = createToken(user);
+
+        return h
+          .response({
+            success: true,
+            name: `${user.firstName} ${user.lastName}`,
+            role: user.role,
+            token: token,
+            _id: user._id,
+          })
+          .code(201);
+      } catch (err) {
+        console.error(err);
+        return Boom.serverUnavailable("Database error during GitHub authentication");
+      }
+    },
+    tags: ["api"],
+    description: "Authenticate via GitHub",
+    notes: "Finds or creates a user based on GitHUb ID and returns a JWT",
   },
 };

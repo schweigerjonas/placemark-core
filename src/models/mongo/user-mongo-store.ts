@@ -32,6 +32,11 @@ export const userMongoStore: UserStore = {
     return user;
   },
 
+  async getUserByGithubId(id: number): Promise<User | null> {
+    const user = await UserMongoose.findOne({ githubId: id }).lean();
+    return user;
+  },
+
   async updateUser(user: User, updatedUser: UserDetails): Promise<void> {
     await UserMongoose.updateOne(
       { _id: user._id },
