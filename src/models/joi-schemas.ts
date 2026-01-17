@@ -32,6 +32,8 @@ export const UserSpec = UserCredentialsSpec.keys({
   firstName: Joi.string().example("Homer").required(),
   lastName: Joi.string().example("Simpson").required(),
   role: Joi.string().example("USER").required(),
+  username: Joi.string().example("homersimpson").optional(),
+  githubId: Joi.number().example("111111111").optional(),
 }).label("UserDetails");
 
 export const UserSpecPlus = UserSpec.keys({
