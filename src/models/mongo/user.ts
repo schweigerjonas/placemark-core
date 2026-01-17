@@ -13,6 +13,9 @@ const userSchema = new Schema<User>({
     enum: Role,
     default: Role.User,
   },
+  username: String,
+  githubId: Number,
+  googleId: String,
 });
 
 export const UserMongoose = Mongoose.model("User", userSchema);
