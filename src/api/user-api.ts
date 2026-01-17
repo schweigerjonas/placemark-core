@@ -274,11 +274,65 @@ export const userApi = {
           .code(201);
       } catch (err) {
         console.error(err);
+
         return Boom.serverUnavailable("Database error during GitHub authentication");
       }
     },
     tags: ["api"],
     description: "Authenticate via GitHub",
     notes: "Finds or creates a user based on GitHUb ID and returns a JWT",
+  },
+
+  authenticateGoogle: {
+    auth: false,
+    handler: async function (request: Request, h: ResponseToolkit) {
+      const payload = request.payload as { googleId: string; username: string; email: string };
+
+      try {
+        let user = (await db.userStore?.getUserByGoogleId(payload.googleId)) as User;
+
+        if (!user) {
+          user = (await db.userStore?.getUserByEmail(payload.email)) as User;
+
+          if (user) {
+            // add google to existing email/password account
+            user.googleId = payload.googleId;
+            await db.userStore?.updateUser(user, user);
+          } else {
+            const newUser: UserDetails = {
+              firstName: payload.username.split(" ")[0] || payload.username,
+              lastName: payload.username.split(" ")[1] || "(Google)",
+              email: payload.email,
+              password: "oauth-protected-account",
+              role: Role.User,
+              googleId: payload.googleId,
+              username: payload.username,
+            };
+
+            const createdUser = await db.userStore?.addUser(newUser);
+
+            if (createdUser) {
+              user = createdUser;
+            }
+          }
+        }
+
+        const token = createToken(user);
+
+        return h
+          .response({
+            success: true,
+            name: `${user.firstName} ${user.lastName}`,
+            role: user.role,
+            token: token,
+            _id: user._id,
+          })
+          .code(201);
+      } catch (err) {
+        console.error(err);
+
+        return Boom.serverUnavailable("Database error during Google authentication");
+      }
+    },
   },
 };

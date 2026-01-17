@@ -166,6 +166,11 @@ export const apiRoutes = [
     path: "/api/users/authenticate/github",
     config: userApi.authenticateGithub,
   },
+  {
+    method: "POST" as const,
+    path: "/api/users/authenticate/google",
+    config: userApi.authenticateGoogle,
+  },
 
   { method: "POST" as const, path: "/api/users", config: userApi.create },
   { method: "GET" as const, path: "/api/users", config: userApi.findAll },

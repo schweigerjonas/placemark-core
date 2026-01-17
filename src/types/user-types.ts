@@ -11,6 +11,7 @@ export type User = {
   role: Role;
   username?: string;
   githubId?: number;
+  googleId?: string;
   _id: string;
 };
 

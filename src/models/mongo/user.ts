@@ -15,6 +15,7 @@ const userSchema = new Schema<User>({
   },
   username: String,
   githubId: Number,
+  googleId: String,
 });
 
 export const UserMongoose = Mongoose.model("User", userSchema);

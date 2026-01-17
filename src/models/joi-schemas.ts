@@ -32,8 +32,9 @@ export const UserSpec = UserCredentialsSpec.keys({
   firstName: Joi.string().example("Homer").required(),
   lastName: Joi.string().example("Simpson").required(),
   role: Joi.string().example("USER").required(),
-  username: Joi.string().example("homersimpson").optional(),
-  githubId: Joi.number().example("111111111").optional(),
+  username: Joi.string().optional(),
+  githubId: Joi.number().optional(),
+  googleId: Joi.string().optional(),
 }).label("UserDetails");
 
 export const UserSpecPlus = UserSpec.keys({
@@ -53,6 +54,9 @@ export const UserUpdateSpec = Joi.object({
   email: Joi.string().email().example("homer@simpson.com").allow("").optional(),
   password: Joi.string().example("secret").allow("").optional(),
   role: Joi.string().example("USER").allow("").optional(),
+  username: Joi.string().allow("").optional(),
+  githubId: Joi.number().integer().allow(null).optional(),
+  googleId: Joi.string().allow("").optional(),
 }).label("UserUpdateDetails");
 
 export const UserPasswordUpdateSpec = Joi.object({

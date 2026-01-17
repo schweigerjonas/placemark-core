@@ -37,6 +37,11 @@ export const userMongoStore: UserStore = {
     return user;
   },
 
+  async getUserByGoogleId(id: string): Promise<User | null> {
+    const user = await UserMongoose.findOne({ googleId: id }).lean();
+    return user;
+  },
+
   async updateUser(user: User, updatedUser: UserDetails): Promise<void> {
     await UserMongoose.updateOne(
       { _id: user._id },
@@ -47,6 +52,9 @@ export const userMongoStore: UserStore = {
           email: updatedUser.email || user.email,
           password: updatedUser.password || user.password,
           role: updatedUser.role || user.role,
+          username: updatedUser.username || user.username,
+          githubId: updatedUser.githubId || user.githubId,
+          googleId: updatedUser.googleId || user.googleId,
         },
       }
     );
