@@ -89,11 +89,13 @@ export const editPOIController = {
           return h.redirect(`/poi/${request.params.id}/edit`);
         }
 
-        await imageStore.deleteImage(poi.img.publicID);
-        poi.img = {
-          url: "",
-          publicID: "",
-        };
+        await imageStore.deleteImage(poi.img[0].publicID);
+        poi.img = [
+          {
+            url: "",
+            publicID: "",
+          },
+        ];
         await db.poiStore?.updatePOI(poi, poi);
 
         return h.redirect(`/poi/${request.params.id}/edit`);
