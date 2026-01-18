@@ -10,6 +10,7 @@ export const poiJsonStore: PointOfInterestStore = {
     const newPOI: PointOfInterest = {
       ...poi,
       categoryID: categoryID,
+      createdAt: new Date().getFullYear(),
       _id: uuidv4(),
     };
 

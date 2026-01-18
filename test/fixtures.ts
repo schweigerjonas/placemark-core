@@ -48,10 +48,12 @@ export const neuschwansteinCastle: PointOfInterestDetails = {
     lat: "47.4167",
     lng: "10.9833",
   },
-  img: {
-    url: "",
-    publicID: "",
-  },
+  img: [
+    {
+      url: "",
+      publicID: "",
+    },
+  ],
 };
 
 export const testPOIs: PointOfInterestDetails[] = [
@@ -62,10 +64,12 @@ export const testPOIs: PointOfInterestDetails[] = [
       lat: "52.5163",
       lng: "13.3777",
     },
-    img: {
-      url: "",
-      publicID: "",
-    },
+    img: [
+      {
+        url: "",
+        publicID: "",
+      },
+    ],
   },
   {
     name: "Romantic Road (Würzburg)",
@@ -74,10 +78,12 @@ export const testPOIs: PointOfInterestDetails[] = [
       lat: "49.7912",
       lng: "9.9535",
     },
-    img: {
-      url: "",
-      publicID: "",
-    },
+    img: [
+      {
+        url: "",
+        publicID: "",
+      },
+    ],
   },
   {
     name: "The Black Forest (Freiburg)",
@@ -86,10 +92,12 @@ export const testPOIs: PointOfInterestDetails[] = [
       lat: "47.9990",
       lng: "7.8421",
     },
-    img: {
-      url: "",
-      publicID: "",
-    },
+    img: [
+      {
+        url: "",
+        publicID: "",
+      },
+    ],
   },
 ];
 

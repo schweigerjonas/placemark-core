@@ -46,10 +46,12 @@ export const categoryController = {
       const poiDetails = request.payload as PointOfInterestDetails;
       const poi = {
         ...poiDetails,
-        img: {
-          url: "",
-          publicID: "",
-        },
+        img: [
+          {
+            url: "",
+            publicID: "",
+          },
+        ],
       } as PointOfInterestDetails;
 
       if (!category) {

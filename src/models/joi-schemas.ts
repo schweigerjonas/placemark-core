@@ -32,6 +32,9 @@ export const UserSpec = UserCredentialsSpec.keys({
   firstName: Joi.string().example("Homer").required(),
   lastName: Joi.string().example("Simpson").required(),
   role: Joi.string().example("USER").required(),
+  username: Joi.string().optional(),
+  githubId: Joi.number().optional(),
+  googleId: Joi.string().optional(),
 }).label("UserDetails");
 
 export const UserSpecPlus = UserSpec.keys({
@@ -51,6 +54,9 @@ export const UserUpdateSpec = Joi.object({
   email: Joi.string().email().example("homer@simpson.com").allow("").optional(),
   password: Joi.string().example("secret").allow("").optional(),
   role: Joi.string().example("USER").allow("").optional(),
+  username: Joi.string().allow("").optional(),
+  githubId: Joi.number().integer().allow(null).optional(),
+  googleId: Joi.string().allow("").optional(),
 }).label("UserUpdateDetails");
 
 export const UserPasswordUpdateSpec = Joi.object({
@@ -104,7 +110,7 @@ const transformPointOfInterest = (value: any, helpers: CustomHelpers) => {
       lat,
       lng,
     },
-    img,
+    img: img || [],
   };
 };
 
@@ -115,7 +121,7 @@ const NestedPointOfInterestSpec = Joi.object()
       .example("Iconic neoclassical triumphal arch in Berlin, symbolizing reunification.")
       .required(),
     location: LocationSpec.required(),
-    img: ImageSpec.optional(),
+    img: ImageArray.optional(),
     categoryID: IDSpec.optional(),
   })
   .label("NestedPointOfInterestDetails");
@@ -128,7 +134,7 @@ const FlatPointOfInterestSpec = Joi.object()
       .required(),
     lat: Joi.number().min(-90).max(90).precision(6).example(52.5163).required(),
     lng: Joi.number().min(-180).max(180).precision(6).example(13.3777).required(),
-    img: ImageSpec.optional(),
+    img: ImageArray.optional(),
     categoryID: IDSpec.optional(),
   })
   .custom(transformPointOfInterest)
@@ -145,10 +151,11 @@ export const PointOfInterestSpecPlus = Joi.object()
       .example("Iconic neoclassical triumphal arch in Berlin, symbolizing reunification.")
       .required(),
     location: LocationSpec.required(),
-    img: ImageSpec.optional(),
+    img: ImageArray.optional(),
     categoryID: IDSpec.optional(),
     _id: IDSpec,
     __v: Joi.number(),
+    createdAt: Joi.number().example(1736952863).optional(),
   })
   .label("PointOfInterestDetailsPlus");
 
@@ -164,7 +171,7 @@ const NestedPointOfInterestUpdateSpec = Joi.object()
       .allow("")
       .optional(),
     location: LocationSpec.optional(),
-    img: ImageSpec.optional(),
+    img: ImageArray.optional(),
   })
   .label("NestedPointOfInterestUpdateSpec");
 
@@ -177,7 +184,7 @@ const FlatPointOfInterestUpdateSpec = Joi.object()
       .optional(),
     lat: Joi.number().min(-90).max(90).precision(6).example(52.5163).allow("").empty("").optional(),
     lng: Joi.number().min(-90).max(90).precision(6).example(13.3777).allow("").empty("").required(),
-    img: ImageSpec.optional(),
+    img: ImageArray.optional(),
   })
   .custom(transformPointOfInterest)
   .label("FlatPointOfInterestUpdateDetails");

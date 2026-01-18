@@ -37,6 +37,14 @@ export const userJsonStore: UserStore = {
     return u;
   },
 
+  async getUserByGithubId(id: number): Promise<User | null> {
+    return null;
+  },
+
+  async getUserByGoogleId(id: string): Promise<User | null> {
+    return null;
+  },
+
   async updateUser(user: User, updatedUser: UserDetails): Promise<void> {
     user.firstName = updatedUser.firstName || user.firstName;
     user.lastName = updatedUser.lastName || user.lastName;

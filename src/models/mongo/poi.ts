@@ -16,11 +16,12 @@ const poiSchema = new Schema<PointOfInterest>({
   name: String,
   description: String,
   location: locationSchema,
-  img: imageSchema,
+  img: [imageSchema],
   categoryID: {
     type: Schema.Types.ObjectId,
     ref: "Category",
   },
+  createdAt: { type: Number, default: () => Math.floor(Date.now() / 1000) },
 });
 
 export const PointOfInterestMongoose = Mongoose.model("PointOfInterest", poiSchema);
