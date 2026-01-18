@@ -16,7 +16,7 @@
 
 ## Important Note
 
-Starting release v3.0.0, the project will mainly function as the API for its frontend counterpart [placemark-svelte](https://github.com/schweigerjonas/placemark-svelte). With this in mind, there is no guarantee that all of the functions implemented in previous versions will still work in the UI of this version of the application.
+Starting at release **v3.0.0**, the project will mainly function as the API for its frontend counterpart [placemark-svelte](https://github.com/schweigerjonas/placemark-svelte). With this in mind, there is no guarantee that all of the functions implemented in previous versions will still work in the UI of this version of the application.
 
 ## Features
 
