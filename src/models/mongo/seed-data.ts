@@ -433,7 +433,16 @@ export const seedData = {
       description:
         "A perfectly preserved medieval city on the Danube, showing the layers of Roman, Romanesque, and Gothic history.",
       location: { lat: "49.0203", lng: "12.0975" },
-      img: [{ url: "", publicID: "" }],
+      img: [
+        {
+          url: "http://res.cloudinary.com/dif8elawf/image/upload/v1768697824/fo9imogsjrxwc1dhsk0f.png",
+          publicID: "fo9imogsjrxwc1dhsk0f",
+        },
+        {
+          url: "http://res.cloudinary.com/dif8elawf/image/upload/v1768697837/uelwbpc7kvcofbqhxoba.png",
+          publicID: "uelwbpc7kvcofbqhxoba",
+        },
+      ],
       categoryID: "->categories.sites",
       createdAt: 1768086000,
     },
