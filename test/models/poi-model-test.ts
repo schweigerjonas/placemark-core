@@ -78,10 +78,12 @@ suite("POI model tests", () => {
         lat: "48.0",
         lng: "11.0",
       },
-      img: {
-        url: "Updated: URL",
-        publicID: "Updated: ID",
-      },
+      img: [
+        {
+          url: "Updated: URL",
+          publicID: "Updated: ID",
+        },
+      ],
     };
     const poi = await db.poiStore!.addPOI(category!._id, neuschwansteinCastle);
     assert.exists(poi);
