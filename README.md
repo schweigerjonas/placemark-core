@@ -12,7 +12,6 @@
   - [Running the Application](#running-the-application)
 - [Testing](#testing)
 - [API Documentation](#api-documentation)
-- [Deployment](#deployment)
 
 ## Important Note
 
@@ -119,17 +118,3 @@ Once the application is running, the interactive API documentation is available 
 > <http://localhost:3000/documentation> (adjust port if necessary)
 
 This documentation provides details on all available endpoints, required parameters, and response schemas.
-
-## Deployment
-
-The application is deployed live at:
-
-> <https://placemark-core.onrender.com/>
-
-The application at **v2.0.0** is also deployed live at:
-
-> <https://placemark-l2.onrender.com/>
-
-This version has practically the same functionality on its own frontend as the later versions, however it doesn't have the changes that were needed for it to work as the backend for [placemark-svelte](https://github.com/schweigerjonas/placemark-svelte), so all of the functions will work as intended.
-
-_Note: It may take 1-2 minutes until the instance is spun up upon first visiting the website._
